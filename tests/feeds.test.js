@@ -23,6 +23,8 @@ async function build(extraFiles = {}, options) {
       result = {
         enFeed: await read("en/feed.xml"),
         frFeed: await read("fr/feed.xml"),
+        enRss: await read("en/rss.xml"),
+        frRss: await read("fr/rss.xml"),
         sitemap: await read("sitemap.xml"),
         router: await read("blog/index.html"),
       };
@@ -93,4 +95,22 @@ test("/blog/ shows both language links outside scripts and is noindex, without c
   assert.ok(!router.includes('rel="canonical"'));
   assert.ok(router.includes("location.replace"));
   assert.ok(router.includes("nakocorp-lang"));
+});
+
+test("RSS 2.0 feeds sit next to the Atom ones, one per language, with absolute links", async () => {
+  const { enRss, frRss } = await build();
+  assert.match(enRss, /<rss version="2.0"/);
+  // <content:encoded> needs its namespace, or strict readers reject the feed.
+  assert.match(enRss, /xmlns:content="http:\/\/purl\.org\/rss\/1\.0\/modules\/content\/"/);
+  assert.ok(enRss.includes(`<link>${SITE}/en/blog/hello/</link>`));
+  assert.ok(enRss.includes("Summary of Hello"));
+  assert.ok(!enRss.includes("/fr/blog/"), "EN feed lists no FR article");
+  assert.match(frRss, /<title>Blog NakoCorp<\/title>/);
+  assert.ok(frRss.includes(`${SITE}/fr/blog/bonjour/`));
+});
+
+test("drafts never reach the RSS feeds either", async () => {
+  const draft = { "en/blog/secret.md": article("Secret", "draft: true\n").replace("translationKey: pair", "translationKey: secret") };
+  const { enRss } = await build(draft, { drafts: true });
+  assert.ok(!enRss.includes("Secret") && !enRss.includes("/secret/"));
 });

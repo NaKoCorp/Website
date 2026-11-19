@@ -92,22 +92,35 @@ export default function (eleventyConfig) {
     );
   }
   const feeds = { en: "NakoCorp blog", fr: "Blog NakoCorp" };
+  // Each language gets an Atom feed (feed.xml) and the same entries as RSS 2.0
+  // (rss.xml) for the readers that only take RSS.
+  const formats = { atom: "feed.xml", rss: "rss.xml" };
   for (const [lang, title] of Object.entries(feeds)) {
-    eleventyConfig.addPlugin(feedPlugin, {
-      type: "atom",
-      outputPath: `/${lang}/feed.xml`,
-      collection: { name: `feed_posts_${lang}`, limit: 20, sort: "descending" },
-      metadata: {
-        language: lang,
-        title,
-        subtitle: labels[lang].blogDescription,
-        // The feed's id and alternate link: this language's blog list. Entry
-        // URLs are root-relative, so they still resolve to the site root.
-        base: `https://www.nakocorp.com/${lang}/blog/`,
-        author: { name: "NakoCorp" },
-      },
-    });
+    for (const [type, file] of Object.entries(formats)) {
+      eleventyConfig.addPlugin(feedPlugin, {
+        type,
+        outputPath: `/${lang}/${file}`,
+        collection: { name: `feed_posts_${lang}`, limit: 20, sort: "descending" },
+        metadata: {
+          language: lang,
+          title,
+          subtitle: labels[lang].blogDescription,
+          // The feed's id and alternate link: this language's blog list. Entry
+          // URLs are root-relative, so they still resolve to the site root.
+          base: `https://www.nakocorp.com/${lang}/blog/`,
+          author: { name: "NakoCorp" },
+        },
+      });
+    }
   }
+
+  // The RSS template of @11ty/eleventy-plugin-rss 3.1.0 writes <content:encoded>
+  // without declaring its namespace: declare it, so the XML stays well formed.
+  eleventyConfig.addTransform("rss-content-namespace", (content, outputPath) =>
+    typeof outputPath === "string" && outputPath.endsWith("/rss.xml") && !content.includes("xmlns:content=")
+      ? content.replace('<rss version="2.0"', '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"')
+      : content,
+  );
 
   eleventyConfig.addFilter("formatDate", (date, lang) => formatDate(new Date(date), lang));
   // YYYY-MM-DD, for <time datetime> and the article meta tags.

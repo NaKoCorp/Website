@@ -190,3 +190,9 @@ test("articles carry the reading aids and a cover; the list features the latest 
   assert.match(en, /<div class="article-cover">\s*<svg class="cover-art"/);
   assert.match(enIndex, /<a class="feature-card" href="\/en\/blog\/[^"]+\/">/);
 });
+
+test("every page announces both feeds of its language", async () => {
+  const { fr } = await pages();
+  assert.match(fr, /<link rel="alternate" type="application\/atom\+xml"[^>]*href="\/fr\/feed\.xml">/);
+  assert.match(fr, /<link rel="alternate" type="application\/rss\+xml"[^>]*href="\/fr\/rss\.xml">/);
+});

@@ -10,7 +10,7 @@ layout: layouts/base.njk
     <p class="index-lead">{{ l.blogDescription }}</p>
     <p class="index-meta">
       {%- if posts.length %}<span>{{ posts.length }} {{ l.articleIn if posts.length == 1 else l.articlesIn }}</span><span aria-hidden="true">·</span>{% endif %}
-      <a href="/{{ lang }}/feed.xml">{{ l.feed }}</a>
+      <a href="/{{ lang }}/rss.xml">RSS</a><span aria-hidden="true">·</span><a href="/{{ lang }}/feed.xml">Atom</a>
     </p>
   </div>
 </header>

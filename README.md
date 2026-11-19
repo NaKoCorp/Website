@@ -7,7 +7,7 @@ Website of [NakoCorp](https://www.nakocorp.com): the landing page for [Barking](
 [Eleventy](https://www.11ty.dev/) 3 on Node 22 (see [.nvmrc](.nvmrc)). The build outputs a static site to `_site/`.
 
 - The homepage ([src/index.html](src/index.html)) is still plain HTML/CSS/JS, copied as-is, with a bilingual EN/FR switcher: English lives in the HTML, French strings are in [src/assets/js/site.js](src/assets/js/site.js). The browser language picks the default, and the choice is persisted in `localStorage`. Illustrations and diagrams are inline SVG and HTML/CSS mockups.
-- The blog lives under `/en/blog/` and `/fr/blog/`, with one feed per language (`/en/feed.xml`, `/fr/feed.xml`), a `/sitemap.xml`, and a `/blog/` page that routes visitors to their language.
+- The blog lives under `/en/blog/` and `/fr/blog/`, with two feeds per language, Atom (`/en/feed.xml`, `/fr/feed.xml`) and RSS 2.0 (`/en/rss.xml`, `/fr/rss.xml`), a `/sitemap.xml`, and a `/blog/` page that routes visitors to their language.
 - The blog has no third-party scripts. Its only JavaScript is the Paper/Ink theme script and the `/blog/` router.
 
 ## Structure

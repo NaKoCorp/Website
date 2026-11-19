@@ -33,6 +33,7 @@
 <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ alt.url }}">
 {%- endif %}{% endfor %}
 <link rel="alternate" type="application/atom+xml" title="{{ l.feedTitle }}" href="/{{ lang }}/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="{{ l.rssTitle }}" href="/{{ lang }}/rss.xml">
 <meta property="og:type" content="{{ 'article' if translationKey else 'website' }}">
 <meta property="og:site_name" content="{{ l.blogTitle }}">
 <meta property="og:title" content="{{ title or l.blogTitle }}">
