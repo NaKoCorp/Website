@@ -154,13 +154,13 @@ test("article pages link previous and next within the same language", async () =
   assert.doesNotMatch(postNav, /\/fr\//);
 });
 
-test("the footer is on Ink and carries the FrenchMark with the Ink coq, like the homepage", async () => {
+test("the footer carries the FrenchMark with both coqs, swapped by theme", async () => {
   const { en, fr } = await pages();
   const footer = (html) => /<footer[\s\S]*<\/footer>/.exec(html)[0];
   assert.ok(footer(en).includes(labels.en.frenchMark));
   assert.ok(footer(fr).includes(labels.fr.frenchMark));
+  assert.match(footer(en), /coq-light\.svg/);
   assert.match(footer(en), /coq-dark\.svg/);
-  assert.doesNotMatch(footer(en), /coq-light\.svg/);
 });
 
 test("blog header matches the homepage header: lockup, sections, EN / FR, GitHub", async () => {
@@ -195,4 +195,10 @@ test("every page announces both feeds of its language", async () => {
   const { fr } = await pages();
   assert.match(fr, /<link rel="alternate" type="application\/atom\+xml"[^>]*href="\/fr\/feed\.xml">/);
   assert.match(fr, /<link rel="alternate" type="application\/rss\+xml"[^>]*href="\/fr\/rss\.xml">/);
+});
+
+test("blog pages record their language under the homepage's key", async () => {
+  const { en, frIndex } = await pages();
+  assert.match(en, /localStorage\.setItem\("nakocorp-lang", "en"\)/);
+  assert.match(frIndex, /localStorage\.setItem\("nakocorp-lang", "fr"\)/);
 });

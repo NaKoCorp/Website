@@ -209,37 +209,37 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   .theme-toggle { transition: none; }
 }
 
-/* NAV: the homepage header (src/assets/css/site.css, "NAV"), Ink in both
-   themes, so it reads the raw palette like the homepage does. */
+/* NAV: the homepage header (src/assets/css/site.css, "NAV"). It follows the
+   theme like the iOS app: translucent Paper in light, Ink in dark. */
 .site-nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--ink) 85%, transparent);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--ink-line);
-  color: var(--on-dark);
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
 }
 .site-nav .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
-.site-nav .brand { display: flex; align-items: center; gap: 10px; flex: none; color: var(--on-dark); }
-.site-nav .brand:hover { color: var(--white); }
+.site-nav .brand { display: flex; align-items: center; gap: 10px; flex: none; color: var(--fg); }
+.site-nav .brand:hover { color: var(--accent); }
 .site-nav .brand-name { font-family: var(--font-mono); font-weight: 600; font-size: 19px; }
-.site-nav .brand-by { font-family: var(--font-mono); font-size: 11px; color: var(--on-dark-muted); border-left: 1px solid var(--ink-line); padding-left: 10px; margin-left: 2px; }
+.site-nav .brand-by { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); border-left: 1px solid var(--border); padding-left: 10px; margin-left: 2px; }
 .site-nav .nav-links { display: flex; align-items: center; gap: 16px; }
-.site-nav .nav-links a { font-family: var(--font-mono); font-size: 13px; color: var(--on-dark-muted); }
-.site-nav .nav-links a:hover, .site-nav .nav-links a[aria-current] { color: var(--white); }
+.site-nav .nav-links a { font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); }
+.site-nav .nav-links a:hover, .site-nav .nav-links a[aria-current] { color: var(--fg); }
 .site-nav .nav-right { display: flex; align-items: center; gap: 20px; flex: none; white-space: nowrap; }
 .site-nav .nav-links a { white-space: nowrap; }
-.site-nav .lang-switch { font-size: 12px; color: var(--ink-line); }
-.site-nav .lang-switch a { color: var(--on-dark-muted); }
-.site-nav .lang-switch a:hover { color: var(--white); }
-.site-nav .lang-switch [aria-current] { color: var(--on-dark); }
-.site-nav .nav-gh { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink); background: var(--on-dark); padding: 9px 16px; border-radius: 4px; }
-.site-nav .nav-gh:hover { color: var(--ink); background: var(--white); }
-.site-nav .theme-toggle { min-width: 36px; min-height: 36px; font-size: 16px; color: var(--on-dark-muted); border-color: var(--ink-line); }
-.site-nav .theme-toggle:hover { color: var(--white); border-color: var(--purple-l); }
-.site-nav :focus-visible { outline-color: var(--purple-l); }
+.site-nav .lang-switch { font-size: 12px; color: var(--border-strong, var(--border)); }
+.site-nav .lang-switch a { color: var(--fg-muted); }
+.site-nav .lang-switch a:hover { color: var(--fg); }
+.site-nav .lang-switch [aria-current] { color: var(--fg); }
+.site-nav .nav-gh { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--surface); background: var(--fg); padding: 9px 16px; border-radius: 4px; }
+.site-nav .nav-gh:hover { color: var(--surface); background: var(--accent); }
+.site-nav .theme-toggle { min-width: 36px; min-height: 36px; font-size: 16px; color: var(--fg-muted); border-color: var(--border); }
+.site-nav .theme-toggle:hover { color: var(--fg); border-color: var(--accent); }
+
 @media (max-width: 1150px) {
   .site-nav .nav-links a { font-size: 12px; }
 }
@@ -300,8 +300,9 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 /* A figure scrolls sideways rather than shrink its diagram's text out of reach. */
 .prose figure:has(> .diagram) { overflow-x: auto; }
 
-/* FOOTER: Ink in both themes, like the homepage footer. */
-.site-footer { background: var(--ink); border-top: 1px solid var(--ink-line); color: var(--on-dark-muted); }
+/* FOOTER: like the homepage footer; surface-alt in light, Ink in dark. */
+.site-footer { background: var(--surface-alt); border-top: 1px solid var(--border); color: var(--fg-muted); }
+[data-theme="dark"] .site-footer { background: var(--surface); }
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
@@ -315,47 +316,46 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 }
 .footer-inner p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
 .footer-copy { gap: 10px !important; }
-.site-footer a { color: var(--on-dark-muted); }
-.site-footer a:hover { color: var(--white); }
-.site-footer :focus-visible { outline-color: var(--purple-l); }
+.site-footer a { color: var(--fg-muted); }
+.site-footer a:hover { color: var(--accent); }
 
-/* FRENCHMARK on Ink: coq-dark in an ink-2 pill. */
+/* FRENCHMARK: coq-light on Paper, coq-dark on Ink. */
 .french-mark {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 12px 6px 8px;
-  border: 1px solid var(--ink-line);
+  border: 1px solid var(--border);
   border-radius: var(--radius-pill);
-  background: var(--ink-2);
-  color: var(--on-dark-muted);
+  background: var(--surface-card);
+  color: var(--fg-muted);
 }
 .french-mark img { display: block; }
+.french-mark .coq-dark { display: none; }
+[data-theme="dark"] .french-mark .coq-light { display: none; }
+[data-theme="dark"] .french-mark .coq-dark { display: block; }
 
-/* BANDS: the list and article headers are Ink in both themes, like the
-   homepage hero, with the same soft purple glow behind them. */
+/* BANDS: the list and article headers sit on surface-alt with the homepage
+   hero's soft purple glow; Paper in light, Ink in dark. */
 .index-hero, .article-hero {
   position: relative;
   overflow: hidden;
-  background: var(--ink);
-  color: var(--on-dark-muted);
-  border-bottom: 1px solid var(--ink-line);
+  background: var(--surface-alt);
+  color: var(--fg-muted);
+  border-bottom: 1px solid var(--border);
 }
 .index-hero::before, .article-hero::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(600px 380px at 82% 30%, color-mix(in srgb, var(--purple) 32%, transparent), transparent 70%),
-    radial-gradient(480px 260px at 6% 110%, color-mix(in srgb, var(--ok) 7%, transparent), transparent 70%);
+    radial-gradient(600px 380px at 82% 30%, color-mix(in srgb, var(--purple) var(--glow, 14%), transparent), transparent 70%),
+    radial-gradient(480px 260px at 6% 110%, color-mix(in srgb, var(--ok) 6%, transparent), transparent 70%);
   pointer-events: none;
 }
+[data-theme="dark"] :is(.index-hero, .article-hero) { --glow: 32%; background: var(--surface); }
 .index-hero > *, .article-hero > * { position: relative; }
-.index-hero .eyebrow, .article-hero .eyebrow { color: var(--purple-l); }
-.index-hero h1, .article-hero h1 { color: var(--on-dark); }
-:is(.index-hero, .article-hero) a { color: var(--purple-l); }
-:is(.index-hero, .article-hero) a:hover { color: var(--white); }
-:is(.index-hero, .article-hero) :focus-visible { outline-color: var(--purple-l); }
+.index-hero h1, .article-hero h1 { color: var(--fg); }
 
 /* LIST PAGE */
 .index-hero { padding: 88px 0 72px; }
@@ -374,7 +374,7 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   margin: 28px 0 0;
   font-family: var(--font-mono);
   font-size: var(--size-caption);
-  color: var(--on-dark-soft);
+  color: var(--fg-soft);
 }
 .blog-index { padding: 56px 0 var(--section-y); }
 .index-empty { color: var(--fg-soft); }
@@ -395,7 +395,7 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   border-color: var(--accent);
   box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--purple) 55%, transparent);
 }
-.feature-cover { display: block; background: var(--ink-2); }
+.feature-cover { display: block; background: var(--surface-alt); border-right: 1px solid var(--border); }
 .feature-cover .cover-art { display: block; width: 100%; height: 100%; object-fit: cover; }
 .feature-body { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 36px 36px 32px; }
 .feature-body h2 {
@@ -442,7 +442,7 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   letter-spacing: -1px;
   text-wrap: balance;
 }
-.article-lead { max-width: 52ch; margin: 0 0 22px; font-size: var(--size-lead); line-height: 1.6; color: var(--on-dark-muted); }
+.article-lead { max-width: 52ch; margin: 0 0 22px; font-size: var(--size-lead); line-height: 1.6; color: var(--fg-muted); }
 .article-meta {
   display: flex;
   flex-wrap: wrap;
@@ -453,9 +453,8 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   line-height: 1.5;
   color: var(--fg-soft);
 }
-.article-hero .article-meta { color: var(--on-dark-soft); }
-.article-hero .tag { color: var(--purple-l); }
-.article-cover { overflow: hidden; border: 1px solid var(--ink-line); border-radius: var(--radius-panel); box-shadow: 0 30px 60px -30px rgb(0 0 0 / .6); }
+.article-hero .tag { color: var(--accent); }
+.article-cover { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); box-shadow: 0 30px 60px -30px rgb(0 0 0 / .6); }
 .article-cover .cover-art { display: block; }
 
 /* ARTICLE BODY: the column keeps its measure; the table of contents sits in
@@ -511,7 +510,8 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 
 /* COVERS AND DIAGRAM MOTION: the packet travels its route; the relays it
    reaches pulse once per trip. Still under reduced motion. */
-.cover-art { width: 100%; height: auto; }
+.cover-art { width: 100%; height: auto; --cover-bg: var(--surface-alt); --cover-grid: var(--border); --cover-node: var(--surface-card); --cover-line: var(--fg-soft); --cover-chip: var(--border); }
+[data-theme="dark"] .cover-art { --cover-bg: var(--ink-2); --cover-grid: var(--ink-line); --cover-node: var(--ink); --cover-line: var(--on-dark-muted); --cover-chip: var(--ink-3); }
 .cover-packet, .diagram-packet { offset-rotate: 0deg; }
 .cover-packet { offset-path: path("M120 180C220 180 236 96 320 96C404 96 420 180 520 180"); animation: travel 5.5s cubic-bezier(.45, 0, .25, 1) infinite; }
 .diagram-packet { offset-path: path("M130 150C210 150 226 72 360 72C494 72 510 150 590 150"); animation: travel 6s cubic-bezier(.45, 0, .25, 1) infinite; }
