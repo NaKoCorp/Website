@@ -9,6 +9,7 @@
     nav_roadmap: "Feuille de route",
     nav_blog: "Blog",
     french_mark: "Projet français",
+    theme_dark: "Thème sombre",
 
     hero_pill: "Open source · AGPL-3.0 · prototype en cours",
     hero_h1: "Vos messages passent. <em>Même quand internet ne passe plus.</em>",
