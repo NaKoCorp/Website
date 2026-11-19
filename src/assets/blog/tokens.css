@@ -70,6 +70,8 @@
   --fg-muted: var(--muted);
   --fg-soft: var(--soft);
   --border: var(--line);
+  --border-strong: #D8D0E6;
+  --transport-net: #9B6BE0;
   --accent: var(--purple);
   --field: var(--line);
   --segment: var(--white);
@@ -100,6 +102,8 @@
   --fg-muted: var(--on-dark-muted);
   --fg-soft: var(--on-dark-soft);
   --border: var(--ink-line);
+  --border-strong: var(--muted);
+  --transport-net: var(--net);
   --accent: var(--purple-l);
   --field: var(--ink-3);
   --segment: var(--ink-2);

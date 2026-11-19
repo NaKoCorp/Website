@@ -1,33 +1,33 @@
-{#- Cover of article 01, drawn on Ink in both themes. Decorative: the title
+{#- Cover of article 01, drawn with the theme's colours. Decorative: the title
     sits next to it. A sealed packet leaves one phone, is copied onto three
     relays (dashed net-coloured links: a path a message takes) and reaches
     the other phone. The packet moves only without reduced motion. -#}
 <svg class="cover-art" viewBox="0 0 640 360" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-<rect width="640" height="360" fill="var(--ink-2)"/>
-<g fill="none" stroke="var(--ink-line)" stroke-width="1" opacity=".6">
+<rect width="640" height="360" fill="var(--cover-bg)"/>
+<g fill="none" stroke="var(--cover-grid)" stroke-width="1" opacity=".6">
 <path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640"/>
 <path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/>
 </g>
-<g fill="none" stroke="var(--net)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round">
+<g fill="none" stroke="var(--transport-net)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round">
 <path d="M148 180C220 180 236 96 298 96M342 96C404 96 420 180 492 180"/>
 <path d="M148 180H298M342 180H492"/>
 <path d="M148 180C220 180 236 264 298 264M342 264C404 264 420 180 492 180"/>
 </g>
-<g class="cover-nodes" stroke="var(--net)" stroke-width="1.5" fill="var(--ink)">
+<g class="cover-nodes" stroke="var(--transport-net)" stroke-width="1.5" fill="var(--cover-node)">
 <circle cx="320" cy="96" r="22"/><circle cx="320" cy="180" r="22"/><circle cx="320" cy="264" r="22"/>
 </g>
-<g fill="var(--net)"><circle cx="320" cy="96" r="4"/><circle cx="320" cy="180" r="4"/><circle cx="320" cy="264" r="4"/></g>
-<g fill="var(--ink)" stroke="var(--on-dark-muted)" stroke-width="1.5">
+<g fill="var(--transport-net)"><circle cx="320" cy="96" r="4"/><circle cx="320" cy="180" r="4"/><circle cx="320" cy="264" r="4"/></g>
+<g fill="var(--cover-node)" stroke="var(--cover-line)" stroke-width="1.5">
 <rect x="84" y="128" width="64" height="104" rx="12"/>
 <rect x="492" y="128" width="64" height="104" rx="12"/>
 </g>
-<g fill="var(--on-dark-muted)"><rect x="106" y="138" width="20" height="3" rx="1.5"/><rect x="514" y="138" width="20" height="3" rx="1.5"/></g>
+<g fill="var(--cover-line)"><rect x="106" y="138" width="20" height="3" rx="1.5"/><rect x="514" y="138" width="20" height="3" rx="1.5"/></g>
 <rect x="96" y="160" width="40" height="12" rx="6" fill="var(--purple)"/>
-<rect x="96" y="180" width="28" height="12" rx="6" fill="var(--ink-3)"/>
-<rect x="504" y="160" width="28" height="12" rx="6" fill="var(--ink-3)"/>
+<rect x="96" y="180" width="28" height="12" rx="6" fill="var(--cover-chip)"/>
+<rect x="504" y="160" width="28" height="12" rx="6" fill="var(--cover-chip)"/>
 <rect x="504" y="180" width="40" height="12" rx="6" fill="var(--purple)"/>
 <g class="cover-packet">
-<rect x="-14" y="-10" width="28" height="20" rx="4" fill="var(--purple-l)"/>
-<path d="M-14 -7L0 3L14 -7" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+<rect x="-14" y="-10" width="28" height="20" rx="4" fill="var(--accent)"/>
+<path d="M-14 -7L0 3L14 -7" fill="none" stroke="var(--cover-node)" stroke-width="1.5"/>
 </g>
 </svg>

@@ -23,6 +23,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% include "partials/theme-script.njk" %}
+{#- The homepage and the blog share the language choice: a blog page records
+    its language under the homepage's key, so "/" opens in the same language. -#}
+<script>try { localStorage.setItem("nakocorp-lang", "{{ lang }}"); } catch (e) {}</script>
 <title>{{ pageTitle }}</title>
 <meta name="description" content="{{ pageDescription }}">
 <link rel="canonical" href="{{ canonical }}">
