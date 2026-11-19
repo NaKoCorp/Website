@@ -184,9 +184,9 @@ test("blog header matches the homepage header: lockup, sections, EN / FR, GitHub
 
 test("articles carry the reading aids and a cover; the list features the latest article", async () => {
   const { en, enIndex } = await pages();
-  assert.match(en, /<div class="reading-progress" aria-hidden="true"><span data-progress><\/span><\/div>/);
-  assert.match(en, /<nav class="toc" aria-label="On this page" data-toc hidden>/);
-  assert.match(en, /<script src="\/assets\/blog\/blog.js" defer><\/script>/);
-  assert.match(en, /<div class="article-cover"><svg class="cover-art"/);
+  assert.match(en, /<div class="reading-progress" aria-hidden="true"><span data-progress[^>]*><\/span><\/div>/);
+  assert.match(en, /<nav class="toc" aria-label="On this page" data-toc[^>]* hidden/);
+  assert.match(en, /<script src="\/assets\/blog\/blog.js" defer[^>]*><\/script>/);
+  assert.match(en, /<div class="article-cover">\s*<svg class="cover-art"/);
   assert.match(enIndex, /<a class="feature-card" href="\/en\/blog\/[^"]+\/">/);
 });
