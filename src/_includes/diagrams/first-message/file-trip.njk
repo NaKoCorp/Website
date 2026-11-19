@@ -1,0 +1,60 @@
+{#- Article 02: the message and its receipt travel as plain files between two
+    --home directories on one machine (v0.2.0: a 16,384-byte .pkt for the first
+    message, a 245-byte .pkt for the receipt). File arrows use a neutral token,
+    not a transport colour; the optional relay variant above is a network
+    message path, so it uses the net transport colour, dashed. ids are prefixed
+    with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "A Barking message and its receipt travelling as files",
+    desc: "Alice's directory writes the message to a2b/….pkt. Any channel carries the file to Bob's directory, which decrypts it and writes the receipt to b2a/….pkt. The receipt goes back to Alice, whose message becomes delivered. Above, the same trip through a relay with barking sync, optional.",
+    message: "message", receipt: "receipt", channel: "any channel: USB key, email…",
+    relayed: "through a relay (optional)", relay: "relay", delivered: "delivered ✓"
+  },
+  fr: {
+    title: "Un message Barking et son accusé voyagent dans des fichiers",
+    desc: "Le dossier d’Alice écrit le message dans a2b/….pkt. N’importe quel canal porte le fichier jusqu’au dossier de Bob, qui le déchiffre et écrit l’accusé dans b2a/….pkt. L’accusé revient chez Alice, dont le message passe à delivered. Au-dessus, le même trajet par un relais avec barking sync, facultatif.",
+    message: "message", receipt: "accusé", channel: "n’importe quel canal : clé USB, e-mail…",
+    relayed: "par un relais (facultatif)", relay: "relais", delivered: "delivered ✓"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 260" role="img" aria-labelledby="file-trip-title file-trip-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="file-trip-title">{{ t.title }}</title>
+<desc id="file-trip-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="file-trip-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--fg-muted)"/></marker>
+</defs>
+<text x="360" y="18" text-anchor="middle" font-size="12" fill="var(--fg-muted)">{{ t.relayed }}</text>
+<g fill="none" stroke="var(--transport-net)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round">
+<path d="M150 118C210 118 236 50 300 50"/><path d="M420 50C484 50 510 118 570 118"/>
+</g>
+<rect x="300" y="30" width="120" height="40" rx="20" fill="var(--surface-alt)" stroke="var(--transport-net)" stroke-width="1.5"/>
+<text x="360" y="54" text-anchor="middle" font-size="12" fill="currentColor">{{ t.relay }}</text>
+<text x="360" y="90" text-anchor="middle" font-size="12" fill="var(--fg-soft)">barking sync</text>
+<g fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5">
+<rect x="40" y="108" width="110" height="112" rx="14"/>
+<rect x="570" y="108" width="110" height="112" rx="14"/>
+</g>
+<text x="95" y="160" text-anchor="middle" font-weight="600" fill="currentColor">Alice</text>
+<text x="95" y="180" text-anchor="middle" font-size="12" fill="var(--fg-soft)">alice/</text>
+<text x="625" y="160" text-anchor="middle" font-weight="600" fill="currentColor">Bob</text>
+<text x="625" y="180" text-anchor="middle" font-size="12" fill="var(--fg-soft)">bob/</text>
+<g fill="none" stroke="var(--fg-muted)" stroke-width="1.5">
+<path d="M150 140H286" marker-end="url(#file-trip-head)"/><path d="M434 140H566" marker-end="url(#file-trip-head)"/>
+<path d="M570 194H434" marker-end="url(#file-trip-head)"/><path d="M286 194H154" marker-end="url(#file-trip-head)"/>
+</g>
+<g fill="var(--surface-alt)" stroke="var(--border)" stroke-width="1.5">
+<rect x="290" y="126" width="140" height="28" rx="6"/>
+<rect x="290" y="180" width="140" height="28" rx="6"/>
+</g>
+<g font-size="12" text-anchor="middle" fill="currentColor">
+<text x="360" y="145">a2b/….pkt</text>
+<text x="360" y="199">b2a/….pkt</text>
+</g>
+<g font-size="12" text-anchor="middle">
+<text x="218" y="130" fill="var(--accent)">{{ t.message }}</text>
+<text x="502" y="184" fill="var(--fg-muted)">{{ t.receipt }}</text>
+</g>
+<text x="360" y="244" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.channel }}</text>
+<text x="95" y="244" text-anchor="middle" font-size="12" fill="var(--accent)">{{ t.delivered }}</text>
+</svg>
