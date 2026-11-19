@@ -1,12 +1,15 @@
 {%- set l = site.labels[lang] -%}
+{#- Same footer as the homepage (src/index.html), on Ink, with the FrenchMark. -#}
 <footer class="site-footer">
   <div class="blog-wrap footer-inner">
     <p class="footer-copy"><span class="logo-tile logo-tile-sm"><img src="/assets/nakocorp-logo.svg" alt="" width="36" height="34"></span><span>{{ l.footerCopy }}</span></p>
     <p class="footer-links">
-      <a href="https://github.com/nakocorp/barking">GitHub</a>
+      <a href="/{{ lang }}/blog/">{{ l.blog }}</a>
+      <a href="https://github.com/nakocorp/barking" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/nakocorp" target="_blank" rel="noopener">github.com/nakocorp</a>
+      <a href="/{{ lang }}/rss.xml">RSS</a>
       <a href="/{{ lang }}/feed.xml">Atom</a>
-      {#- The coq follows the theme: coq-light on Paper, coq-dark on Ink. #}
-      <span class="french-mark"><img class="coq-light" src="/assets/blog/coq-light.svg" alt="" width="18" height="18"><img class="coq-dark" src="/assets/blog/coq-dark.svg" alt="" width="18" height="18">{{ l.frenchMark }}</span>
+      <span class="french-mark"><img src="/assets/blog/coq-dark.svg" alt="" width="18" height="18">{{ l.frenchMark }}</span>
     </p>
   </div>
 </footer>

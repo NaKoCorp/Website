@@ -15,6 +15,8 @@ The messengers most people use stop working when a cell tower goes down, when a 
 
 Barking aims at two situations with the same software: the ordinary days, when you just want to talk to people, and the day one of those things happens. The design goal is that no single operator, NakoCorp included, can stop your messages or read them.
 
+<p class="pull">No single operator, NakoCorp included, should be able to stop your messages or read them.</p>
+
 The code is not there yet: the rest of this article draws the line between the two.
 
 ## Who it is for
@@ -29,6 +31,11 @@ The second audience is people in a crisis: an internet shutdown, a natural disas
 
 **No relay is trusted, not even NakoCorp's.** Messages are encrypted end to end. The sender's identity is not written on the packet: it is only inside the encrypted content, and the recipient learns it when decrypting. The mailbox a packet is addressed to is a 16-byte identifier that only the two correspondents can compute, and it [changes every day](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-core/src/mailbox.rs#L1-L2). A relay stores sealed packets for mailboxes it cannot link to a name.
 
+<figure>
+{% diagram "message-path" %}
+<figcaption>Sealed on one device, copied onto the relays responsible for a daily mailbox, opened on the other.</figcaption>
+</figure>
+
 **An identity is a key, not a phone number.** Your identity is an Ed25519 root key derived from a 24-word recovery phrase. It can sign for up to [eight devices](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-core/src/identity/device_list.rs#L18).
 
 **A custom protocol, no custom cryptography.** Barking does not build on Nostr, libp2p or MLS: none of them is in its dependency tree. It does use well-known libraries for every primitive (RustCrypto crates such as `ml-kem` and `chacha20poly1305`, and the dalek crates for X25519 and Ed25519). A conversation starts with PQXDH, a key agreement that combines X25519 with the post-quantum ML-KEM-768, then continues with a Double Ratchet whose headers are encrypted too.
@@ -36,6 +43,8 @@ The second audience is people in a crisis: an internet shutdown, a natural disas
 ## What works today
 
 The current prototype ships a command-line client, `barking`, and the relay nodes. Concretely, at v0.2.0:
+
+<div class="status-list is-done">
 
 - encrypted one-to-one messaging from the CLI, with contact cards, safety codes and delivery receipts;
 - text messages up to [4,000 UTF-8 bytes](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-core/src/envelope.rs#L29);
@@ -48,17 +57,43 @@ The current prototype ships a command-line client, `barking`, and the relay node
 - synchronization built for bad connections, with resumable fetches and saved progress;
 - the server side of iOS wake-ups: relays notify `barking-push`, a stateless relay that forwards sealed tokens to Apple's push service.
 
+</div>
+
+A first conversation, with the commands of the README's Quick start at v0.2.0 (synchronization is manual for now):
+
+<div class="term">
+<div class="term-bar"><i></i><i></i><i></i><span>barking · v0.2.0</span></div>
+
+```sh
+# create an identity and export your contact card
+barking init --name laptop
+barking card --display-name Alice
+
+# add a contact and a relay, then talk
+barking add '<contact-card>' --alias bob
+barking node add <IP:port> <node-id>
+barking send bob 'Hello!' --out ./packets
+barking sync
+barking messages bob
+```
+
+</div>
+
 An iOS app is in progress in the same repository, under `apple/`. It is not published, and its test builds are not public.
 
 ## What does not exist yet
 
 These items are planned, not built:
 
+<div class="status-list is-planned">
+
 - published Android and iOS apps;
 - mesh transports: Bluetooth LE, Wi-Fi and LoRa (the packet format already has fragmentation for small radio frames, but no radio transport exists);
 - groups and media attachments;
 - Tor or a mixnet, to hide your IP address from relays;
 - an external security audit.
+
+</div>
 
 Releases do exist: v0.0.1 and v0.1.0 came out on 13 November 2026, and [v0.2.0](https://github.com/NaKoCorp/Barking/releases/tag/v0.2.0) on 16 November. A release only means the binaries were built by GitHub's CI and attested there. It does not mean the software is ready.
 
@@ -68,9 +103,13 @@ There is no public relay network either. The [bootstrap list](https://github.com
 
 The warning in the README comes down to three points:
 
+<div class="status-list is-limit">
+
 - **Not audited.** No external firm has reviewed the cryptography or the code.
 - **Relays see your IP address.** A relay knows which address deposits or fetches a packet. Hiding it needs Tor or a mixnet, which is planned, not done.
 - **No public relay network.** You have to run a relay or know someone who does.
+
+</div>
 
 Do not use Barking for sensitive communications yet. Use it to try the design, break it and report what you find.
 

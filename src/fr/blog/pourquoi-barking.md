@@ -15,6 +15,8 @@ Les messageries que la plupart des gens utilisent s’arrêtent quand une antenn
 
 Barking vise deux situations avec le même logiciel : les jours ordinaires, quand vous voulez simplement parler à vos proches, et le jour où l’une de ces choses arrive. L’objectif de conception : aucun opérateur, NakoCorp compris, ne doit pouvoir bloquer vos messages ni les lire.
 
+<p class="pull">Aucun opérateur, NakoCorp compris, ne doit pouvoir bloquer vos messages ni les lire.</p>
+
 Le code n’y est pas encore : la suite trace la frontière entre les deux.
 
 ## À qui elle s’adresse
@@ -29,6 +31,11 @@ Le second public, ce sont les personnes en situation de crise : coupure d’int
 
 **Aucun relais n’est digne de confiance, pas même ceux de NakoCorp.** Les messages sont chiffrés de bout en bout. L’identité de l’expéditeur n’est pas écrite sur le paquet : elle se trouve seulement dans le contenu chiffré, et le destinataire la découvre en déchiffrant. La boîte aux lettres à laquelle un paquet est adressé est un identifiant de 16 octets que seuls les deux correspondants savent calculer, et il [change chaque jour](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-core/src/mailbox.rs#L1-L2). Un relais garde des paquets scellés pour des boîtes aux lettres qu’il ne peut relier à aucun nom.
 
+<figure>
+{% diagram "message-path" %}
+<figcaption>Scellé sur un appareil, recopié sur les relais responsables d’une boîte qui change chaque jour, ouvert sur l’autre.</figcaption>
+</figure>
+
 **Une identité est une clé, pas un numéro.** Votre identité est une clé racine Ed25519, dérivée d’une phrase de récupération de 24 mots. Elle peut certifier jusqu’à [huit appareils](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-core/src/identity/device_list.rs#L18).
 
 **Un protocole maison, aucune cryptographie maison.** Barking ne s’appuie ni sur Nostr, ni sur libp2p, ni sur MLS : aucun des trois n’apparaît dans ses dépendances. Il utilise en revanche des bibliothèques reconnues pour chaque primitive (des crates RustCrypto comme `ml-kem` et `chacha20poly1305`, et les crates dalek pour X25519 et Ed25519). Une conversation commence par PQXDH, un accord de clés qui combine X25519 et ML-KEM-768, résistant aux ordinateurs quantiques, puis continue avec un Double Ratchet dont les en-têtes sont eux aussi chiffrés.
@@ -36,6 +43,8 @@ Le second public, ce sont les personnes en situation de crise : coupure d’int
 ## Ce qui marche aujourd’hui
 
 Le prototype actuel livre un client en ligne de commande, `barking`, et les relais. Concrètement, en v0.2.0 :
+
+<div class="status-list is-done">
 
 - messagerie chiffrée un à un depuis le CLI, avec cartes de contact, codes de sécurité et accusés de réception ;
 - messages texte jusqu’à [4 000 octets UTF-8](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-core/src/envelope.rs#L29) ;
@@ -48,17 +57,43 @@ Le prototype actuel livre un client en ligne de commande, `barking`, et les rela
 - une synchronisation pensée pour les mauvaises connexions, avec reprise des téléchargements et progression sauvegardée ;
 - le côté serveur des réveils iOS : les relais préviennent `barking-push`, un relais sans état qui transmet des jetons scellés au service de notifications d’Apple.
 
+</div>
+
+Une première conversation, avec les commandes du Quick start du README en v0.2.0 (la synchronisation est manuelle pour l’instant) :
+
+<div class="term">
+<div class="term-bar"><i></i><i></i><i></i><span>barking · v0.2.0</span></div>
+
+```sh
+# créer une identité et exporter sa carte de contact
+barking init --name laptop
+barking card --display-name Alice
+
+# ajouter un contact et un relais, puis écrire
+barking add '<contact-card>' --alias bob
+barking node add <IP:port> <node-id>
+barking send bob 'Hello!' --out ./packets
+barking sync
+barking messages bob
+```
+
+</div>
+
 Une app iOS est en cours dans le même dépôt, sous `apple/`. Elle n’est pas publiée, et ses versions de test ne sont pas publiques.
 
 ## Ce qui n’existe pas encore
 
 Ces éléments sont prévus, pas construits :
 
+<div class="status-list is-planned">
+
 - des apps Android et iOS publiées ;
 - des transports mesh : Bluetooth LE, Wi-Fi et LoRa (le format de paquet sait déjà se fragmenter pour les petites trames radio, mais aucun transport radio n’existe) ;
 - les groupes et les pièces jointes ;
 - Tor ou un mixnet, pour cacher votre adresse IP aux relais ;
 - un audit de sécurité externe.
+
+</div>
 
 Des releases existent bien : v0.0.1 et v0.1.0 sont sorties le 13 novembre 2026, et [v0.2.0](https://github.com/NaKoCorp/Barking/releases/tag/v0.2.0) le 16 novembre. Une release veut seulement dire que les binaires ont été construits par la CI de GitHub et attestés par elle. Elle ne veut pas dire que le logiciel est prêt.
 
@@ -68,9 +103,13 @@ Il n’y a pas non plus de réseau public de relais. La [liste d’amorçage](ht
 
 L’avertissement du README tient en trois points :
 
+<div class="status-list is-limit">
+
 - **Pas d’audit.** Aucun cabinet externe n’a relu la cryptographie ni le code.
 - **Les relais voient votre adresse IP.** Un relais sait quelle adresse dépose ou relève un paquet. La cacher demande Tor ou un mixnet, prévus mais pas faits.
 - **Pas de réseau public de relais.** Il faut lancer un relais ou connaître quelqu’un qui en lance un.
+
+</div>
 
 N’utilisez pas encore Barking pour des communications sensibles. Utilisez-le pour essayer la conception, la mettre à l’épreuve et signaler ce que vous trouvez.
 
