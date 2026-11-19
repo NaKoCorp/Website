@@ -154,13 +154,13 @@ test("article pages link previous and next within the same language", async () =
   assert.doesNotMatch(postNav, /\/fr\//);
 });
 
-test("the footer carries the FrenchMark in the page's language with both coqs", async () => {
+test("the footer is on Ink and carries the FrenchMark with the Ink coq, like the homepage", async () => {
   const { en, fr } = await pages();
   const footer = (html) => /<footer[\s\S]*<\/footer>/.exec(html)[0];
   assert.ok(footer(en).includes(labels.en.frenchMark));
   assert.ok(footer(fr).includes(labels.fr.frenchMark));
-  assert.match(footer(en), /coq-light\.svg/);
   assert.match(footer(en), /coq-dark\.svg/);
+  assert.doesNotMatch(footer(en), /coq-light\.svg/);
 });
 
 test("blog header matches the homepage header: lockup, sections, EN / FR, GitHub", async () => {
@@ -180,4 +180,19 @@ test("blog header matches the homepage header: lockup, sections, EN / FR, GitHub
   // EN always comes first, as on the homepage; the current language is not a link.
   assert.match(nav(frIndex), /<a href="\/en\/blog\/"[^>]*><span lang="en">EN<\/span><\/a><span aria-hidden="true">\/<\/span><span aria-current="true" lang="fr">FR<\/span>/);
   assert.match(nav(frIndex), /href="\/fr\/blog\/" aria-current="page"/);
+});
+
+test("articles carry the reading aids and a cover; the list features the latest article", async () => {
+  const { en, enIndex } = await pages();
+  assert.match(en, /<div class="reading-progress" aria-hidden="true"><span data-progress[^>]*><\/span><\/div>/);
+  assert.match(en, /<nav class="toc" aria-label="On this page" data-toc[^>]* hidden/);
+  assert.match(en, /<script src="\/assets\/blog\/blog.js" defer[^>]*><\/script>/);
+  assert.match(en, /<div class="article-cover">\s*<svg class="cover-art"/);
+  assert.match(enIndex, /<a class="feature-card" href="\/en\/blog\/[^"]+\/">/);
+});
+
+test("every page announces both feeds of its language", async () => {
+  const { fr } = await pages();
+  assert.match(fr, /<link rel="alternate" type="application\/atom\+xml"[^>]*href="\/fr\/feed\.xml">/);
+  assert.match(fr, /<link rel="alternate" type="application\/rss\+xml"[^>]*href="\/fr\/rss\.xml">/);
 });

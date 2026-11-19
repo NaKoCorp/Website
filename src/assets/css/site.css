@@ -271,7 +271,9 @@ p { margin: 0; }
 .footer a { color: var(--on-dark-muted); }
 .footer a:hover { color: #fff; }
 .footer-brand { display: flex; align-items: center; gap: 10px; }
-.footer-links { display: flex; gap: 22px; }
+.footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
+.french-mark { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 8px; border: 1px solid var(--ink-line); border-radius: 999px; background: var(--ink-2); color: var(--on-dark-muted); }
+.french-mark img { display: block; }
 
 /* REVEAL */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }

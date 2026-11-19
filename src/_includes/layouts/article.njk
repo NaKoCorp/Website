@@ -6,28 +6,42 @@ layout: layouts/base.njk
 {#- The list is newest first: the previous (older) article comes after this one. -#}
 {%- set older = posts | getNextCollectionItem(page) -%}
 {%- set newer = posts | getPreviousCollectionItem(page) -%}
-<div class="blog-wrap">
-  <article class="article">
-    <header class="article-head">
-      <p class="eyebrow">// blog</p>
-      <h1>{{ title }}</h1>
-      <p class="article-meta">
-        {%- set postDate = page.date %}{% set postUpdated = updated %}{% include "partials/post-dates.njk" %}<span aria-hidden="true">·</span><span>{{ content | readingTime }} {{ l.minRead }}</span>
-        {%- if tags and tags.length %}<span aria-hidden="true">·</span><span class="article-tags">{% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}</span>{% endif %}
-      </p>
-    </header>
-    {%- if barking %}
-    {% include "partials/prototype-warning.njk" %}
-    {%- endif %}
-    <div class="prose">
-{{ content | safe }}
+<div class="reading-progress" aria-hidden="true"><span data-progress></span></div>
+<article data-article>
+  <header class="article-hero">
+    <div class="blog-wrap article-hero-grid">
+      <div class="article-head">
+        <p class="eyebrow">// blog</p>
+        <h1>{{ title }}</h1>
+        <p class="article-lead">{{ description }}</p>
+        <p class="article-meta">
+          {%- set postDate = page.date %}{% set postUpdated = updated %}{% include "partials/post-dates.njk" %}<span aria-hidden="true">·</span><span>{{ content | readingTime }} {{ l.minRead }}</span>
+          {%- if tags and tags.length %}<span aria-hidden="true">·</span><span class="article-tags">{% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}</span>{% endif %}
+        </p>
+      </div>
+      <div class="article-cover">{% include (translationKey | coverInclude) %}</div>
     </div>
-    {% include "partials/cta.njk" %}
-    {%- if older or newer %}
-    <nav class="post-nav" aria-label="{{ l.previous }} / {{ l.next }}">
-      {%- if older %}<a class="post-nav-prev" href="{{ older.url }}" rel="prev"><span>← {{ l.previous }}</span>{{ older.data.title }}</a>{% endif %}
-      {%- if newer %}<a class="post-nav-next" href="{{ newer.url }}" rel="next"><span>{{ l.next }} →</span>{{ newer.data.title }}</a>{% endif %}
+  </header>
+  <div class="blog-wrap article-layout">
+    <div class="article">
+      {%- if barking %}
+      {% include "partials/prototype-warning.njk" %}
+      {%- endif %}
+      <div class="prose">
+{{ content | safe }}
+      </div>
+      {% include "partials/cta.njk" %}
+      {%- if older or newer %}
+      <nav class="post-nav" aria-label="{{ l.previous }} / {{ l.next }}">
+        {%- if older %}<a class="post-nav-prev" href="{{ older.url }}" rel="prev"><span>← {{ l.previous }}</span>{{ older.data.title }}</a>{% endif %}
+        {%- if newer %}<a class="post-nav-next" href="{{ newer.url }}" rel="next"><span>{{ l.next }} →</span>{{ newer.data.title }}</a>{% endif %}
+      </nav>
+      {%- endif %}
+    </div>
+    <nav class="toc" aria-label="{{ l.onThisPage }}" data-toc hidden>
+      <p class="toc-title">{{ l.onThisPage }}</p>
+      <ol></ol>
     </nav>
-    {%- endif %}
-  </article>
-</div>
+  </div>
+</article>
+<script src="/assets/blog/blog.js" defer></script>
