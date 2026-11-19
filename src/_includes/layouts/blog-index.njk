@@ -3,25 +3,46 @@ layout: layouts/base.njk
 ---
 {%- set l = site.labels[lang] -%}
 {%- set posts = collections["posts_" + lang] -%}
-<div class="blog-wrap">
-  <div class="blog-index">
-    <header class="index-head">
-      <p class="eyebrow">// blog</p>
-      <h1>{{ l.blogTitle }}</h1>
-      <p class="index-lead">{{ l.blogDescription }}</p>
-    </header>
-    {%- if posts.length %}
-    <ul class="post-list">
-      {%- for post in posts %}
-      <li class="post-item">
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+<header class="index-hero">
+  <div class="blog-wrap">
+    <p class="eyebrow">// blog</p>
+    <h1>{{ l.blogTitle }}</h1>
+    <p class="index-lead">{{ l.blogDescription }}</p>
+    <p class="index-meta">
+      {%- if posts.length %}<span>{{ posts.length }} {{ l.articleIn if posts.length == 1 else l.articlesIn }}</span><span aria-hidden="true">·</span>{% endif %}
+      <a href="/{{ lang }}/feed.xml">{{ l.feed }}</a>
+    </p>
+  </div>
+</header>
+<div class="blog-wrap blog-index">
+  {%- if posts.length %}
+  {%- set lead = posts[0] %}
+  <a class="feature-card" href="{{ lead.url }}">
+    <span class="feature-cover">{% include (lead.data.translationKey | coverInclude) %}</span>
+    <span class="feature-body">
+      <span class="pill">{{ l.latest }}</span>
+      <h2>{{ lead.data.title }}</h2>
+      <span class="feature-desc">{{ lead.data.description }}</span>
+      <span class="article-meta">{% set postDate = lead.date %}{% set postUpdated = lead.data.updated %}{% include "partials/post-dates.njk" %}<span aria-hidden="true">·</span><span>{{ lead.content | readingTime }} {{ l.minRead }}</span></span>
+      <span class="feature-cta">{{ l.readArticle }} <span aria-hidden="true">→</span></span>
+    </span>
+  </a>
+  {%- if posts.length > 1 %}
+  <h2 class="list-title">{{ l.moreArticles }}</h2>
+  <ul class="post-list">
+    {%- for post in posts.slice(1) %}
+    <li class="post-item">
+      <a class="post-thumb" href="{{ post.url }}" tabindex="-1" aria-hidden="true">{% include (post.data.translationKey | coverInclude) %}</a>
+      <div>
+        <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
         <p class="article-meta">{% set postDate = post.date %}{% set postUpdated = post.data.updated %}{% include "partials/post-dates.njk" %}<span aria-hidden="true">·</span><span>{{ post.content | readingTime }} {{ l.minRead }}</span></p>
         <p>{{ post.data.description }}</p>
-      </li>
-      {%- endfor %}
-    </ul>
-    {%- else %}
-    <p class="index-empty">{{ l.noPosts }}</p>
-    {%- endif %}
-  </div>
+      </div>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+  {%- else %}
+  <p class="index-empty">{{ l.noPosts }}</p>
+  {%- endif %}
 </div>

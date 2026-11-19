@@ -1,0 +1,55 @@
+{#- How a message travels today, from the article's facts (v0.2.0): the
+    packet is sealed end to end and carries no sender; it is addressed to a
+    mailbox only the two correspondents can compute, which changes every day;
+    several relays responsible for that mailbox keep a copy; the recipient
+    fetches it. The relay path uses the net transport colour. ids are
+    prefixed with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "How a message travels between two people today",
+    desc: "Alice's device seals the message end to end, with no sender on the packet, and addresses it to a mailbox that changes every day. Several relays responsible for that mailbox keep a copy. Bob's device fetches it and is the only one able to open it.",
+    sealed: "sealed packet", nosender: "no sender on it", daily: "mailbox changes daily",
+    relay: "relay", relays: "relays responsible for the mailbox", copies: "each keeps a copy",
+    fetch: "fetches, decrypts"
+  },
+  fr: {
+    title: "Comment un message voyage aujourd’hui entre deux personnes",
+    desc: "L’appareil d’Alice scelle le message de bout en bout, sans expéditeur sur le paquet, et l’adresse à une boîte aux lettres qui change chaque jour. Plusieurs relais responsables de cette boîte en gardent une copie. L’appareil de Bob la récupère et il est le seul à pouvoir l’ouvrir.",
+    sealed: "paquet scellé", nosender: "sans expéditeur", daily: "boîte changée chaque jour",
+    relay: "relais", relays: "relais responsables de la boîte", copies: "chacun garde une copie",
+    fetch: "récupère, déchiffre"
+  }
+}[lang] -%}
+<svg class="diagram diagram-path" viewBox="0 0 720 300" role="img" aria-labelledby="message-path-title message-path-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="message-path-title">{{ t.title }}</title>
+<desc id="message-path-desc">{{ t.desc }}</desc>
+<text x="360" y="22" text-anchor="middle" font-size="12" fill="var(--fg-muted)">{{ t.relays }}</text>
+<g fill="none" stroke="var(--net)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round">
+<path d="M130 150C210 150 226 72 300 72"/><path d="M130 150H300"/><path d="M130 150C210 150 226 228 300 228"/>
+<path d="M420 72C494 72 510 150 590 150"/><path d="M420 150H590"/><path d="M420 228C494 228 510 150 590 150"/>
+</g>
+<g fill="var(--surface-alt)" stroke="var(--net)" stroke-width="1.5">
+<rect x="300" y="50" width="120" height="44" rx="22"/><rect x="300" y="128" width="120" height="44" rx="22"/><rect x="300" y="206" width="120" height="44" rx="22"/>
+</g>
+<g font-size="12" fill="currentColor" text-anchor="middle">
+<text x="360" y="76">{{ t.relay }}</text><text x="360" y="154">{{ t.relay }}</text><text x="360" y="232">{{ t.relay }}</text>
+</g>
+<text x="360" y="280" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.copies }}</text>
+<g fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5">
+<rect x="50" y="96" width="80" height="108" rx="14"/>
+<rect x="590" y="96" width="80" height="108" rx="14"/>
+</g>
+<g fill="currentColor" opacity=".55"><rect x="80" y="106" width="20" height="3" rx="1.5"/><rect x="620" y="106" width="20" height="3" rx="1.5"/></g>
+<text x="90" y="228" text-anchor="middle" font-weight="600" fill="currentColor">Alice</text>
+<text x="630" y="228" text-anchor="middle" font-weight="600" fill="currentColor">Bob</text>
+<g font-size="12" text-anchor="middle">
+<text x="90" y="248" fill="var(--accent)">{{ t.sealed }}</text>
+<text x="90" y="266" fill="var(--fg-soft)">{{ t.nosender }}</text>
+<text x="90" y="284" fill="var(--fg-soft)">{{ t.daily }}</text>
+<text x="630" y="248" fill="var(--fg-soft)">{{ t.fetch }}</text>
+</g>
+<g class="diagram-packet">
+<rect x="-15" y="-11" width="30" height="22" rx="4" fill="var(--accent)"/>
+<path d="M-15 -8L0 3L15 -8" fill="none" stroke="var(--surface-card)" stroke-width="1.5"/>
+</g>
+</svg>

@@ -133,6 +133,14 @@ export default function (eleventyConfig) {
     return this.env.renderString(`{% include "${rel}" %}`, this.ctx?.getAll?.() ?? this.ctx);
   });
 
+  // Cover illustration of an article: _includes/covers/<translationKey>.njk,
+  // else the generic cover. Used by the list and the article header.
+  eleventyConfig.addFilter("coverInclude", (key) =>
+    key && existsSync(join(input, "_includes", "covers", `${key}.njk`))
+      ? `covers/${key}.njk`
+      : "covers/default.njk",
+  );
+
   return {
     dir: { input, output, includes: "_includes", data: "_data" },
     // HTML is never interpreted: the homepage is copied untouched.
