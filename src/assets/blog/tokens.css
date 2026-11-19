@@ -1,0 +1,170 @@
+/* NakoCorp design tokens for the blog.
+   Source: the design system's tokens.json (color.tokens, type, spacing,
+   radius). Values already live on the homepage (assets/css/site.css) are
+   copied with the homepage's spelling: the homepage wins.
+   Themes: Paper = light (default), Ink = dark, on <html data-theme>. */
+
+/* Palette: raw colours. Read through the semantic tokens below, except in
+   code blocks, which keep the terminal colours in both themes. */
+:root {
+  --ink: #120E19;
+  --ink-2: #1B1524;
+  --ink-3: #2A2236;
+  --ink-line: #33293F;
+  --paper: #FBFAFC;
+  --paper-2: #F3F0F8;
+  --text: #1B1720;
+  --muted: #4A4356;
+  --soft: #6B6478;
+  --line: #EAE5F2;
+  --line-strong: #d8d0e6;
+  --purple: #6640AF;
+  --purple-d: #4E3189;
+  --purple-l: #B9A6E0;
+  --lilac: #EFEAF9;
+  --on-dark: #F2EFF7;
+  --on-dark-muted: #ABA0C2;
+  --on-dark-soft: #9a90b2;
+  --logo-ink: #6142a9;
+  --logo-tile-top: #7c55c9;
+  --flag-blue: #000091;
+  --flag-red: #e1000f;
+  --ble: #5AB0FF;
+  --wifi: #3DDC97;
+  --lora: #F2C94C;
+  --net: #C59BFF;
+  --ok: #3DDC97;
+  --ok-paper: #1e7a52;
+  --lora-dot: #d9a920;
+  --net-dot: #9b6be0;
+  --avatar-coral: #e0876a;
+  --yes: #1f9d68;
+  --no: #b8455a;
+  --threat: #ff7a90;
+  --done-bg: #e1f7ec;
+  --done-fg: #1f7f55;
+  --done-dot: #3dbb85;
+  --todo-dot: #c4bad6;
+  --caution-bg: #fff6da;
+  --caution-fg: #6b5413;
+  --next-fg: #8a6a0b;
+  --plan-fg: #9a7a10;
+  --warning-bg: #fff8e6;
+  --warning-border: #f3dfa2;
+  --warning-fg: #5e4a12;
+  --warning-strong: #3f300a;
+  --term-bg: #0b0910;
+  --term-fg: #d9d2e8;
+  --term-comment: #6e6380;
+  --phone-screen: #f7f5fa;
+  --white: #ffffff;
+}
+
+/* Semantic colours: Paper. */
+:root,
+[data-theme="light"] {
+  --surface: var(--paper);
+  --surface-alt: var(--paper-2);
+  --surface-card: var(--white);
+  --fg: var(--text);
+  --fg-muted: var(--muted);
+  --fg-soft: var(--soft);
+  --border: var(--line);
+  --accent: var(--purple);
+  --field: var(--line);
+  --segment: var(--white);
+  --fill-disabled: var(--line);
+  --fg-disabled: var(--soft);
+  --border-disabled: var(--line);
+  --toggle-on: var(--purple);
+  --focus-ring: var(--purple);
+  --terminal-bg: var(--term-bg);
+  --terminal-fg: var(--term-fg);
+  --status-ok: var(--ok-paper);
+  --danger: var(--no);
+  /* Blog additions, from the README's interaction states and the iOS warn* roles. */
+  --accent-hover: var(--purple-d);
+  --warn-bg: var(--warning-bg);
+  --warn-border: var(--warning-border);
+  --warn-fg: var(--warning-fg);
+  --warn-strong: var(--warning-strong);
+  color-scheme: light;
+}
+
+/* Semantic colours: Ink. */
+[data-theme="dark"] {
+  --surface: var(--ink);
+  --surface-alt: var(--ink-2);
+  --surface-card: var(--ink-2);
+  --fg: var(--on-dark);
+  --fg-muted: var(--on-dark-muted);
+  --fg-soft: var(--on-dark-soft);
+  --border: var(--ink-line);
+  --accent: var(--purple-l);
+  --field: var(--ink-3);
+  --segment: var(--ink-2);
+  --fill-disabled: var(--ink-3);
+  --fg-disabled: var(--on-dark-soft);
+  --border-disabled: var(--ink-line);
+  --toggle-on: var(--purple);
+  --focus-ring: var(--purple-l);
+  --terminal-bg: var(--ink-3);
+  --terminal-fg: var(--term-fg);
+  --status-ok: var(--ok);
+  --danger: var(--threat);
+  /* purple-d on ink fails contrast: hover brightens Ink text to on-dark instead. */
+  --accent-hover: var(--on-dark);
+  --warn-bg: var(--ink-3);
+  --warn-border: var(--warning-fg);
+  --warn-fg: var(--warning-border);
+  --warn-strong: var(--on-dark);
+  color-scheme: dark;
+}
+
+/* Type, space and shape. */
+:root {
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+
+  --size-display-hero: 50px;
+  --size-display-cta: 40px;
+  --size-heading-section: 38px;
+  --size-heading-feature: 22px;
+  --size-heading-card: 16px;
+  --size-heading-mobile: 28px;
+  --size-lead: 18px;
+  --size-body: 15px;
+  --size-body-sm: 14px;
+  --size-eyebrow: 13px;
+  --size-code: 12.5px;
+  --size-caption: 12px;
+  --size-tag: 11px;
+  --size-reading: 17px;
+
+  --leading-display: 1.2;
+  --leading-feature: 1.3;
+  --leading-card: 1.35;
+  --leading-prose: 1.65;
+  --tracking-heading: -0.5px;
+
+  --wrap: 1180px;
+  --gutter: 48px;
+  --gutter-mobile: 16px;
+  --section-y: 110px;
+  --section-y-mobile: 72px;
+  --section-head: 56px;
+  --grid-gap: 20px;
+  --card-pad: 24px;
+  --stack: 14px;
+  --inline: 8px;
+  --measure: 70ch;
+
+  --radius-tag: 4px;
+  --radius-btn: 6px;
+  --radius-tile: 8px;
+  --radius-chip: 10px;
+  --radius-field: 10px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+  --radius-pill: 999px;
+}

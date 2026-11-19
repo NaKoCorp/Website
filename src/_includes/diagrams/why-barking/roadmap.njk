@@ -1,0 +1,40 @@
+{#- Roadmap: what Barking ships today, what comes next, what comes later.
+    Three columns, no dates and no transport colours (no message path is drawn).
+    A solid accent border marks what is built; a dashed border marks what is
+    planned. No blank line, so Markdown keeps it as one HTML block. -#}
+{%- set t = {
+  en: {
+    title: "What Barking ships today and what comes next",
+    desc: "Built today: CLI, QUIC relays, S/Kademlia and replication, multi-device, iOS wake-ups on the server side. Next: iOS app, Android app, public bootstrap relays. Later: BLE, Wi-Fi and LoRa mesh, groups and media, Tor or mixnet, external audit.",
+    cols: [
+      { head: "Built today", items: ["CLI", "QUIC relays", "S/Kademlia + replication", "multi-device", "iOS wake-ups (server side)"] },
+      { head: "Next", items: ["iOS app", "Android app", "public bootstrap relays"] },
+      { head: "Later", items: ["BLE / Wi-Fi / LoRa mesh", "groups and media", "Tor or mixnet", "external audit"] }
+    ]
+  },
+  fr: {
+    title: "Ce que Barking livre aujourd’hui et ce qui vient ensuite",
+    desc: "Déjà construit : CLI, relais QUIC, S/Kademlia et réplication, multi-appareils, réveils iOS côté serveur. Ensuite : app iOS, app Android, relais publics d’amorçage. Plus tard : mesh BLE, Wi-Fi et LoRa, groupes et médias, Tor ou mixnet, audit externe.",
+    cols: [
+      { head: "Déjà construit", items: ["CLI", "relais QUIC", "S/Kademlia + réplication", "multi-appareils", "réveils iOS (côté serveur)"] },
+      { head: "Ensuite", items: ["app iOS", "app Android", "relais publics d’amorçage"] },
+      { head: "Plus tard", items: ["mesh BLE / Wi-Fi / LoRa", "groupes et médias", "Tor ou mixnet", "audit externe"] }
+    ]
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 716 236" role="img" aria-labelledby="roadmap-title roadmap-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="roadmap-title">{{ t.title }}</title>
+<desc id="roadmap-desc">{{ t.desc }}</desc>
+{%- for col in t.cols %}
+{%- set x = 6 + loop.index0 * 236 %}
+{%- set built = loop.first %}
+<rect x="{{ x }}" y="6" width="232" height="224" rx="12" fill="{{ 'var(--surface-alt)' if built else 'var(--surface-card)' }}" stroke="{{ 'var(--accent)' if built else 'var(--border)' }}" stroke-width="1.5"{% if not built %} stroke-dasharray="6 4"{% endif %}/>
+<text x="{{ x + 14 }}" y="36" font-size="14" font-weight="600" fill="{{ 'var(--accent)' if built else 'currentColor' }}">{{ col.head }}</text>
+<line x1="{{ x + 14 }}" y1="50" x2="{{ x + 218 }}" y2="50" stroke="var(--border)" stroke-width="1"/>
+<g fill="{{ 'currentColor' if built else 'var(--fg-soft)' }}">
+{%- for item in col.items %}
+<text x="{{ x + 14 }}" y="{{ 78 + loop.index0 * 30 }}">{{ item }}</text>
+{%- endfor %}
+</g>
+{%- endfor %}
+</svg>

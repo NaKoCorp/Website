@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+---
+{%- set l = site.labels[lang] -%}
+{%- set posts = collections["posts_" + lang] -%}
+<div class="blog-wrap">
+  <div class="blog-index">
+    <header class="index-head">
+      <p class="eyebrow">// blog</p>
+      <h1>{{ l.blogTitle }}</h1>
+      <p class="index-lead">{{ l.blogDescription }}</p>
+    </header>
+    {%- if posts.length %}
+    <ul class="post-list">
+      {%- for post in posts %}
+      <li class="post-item">
+        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+        <p class="article-meta">{% set postDate = post.date %}{% set postUpdated = post.data.updated %}{% include "partials/post-dates.njk" %}<span aria-hidden="true">·</span><span>{{ post.content | readingTime }} {{ l.minRead }}</span></p>
+        <p>{{ post.data.description }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="index-empty">{{ l.noPosts }}</p>
+    {%- endif %}
+  </div>
+</div>

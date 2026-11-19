@@ -1,0 +1,5 @@
+{#- Publication date, then "Updated <date>" when the article was edited after
+    it was published (frontmatter `updated`). Set postDate and postUpdated
+    before including. -#}
+<time datetime="{{ postDate | isoDate }}">{{ postDate | formatDate(lang) }}</time>
+{%- if postUpdated %}<span aria-hidden="true">·</span><span class="article-updated">{{ site.labels[lang].updatedOn }} <time datetime="{{ postUpdated | isoDate }}">{{ postUpdated | formatDate(lang) }}</time></span>{% endif -%}

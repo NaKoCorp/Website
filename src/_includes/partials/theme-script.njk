@@ -1,0 +1,43 @@
+{#- Inline, in <head>, before any stylesheet: sets <html data-theme> before the
+    first paint, then wires every .theme-toggle once the DOM is ready. -#}
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = "theme";
+  function stored() {
+    try {
+      var value = localStorage.getItem(KEY);
+      return value === "light" || value === "dark" ? value : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  function system() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  root.dataset.theme = stored() || system();
+  function wire() {
+    var buttons = document.querySelectorAll(".theme-toggle");
+    function sync() {
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].setAttribute("aria-pressed", root.dataset.theme === "dark" ? "true" : "false");
+      }
+    }
+    function toggle() {
+      var next = root.dataset.theme === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem(KEY, next);
+      } catch (e) {}
+      sync();
+    }
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", toggle);
+      buttons[i].removeAttribute("hidden");
+    }
+    sync();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>

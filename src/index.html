@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta_title">Barking: the messenger that works without internet</title>
+<meta name="description" content="Barking is an open-source, end-to-end encrypted messenger. An open network of relays that anyone can run carries messages over the internet, and a phone-to-phone mesh over Bluetooth, Wi-Fi and LoRa is planned. No phone number, no central server.">
+<meta property="og:title" content="Barking: the messenger that works without internet">
+<meta property="og:description" content="Open-source, end-to-end encrypted messaging over a decentralized relay network, with a mesh on the roadmap. By NakoCorp.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.nakocorp.com/">
+<meta name="theme-color" content="#120E19">
+<link rel="icon" href="assets/nakocorp-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Barking">
+      <span class="logo-tile"><img src="assets/nakocorp-logo.svg" alt="" width="48" height="45"></span>
+      <span class="brand-name">Barking</span>
+      <span class="brand-by">by NakoCorp</span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#how" data-i18n="nav_how">How it works</a>
+      <a href="#transparency" data-i18n="nav_transparency">Transparency</a>
+      <a href="#security" data-i18n="nav_security">Security</a>
+      <a href="#node" data-i18n="nav_node">Run a node</a>
+      <a href="#roadmap" data-i18n="nav_roadmap">Roadmap</a>
+      <a href="/en/blog/" data-i18n="nav_blog" data-blog-link>Blog</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang">
+        <button type="button" data-lang-btn="en" aria-label="English">EN</button>
+        <span>/</span>
+        <button type="button" data-lang-btn="fr" aria-label="Français">FR</button>
+      </div>
+      <a class="nav-gh" href="https://github.com/nakocorp/barking" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero dark">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill" style="background: var(--ink-2); border: 1px solid var(--ink-line); color: var(--on-dark-muted);"><span class="pill-dot"></span><span data-i18n="hero_pill">Open source · AGPL-3.0 · prototype in progress</span></span>
+      <h1 data-i18n="hero_h1">Messages that get through. <em>Even when the internet doesn't.</em></h1>
+      <p class="lead" data-i18n="hero_p">Barking is an end-to-end encrypted messenger built to keep working when networks fail. Today, an open network of relays that anyone can run carries messages across the internet, and a message can also travel as a file you carry. Next, phones will relay messages to each other over Bluetooth, Wi-Fi and LoRa. No phone number. No central server. Nothing to trust blindly.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#how" data-i18n="hero_cta_primary">See how it works</a>
+        <a class="btn btn-ghost" href="https://github.com/nakocorp/barking" target="_blank" rel="noopener" data-i18n="hero_cta_secondary">★ Star on GitHub</a>
+      </div>
+      <div class="hero-facts">
+        <span data-i18n="hero_fact1">End-to-end encrypted</span>
+        <span data-i18n="hero_fact2">Post-quantum key exchange</span>
+        <span data-i18n="hero_fact3">Written in Rust</span>
+        <span data-i18n="hero_fact4">Reproducible builds</span>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-label="Concept illustration of the Barking app, with the planned mesh" role="img">
+      <svg class="radar" viewBox="0 0 560 560" aria-hidden="true">
+        <circle cx="280" cy="280" r="110"/><circle cx="280" cy="280" r="190"/><circle cx="280" cy="280" r="270"/>
+        <circle class="pulse" cx="280" cy="280" r="270"/><circle class="pulse p2" cx="280" cy="280" r="270"/>
+      </svg>
+
+      <div class="chip chip-1"><span class="chip-ico" style="background: rgba(61,220,151,.15);">🔒</span><div><span data-i18n="chip1_t">End-to-end encrypted</span><small data-i18n="chip1_s">hybrid X25519 + ML-KEM-768</small></div></div>
+      <div class="chip chip-2"><span class="chip-ico" style="background: rgba(242,201,76,.15);">📡</span><div><span data-i18n="chip2_t">LoRa relay</span><small data-i18n="chip2_s">planned · 12 km, no internet needed</small></div></div>
+      <div class="chip chip-3"><span class="chip-ico" style="background: rgba(197,155,255,.15);">✓</span><div><span data-i18n="chip3_t">Delivered</span><small data-i18n="chip3_s">4 in-transit copies erased</small></div></div>
+
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-status"><span>18:06</span><span class="phone-notch"></span><span>✕ 4G</span></div>
+          <div class="app-bar">
+            <span style="color: var(--purple); font-size: 18px;">‹</span>
+            <span class="avatar" style="background: #E0876A;">M</span>
+            <div>
+              <div class="app-bar-title">Maya</div>
+              <div class="app-bar-sub"><span class="verified">●</span> <span data-i18n="ui_verified">verified · safety code matched</span></div>
+            </div>
+          </div>
+          <div class="banner"><span>📡</span><span data-i18n="ui_banner">No internet. Mesh mode (planned): messages hop from phone to phone.</span></div>
+          <div class="chat">
+            <div class="bubble in"><span data-i18n="ui_msg1">Power's out across the whole district. Are you OK?</span>
+              <div class="meta">18:02 <span class="route-tag">LoRa · 2 hops</span></div></div>
+            <div class="bubble out"><span data-i18n="ui_msg2">We're fine! Heading to the school gym.</span>
+              <div class="meta"><span class="route-tag">BLE · 3 hops</span> 18:04 ✓✓</div></div>
+            <div class="bubble in"><span data-i18n="ui_msg3">See you there 🙌</span>
+              <div class="meta">18:05 <span class="route-tag">mesh</span></div></div>
+            <div class="bubble out"><span data-i18n="ui_msg4">Bringing water and the radio.</span>
+              <div class="meta"><span data-i18n="ui_queued">⏳ queued, sends when a neighbor is in range</span></div></div>
+          </div>
+          <div class="composer"><span class="composer-input" data-i18n="ui_composer">Message</span><span class="composer-send">↑</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="why_eyebrow">// why barking</div>
+      <h2 class="h2" data-i18n="why_h2">A messenger that doesn't depend on anyone's infrastructure.</h2>
+      <p class="lead" data-i18n="why_p">Today's messengers stop working when a cell tower goes down, a country cuts the internet or a company shuts a server. Barking is designed for everyday chat and for the day those things happen.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h3 data-i18n="p1_t">Private</h3>
+        <p data-i18n="p1_p">End-to-end encryption, a hidden sender and minimal metadata. Your identity is a key, not a phone number.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a14.5 14.5 0 0 1 20 0"/><circle cx="12" cy="19.5" r="1"/></svg></div>
+        <h3 data-i18n="p2_t">Resilient</h3>
+        <p data-i18n="p2_p">Internet relays today, or a packet file carried by hand; Bluetooth, Wi-Fi and LoRa are planned. Messages wait safely until a route appears.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M10.8 7.2 6.3 15.8M13.2 7.2l4.5 8.6M7.5 18h9"/></svg></div>
+        <h3 data-i18n="p3_t">Decentralized</h3>
+        <p data-i18n="p3_p">No central server to seize, censor or shut down. Anyone can run a relay with a single binary.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3 data-i18n="p4_t">Transparent</h3>
+        <p data-i18n="p4_p">Open code, a published protocol, and an app that shows the path of every message and what each hop could see.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3 data-i18n="p5_t">Simple</h3>
+        <p data-i18n="p5_p">You just send a message. All the complexity stays under the hood, unless you want to look.</p>
+      </div>
+    </div>
+
+    <div class="compare reveal" role="table" aria-label="Comparison">
+      <div class="compare-row" role="row">
+        <div role="columnheader"></div>
+        <div role="columnheader" data-i18n="cmp_h1">Mainstream messengers</div>
+        <div role="columnheader" class="col-barking">Barking</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div role="cell" data-i18n="cmp_r1">Works without internet</div>
+        <div role="cell" class="no" data-i18n="cmp_no">No</div>
+        <div role="cell" class="col-barking"><span class="yes" data-i18n="cmp_yes">Yes</span> <span class="plan" data-i18n="cmp_roadmap">on the roadmap</span></div>
+      </div>
+      <div class="compare-row" role="row">
+        <div role="cell" data-i18n="cmp_r2">Sign up without a phone number</div>
+        <div role="cell" class="no" data-i18n="cmp_rarely">Rarely</div>
+        <div role="cell" class="col-barking yes" data-i18n="cmp_yes">Yes</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div role="cell" data-i18n="cmp_r3">No central server</div>
+        <div role="cell" class="no" data-i18n="cmp_no">No</div>
+        <div role="cell" class="col-barking yes" data-i18n="cmp_yes">Yes</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div role="cell" data-i18n="cmp_r4">Servers can't tell who writes to whom</div>
+        <div role="cell" class="no" data-i18n="cmp_varies">Varies</div>
+        <div role="cell" class="col-barking"><span class="no" data-i18n="cmp_partly">Partly</span> <span class="plan" data-i18n="cmp_r4_note">relays see IP addresses</span></div>
+      </div>
+      <div class="compare-row" role="row">
+        <div role="cell" data-i18n="cmp_r5">Open-source client and server</div>
+        <div role="cell" class="no" data-i18n="cmp_varies">Varies</div>
+        <div role="cell" class="col-barking yes">AGPL-3.0</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div role="cell" data-i18n="cmp_r6">Reproducible, attested binaries</div>
+        <div role="cell" class="no" data-i18n="cmp_rarely">Rarely</div>
+        <div role="cell" class="col-barking yes" data-i18n="cmp_yes">Yes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW: MESH DIAGRAM -->
+<section class="section dark" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="how_eyebrow">// how it works</div>
+      <h2 class="h2" data-i18n="how_h2">One message, every road.</h2>
+      <p class="lead" data-i18n="how_p">Planned: phones and small fixed stations form a mesh, and as soon as one of them finds the internet, it becomes a gateway to the open network of relays. The same encrypted packet format already serves every transport: today it travels over the relays or as a file, and the app will pick the best route available.</p>
+    </div>
+
+    <figure class="figure reveal" style="margin: 0;">
+      <div class="scroll-hint" data-i18n="scroll_hint">← scroll the diagram →</div>
+      <div class="figure-scroll">
+        <svg id="mesh" viewBox="0 0 1100 500" role="img" aria-labelledby="mesh-title">
+          <title id="mesh-title">In the planned mesh, a message from Alice travels over Bluetooth and Wi-Fi to a rooftop station, over LoRa to a village station with internet, is stored on three relay nodes, and is fetched by Bob.</title>
+          <style>
+            .z { fill: rgba(255,255,255,.015); stroke: #3A3046; stroke-dasharray: 6 6; }
+            .zl { font: 600 11px 'Fira Code', monospace; letter-spacing: 1.2px; fill: #8C80A3; }
+            .nl { font: 600 12px 'Fira Code', monospace; fill: #F2EFF7; }
+            .ns { font: 11px 'Fira Code', monospace; fill: #ABA0C2; }
+            .ll { font: 600 11px 'Fira Code', monospace; }
+            .link { fill: none; stroke-width: 2.2; stroke-dasharray: 7 6; }
+            .flow { animation: dash 1.2s linear infinite; }
+            @keyframes dash { to { stroke-dashoffset: -26; } }
+            @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+          </style>
+          <defs>
+            <symbol id="i-phone" viewBox="0 0 28 46"><rect x="1" y="1" width="26" height="44" rx="6" fill="#1B1524" stroke="#C59BFF" stroke-width="1.5"/><rect x="5" y="7" width="18" height="28" rx="2" fill="#2A2236"/><circle cx="14" cy="40" r="2" fill="#5D5070"/></symbol>
+            <symbol id="i-station" viewBox="0 0 54 60"><path d="M27 2v18" stroke="#F2C94C" stroke-width="2"/><circle cx="27" cy="4" r="3" fill="#F2C94C"/><path d="M19 10a11 11 0 0 1 16 0M15 6a17 17 0 0 1 24 0" fill="none" stroke="#F2C94C" stroke-width="1.5" opacity=".6"/><rect x="5" y="20" width="44" height="34" rx="6" fill="#1B1524" stroke="#F2C94C" stroke-width="1.5"/><rect x="11" y="27" width="14" height="10" rx="2" fill="#2A2236"/><circle cx="36" cy="32" r="2.5" fill="#3DDC97"/><circle cx="43" cy="32" r="2.5" fill="#5AB0FF"/><path d="M11 45h32" stroke="#3A3046" stroke-width="3" stroke-linecap="round"/></symbol>
+            <symbol id="i-node" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#1B1524" stroke="#C59BFF" stroke-width="1.5"/><rect x="10" y="11" width="16" height="5" rx="1.5" fill="#2A2236"/><rect x="10" y="19" width="16" height="5" rx="1.5" fill="#2A2236"/><circle cx="23" cy="13.5" r="1.2" fill="#3DDC97"/><circle cx="23" cy="21.5" r="1.2" fill="#3DDC97"/></symbol>
+            <symbol id="i-node-on" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#163A2C" stroke="#3DDC97" stroke-width="2"/><rect x="10" y="11" width="16" height="5" rx="1.5" fill="#1F5A42"/><rect x="10" y="19" width="16" height="5" rx="1.5" fill="#1F5A42"/><circle cx="23" cy="13.5" r="1.2" fill="#3DDC97"/><circle cx="23" cy="21.5" r="1.2" fill="#3DDC97"/></symbol>
+            <radialGradient id="glow"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".4" stop-color="#C59BFF" stop-opacity=".6"/><stop offset="1" stop-color="#C59BFF" stop-opacity="0"/></radialGradient>
+          </defs>
+
+          <!-- zones -->
+          <rect class="z" x="20" y="40" width="380" height="440" rx="18"/>
+          <text class="zl" x="40" y="68" data-i18n="mz_a">NEIGHBORHOOD · NO INTERNET</text>
+          <rect class="z" x="445" y="250" width="200" height="230" rx="18"/>
+          <text class="zl" x="460" y="278" data-i18n="mz_b">VILLAGE · 12 KM AWAY</text>
+          <rect class="z" x="670" y="40" width="410" height="310" rx="18"/>
+          <text class="zl" x="690" y="68" data-i18n="mz_c">RELAY NETWORK · INTERNET</text>
+
+          <!-- links -->
+          <line class="link flow" x1="90" y1="170" x2="250" y2="250" stroke="#5AB0FF"/>
+          <line class="link" x1="90" y1="170" x2="110" y2="370" stroke="#5AB0FF" opacity=".5"/>
+          <line class="link" x1="110" y1="370" x2="250" y2="250" stroke="#3DDC97" opacity=".5"/>
+          <line class="link flow" x1="250" y1="250" x2="330" y2="400" stroke="#3DDC97"/>
+          <path class="link flow" d="M330 400 Q432 300 535 390" stroke="#F2C94C"/>
+          <path class="link flow" d="M535 390 C640 390 700 205 790 205" stroke="#C59BFF"/>
+          <circle cx="875" cy="205" r="85" fill="none" stroke="#3A3046" stroke-width="1.5"/>
+          <path class="link flow" d="M917.5 278.6 L985 420" stroke="#C59BFF"/>
+
+          <text class="ll" x="150" y="196" fill="#5AB0FF">BLE</text>
+          <text class="ll" x="300" y="315" fill="#3DDC97">Wi-Fi P2P</text>
+          <text class="ll" x="412" y="334" fill="#F2C94C" text-anchor="middle">LoRa</text>
+          <text class="ll" x="628" y="296" fill="#C59BFF">QUIC</text>
+          <text class="ll" x="962" y="352" fill="#C59BFF" data-i18n="m_fetch">fetch</text>
+
+          <!-- mesh devices -->
+          <use href="#i-phone" x="76" y="147" width="28" height="46"/>
+          <text class="nl" x="90" y="124" text-anchor="middle">Alice</text>
+          <text class="ns" x="90" y="139" text-anchor="middle" data-i18n="m_sends">sends</text>
+          <use href="#i-phone" x="96" y="347" width="28" height="46"/>
+          <text class="ns" x="110" y="412" text-anchor="middle" data-i18n="m_neighbor">neighbor</text>
+          <use href="#i-phone" x="236" y="227" width="28" height="46"/>
+          <text class="ns" x="272" y="236" data-i18n="m_neighbor">neighbor</text>
+          <use href="#i-station" x="303" y="372" width="54" height="60"/>
+          <text class="nl" x="330" y="452" text-anchor="middle" data-i18n="m_roof">rooftop station</text>
+          <text class="ns" x="330" y="467" text-anchor="middle">Raspberry Pi + LoRa</text>
+
+          <use href="#i-station" x="508" y="362" width="54" height="60"/>
+          <text class="nl" x="535" y="442" text-anchor="middle" data-i18n="m_gateway">gateway</text>
+          <text class="ns" x="535" y="457" text-anchor="middle" data-i18n="m_gateway_s">finds the internet</text>
+
+          <!-- relay ring -->
+          <use href="#i-node" x="772" y="187" width="36" height="36"/>
+          <use href="#i-node" x="814.5" y="113.4" width="36" height="36"/>
+          <use href="#i-node" x="899.5" y="113.4" width="36" height="36"/>
+          <use href="#i-node-on" x="942" y="187" width="36" height="36"/>
+          <use href="#i-node-on" x="899.5" y="260.6" width="36" height="36"/>
+          <use href="#i-node-on" x="814.5" y="260.6" width="36" height="36"/>
+          <text class="ns" x="875" y="200" text-anchor="middle" data-i18n="m_ring1">mailbox 9f3a…</text>
+          <text class="ns" x="875" y="216" text-anchor="middle" data-i18n="m_ring2">kept on 3 nodes</text>
+          <text class="ns" x="1060" y="100" text-anchor="end" data-i18n="m_dht">S/Kademlia DHT</text>
+
+          <use href="#i-phone" x="971" y="410" width="28" height="46"/>
+          <text class="nl" x="1015" y="430">Bob</text>
+          <text class="ns" x="1015" y="446" data-i18n="m_bob">decrypts</text>
+
+          <!-- travelling packet -->
+          <g>
+            <circle r="16" fill="url(#glow)"/>
+            <rect x="-6" y="-5" width="12" height="10" rx="2" fill="#fff"/>
+            <path d="M-4 -5v-2a4 4 0 0 1 8 0v2" fill="none" stroke="#fff" stroke-width="1.6"/>
+            <animateMotion dur="10s" repeatCount="indefinite" path="M90 170 L250 250 L330 400 Q432 300 535 390 C640 390 700 205 790 205 A85 85 0 0 0 832.5 278.6 A85 85 0 0 0 917.5 278.6 L985 420"/>
+          </g>
+        </svg>
+      </div>
+      <figcaption class="figure-caption">
+        <span class="legend" style="color: var(--ble);"><i></i>Bluetooth LE</span>
+        <span class="legend" style="color: var(--wifi);"><i></i>Wi-Fi P2P</span>
+        <span class="legend" style="color: var(--lora);"><i></i>LoRa</span>
+        <span class="legend" style="color: var(--net);"><i></i>Internet (QUIC)</span>
+        <span class="legend" style="color: var(--ok);">● <span data-i18n="m_legend_store">relays that keep the packet</span></span>
+      </figcaption>
+    </figure>
+
+    <div class="transports">
+      <div class="transport reveal" style="--c: var(--ble);">
+        <h4>Bluetooth LE</h4>
+        <div class="range">~10–50 m</div>
+        <p data-i18n="t_ble">Planned: will find nearby phones and carry text, receipts and signaling, hop by hop.</p>
+      </div>
+      <div class="transport reveal" style="--c: var(--wifi);">
+        <h4>Wi-Fi P2P</h4>
+        <div class="range">~50–100 m</div>
+        <p data-i18n="t_wifi">Planned: will take over for photos, videos and heavy syncs, without any router.</p>
+      </div>
+      <div class="transport reveal" style="--c: var(--lora);">
+        <h4>LoRa</h4>
+        <div class="range">2–15 km+</div>
+        <p data-i18n="t_lora">Planned: long-range radio for short texts and alerts, linking two meshes kilometers apart.</p>
+      </div>
+      <div class="transport reveal" style="--c: var(--net);">
+        <h4 data-i18n="t_net_t">Internet</h4>
+        <div class="range" data-i18n="t_net_r">worldwide</div>
+        <p data-i18n="t_net">An open network of relays over QUIC. Packets are copied to several nodes, so no single one matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="section tint" id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="j_eyebrow">// the life of a message</div>
+      <h2 class="h2" data-i18n="j_h2">From your thumb to their screen, step by step.</h2>
+      <p class="lead" data-i18n="j_p">Every intermediary handles a sealed envelope. None of them can open it or forge it, and the envelope does not name its sender.</p>
+    </div>
+    <div class="journey">
+      <div class="step reveal">
+        <div class="step-top"><span class="step-num">01</span>
+          <svg class="step-ico" viewBox="0 0 48 48" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="20" height="40" rx="4"/><rect x="19" y="20" width="10" height="9" rx="1.5" fill="#EFEAF9"/><path d="M21 20v-2.5a3 3 0 0 1 6 0V20"/></svg></div>
+        <h3 data-i18n="j1_t">Encrypted on your phone</h3>
+        <p data-i18n="j1_p">The message, and your identity as its sender, are sealed for each of your contact's devices before anything leaves yours.</p>
+        <div class="tech">double ratchet · X25519 + ML-KEM-768</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-top"><span class="step-num">02</span>
+          <svg class="step-ico" viewBox="0 0 48 48" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="10" width="32" height="8" rx="2"/><rect x="8" y="22" width="32" height="8" rx="2" fill="#EFEAF9"/><rect x="8" y="34" width="32" height="8" rx="2"/><circle cx="34" cy="26" r="1.5" fill="#6640AF"/></svg></div>
+        <h3 data-i18n="j2_t">Queued, never lost</h3>
+        <p data-i18n="j2_p">The packet waits in an encrypted local queue. A crash, a reboot or a dead zone won't lose it: it leaves at the next opportunity.</p>
+        <div class="tech">SQLCipher · persistent outbox</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-top"><span class="step-num">03</span>
+          <svg class="step-ico" viewBox="0 0 48 48" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="34" r="4"/><circle cx="24" cy="14" r="4" fill="#EFEAF9"/><circle cx="40" cy="34" r="4"/><path d="M11 31l10-14M27 17l10 14" stroke-dasharray="3 3"/></svg></div>
+        <h3 data-i18n="j3_t">Hops across the mesh (planned)</h3>
+        <p data-i18n="j3_p">Nearby devices will pass it along: the packet header already carries a hop limit and an expiry date. Duplicates will be dropped, and neighbors will only exchange what the other is missing.</p>
+        <div class="tech">planned · hop limit + expiry</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-top"><span class="step-num">04</span>
+          <svg class="step-ico" viewBox="0 0 48 48" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 36a9 9 0 0 1-1-18 12 12 0 0 1 23 3 7.5 7.5 0 0 1-1 15z" fill="#EFEAF9"/><path d="M24 22v10M20 28l4 4 4-4"/></svg></div>
+        <h3 data-i18n="j4_t">Stored on several relays</h3>
+        <p data-i18n="j4_p">Your device hands it to the relay network (later, a mesh gateway can too). It is copied to the nodes responsible for a mailbox ID that changes every day, and kept for 24 hours by default.</p>
+        <div class="tech">QUIC · S/Kademlia · proof of work</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-top"><span class="step-num">05</span>
+          <svg class="step-ico" viewBox="0 0 48 48" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="20" height="40" rx="4"/><rect x="17" y="16" width="14" height="16" rx="2" fill="#EFEAF9"/><path d="M20 22h8M20 26h5"/></svg></div>
+        <h3 data-i18n="j5_t">Fetched and opened</h3>
+        <p data-i18n="j5_p">Your contact's device checks its mailboxes (or is woken up on iOS), downloads the packet from any relay and decrypts it. Only it can.</p>
+        <div class="tech">resumable fetch · wake-up push</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-top"><span class="step-num">06</span>
+          <svg class="step-ico" viewBox="0 0 48 48" fill="none" stroke="#6640AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18" fill="#EFEAF9"/><path d="M15 24l6 6 12-12"/></svg></div>
+        <h3 data-i18n="j6_t">Receipt erases the copies</h3>
+        <p data-i18n="j6_p">The recipient reveals a secret that only they knew. Every relay holding a copy can check it and delete the packet, and phones in the mesh will too.</p>
+        <div class="tech">id = hash(secret)</div>
+      </div>
+    </div>
+
+    <div class="receipt reveal">
+      <div>
+        <div class="eyebrow" data-i18n="r_eyebrow">// receipts by revealed secret</div>
+        <h3 data-i18n="r_h3">Delivered once means deleted everywhere.</h3>
+        <p data-i18n="r_p">A packet's ID is the hash of a secret sealed inside it. To acknowledge it, the recipient publishes that secret. Any relay can verify it, without learning who sent it, and deletes its copy. Once the mesh exists, a message already delivered over it will not travel the internet afterwards.</p>
+      </div>
+      <div class="svg-scroll"><svg viewBox="0 0 560 250" role="img" aria-labelledby="rc-title">
+        <title id="rc-title">Bob publishes the secret; four holders verify it against the packet ID and delete their copy.</title>
+        <style>
+          .rt { font: 600 12px 'Fira Code', monospace; fill: #1B1720; }
+          .rs { font: 11px 'Fira Code', monospace; fill: #6B6478; }
+          .rok { font: 600 11px 'Fira Code', monospace; fill: #1F9D68; }
+        </style>
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6640AF"/></marker></defs>
+        <rect x="10" y="75" width="120" height="100" rx="12" fill="#EFEAF9" stroke="#6640AF"/>
+        <text class="rt" x="70" y="108" text-anchor="middle">Bob</text>
+        <text class="rs" x="70" y="128" text-anchor="middle" data-i18n="rc_reveals">reveals</text>
+        <rect x="38" y="138" width="64" height="22" rx="5" fill="#6640AF"/>
+        <text x="70" y="153" text-anchor="middle" style="font: 600 12px 'Fira Code', monospace; fill: #fff;" data-i18n="rc_secret">secret</text>
+        <g stroke="#6640AF" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+          <path d="M132 125 C200 125 210 35 278 35"/>
+          <path d="M132 125 C200 125 210 95 278 95"/>
+          <path d="M132 125 C200 125 210 155 278 155"/>
+          <path d="M132 125 C200 125 210 215 278 215"/>
+        </g>
+        <rect x="282" y="14" width="268" height="42" rx="9" fill="#fff" stroke="#EAE5F2"/>
+        <text class="rt" x="298" y="40" data-i18n="rc_h1">relay node A</text>
+        <text class="rok" x="536" y="40" text-anchor="end" data-i18n="rc_del">✓ copy deleted</text>
+        <rect x="282" y="74" width="268" height="42" rx="9" fill="#fff" stroke="#EAE5F2"/>
+        <text class="rt" x="298" y="100" data-i18n="rc_h2">relay node B</text>
+        <text class="rok" x="536" y="100" text-anchor="end" data-i18n="rc_del">✓ copy deleted</text>
+        <rect x="282" y="134" width="268" height="42" rx="9" fill="#fff" stroke="#EAE5F2"/>
+        <text class="rt" x="298" y="160" data-i18n="rc_h3">rooftop station</text>
+        <text class="rok" x="536" y="160" text-anchor="end" data-i18n="rc_del">✓ copy deleted</text>
+        <rect x="282" y="194" width="268" height="42" rx="9" fill="#fff" stroke="#EAE5F2"/>
+        <text class="rt" x="298" y="220" data-i18n="rc_h4">neighbor's phone</text>
+        <text class="rok" x="536" y="220" text-anchor="end" data-i18n="rc_del">✓ copy deleted</text>
+        <text class="rs" x="10" y="246" data-i18n="rc_check">each holder checks: hash(secret) = packet ID</text>
+      </svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPARENCY -->
+<section class="section" id="transparency">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="tr_eyebrow">// transparency view</div>
+      <h2 class="h2" data-i18n="tr_h2">See where your message went, and who saw what.</h2>
+      <p class="lead" data-i18n="tr_p">Most apps ask you to trust them. Barking shows you. Tap any message to see its route and exactly what each intermediary could observe. This log is built on your device and never leaves it.</p>
+      <ul class="checks">
+        <li><span data-i18n="tr_c1"><strong>The route:</strong> transport, relay nodes and status (Pending, On the network, Received, Not delivered).</span></li>
+        <li><span data-i18n="tr_c2"><strong>Who saw what:</strong> "this neighbor saw a 1,024-byte encrypted packet, without knowing who you are".</span></li>
+        <li><span data-i18n="tr_c3"><strong>Your contacts:</strong> their key, linked devices, verification status and where encrypted data is stored.</span></li>
+      </ul>
+    </div>
+    <div class="phones-pair reveal">
+      <div class="phone light">
+        <div class="phone-screen">
+          <div class="phone-status"><span>18:47</span><span class="phone-notch"></span><span>●●● 5G</span></div>
+          <div class="app-bar">
+            <span style="color: var(--purple); font-size: 18px;">‹</span>
+            <div>
+              <div class="app-bar-title" data-i18n="ui_details">Message details</div>
+              <div class="app-bar-sub" data-i18n="ui_details_sub">"We're fine! Heading to…"</div>
+            </div>
+          </div>
+          <div class="tl">
+            <div class="tl-title" data-i18n="ui_path">Path · 4 hops · 42 min</div>
+            <div class="tl-item"><span class="tl-dot" style="background: var(--purple);">✎</span>
+              <div><div class="tl-name" data-i18n="ui_s1">Your phone</div><div class="tl-sub" data-i18n="ui_s1s">Encrypted and queued · 18:04:02</div></div></div>
+            <div class="tl-item"><span class="tl-dot" style="background: var(--ble);">ᛒ</span>
+              <div><div class="tl-name" data-i18n="ui_s2">Neighbor phone</div><div class="tl-sub">Bluetooth LE · 18:04:09</div>
+                <div class="seen" data-i18n="ui_s2w">Saw <b>an encrypted 1,024-byte packet</b>. Not who you are.</div></div></div>
+            <div class="tl-item"><span class="tl-dot" style="background: #D9A920;">≋</span>
+              <div><div class="tl-name" data-i18n="ui_s3">Rooftop station</div><div class="tl-sub">LoRa 868 MHz · 12 km</div>
+                <div class="seen" data-i18n="ui_s3w">Saw <b>a mailbox ID</b> that changes every day.</div></div></div>
+            <div class="tl-item"><span class="tl-dot" style="background: #9B6BE0;">◎</span>
+              <div><div class="tl-name" data-i18n="ui_s4">3 relay nodes</div><div class="tl-sub" data-i18n="ui_s4s">Internet · stored 41 min</div>
+                <div class="seen" data-i18n="ui_s4w">Saw <b>the gateway's IP</b> while connected. No content, no sender.</div></div></div>
+            <div class="tl-item"><span class="tl-dot" style="background: var(--ok);">✓</span>
+              <div><div class="tl-name" data-i18n="ui_s5">Delivered to Maya</div><div class="tl-sub" data-i18n="ui_s5s">18:46 · 4 copies erased</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><p class="concept-note" data-i18n="concept_note">App screens are design concepts: the mobile apps are in development.</p></div>
+</section>
+
+<!-- SECURITY -->
+<section class="section dark" id="security">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="sec_eyebrow">// security model</div>
+      <h2 class="h2" data-i18n="sec_h2">Trust no node. Not even ours.</h2>
+      <p class="lead" data-i18n="sec_p">In an open network you can't know what code a stranger's relay is running. So Barking is designed so that even a malicious node can't read, forge or quietly drop your messages.</p>
+    </div>
+    <div class="layers">
+      <div class="reveal">
+        <div class="onion">
+          <div class="onion-label"><b style="color: var(--ble);" data-i18n="on_1">Neighbor link</b><span data-i18n="on_1s">planned for the mesh · BLE / Wi-Fi</span></div>
+          <div class="l2">
+            <div class="onion-label"><b style="color: var(--net);" data-i18n="on_2">Universal packet</b><span data-i18n="on_2s">what relays see</span></div>
+            <div class="hdr">
+              <span data-i18n="on_h1">version</span><span data-i18n="on_h2">hops left</span><span data-i18n="on_h3">packet ID</span><span data-i18n="on_h4">expiry</span><span data-i18n="on_h5">daily mailbox ID</span><span data-i18n="on_h6">size tier padding</span>
+            </div>
+            <div class="l3">
+              <div class="onion-label"><b style="color: var(--ok);" data-i18n="on_3">End-to-end encryption</b><span data-i18n="on_3s">only the recipient's devices</span></div>
+              <div class="core">
+                <span data-i18n="on_c1">sender identity</span><span data-i18n="on_c2">message</span><span data-i18n="on_c3">receipt secret</span><span data-i18n="on_c4">device list</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="onion-note" data-i18n="on_p">Three nested layers. The neighbor link comes with the mesh; relays only see a sealed envelope with a temporary address, and only your contact holds the keys to the inside.</p>
+      </div>
+      <div class="threats reveal">
+        <div class="threat"><div class="threat-q" data-i18n="th1_q">Read a message</div><div class="threat-a" data-i18n="th1_a">Impossible: end-to-end encryption, relays hold no keys.</div></div>
+        <div class="threat"><div class="threat-q" data-i18n="th2_q">Forge or replay a message</div><div class="threat-a" data-i18n="th2_a">Rejected: authenticated encryption, signed device lists, seen-ID tracking and expiry.</div></div>
+        <div class="threat"><div class="threat-q" data-i18n="th3_q">Fake a delivery</div><div class="threat-a" data-i18n="th3_a">Impossible: only the real recipient knows the receipt secret.</div></div>
+        <div class="threat"><div class="threat-q" data-i18n="th4_q">Drop or hold back messages</div><div class="threat-a" data-i18n="th4_a">Copies on several nodes, end-to-end receipts, retries elsewhere and a local reliability score per node.</div></div>
+        <div class="threat"><div class="threat-q" data-i18n="th5_q">Map who talks to whom</div><div class="threat-a" data-i18n="th5_a">Hidden sender, mailboxes that rotate daily and padded sizes. A responsible relay still sees the IP addresses that deposit and fetch, and can link them.</div></div>
+        <div class="threat"><div class="threat-q" data-i18n="th6_q">Isolate you or spam the network</div><div class="threat-a" data-i18n="th6_a">S/Kademlia defenses, proof-of-work node IDs and deposits, rate limits.</div></div>
+      </div>
+    </div>
+    <div class="libs reveal">
+      <span class="lbl" data-i18n="libs_lbl">No homemade crypto. Established open-source libraries only:</span>
+      <code>ed25519-dalek</code><code>x25519-dalek</code><code>chacha20poly1305</code><code>ml-kem</code><code>hkdf</code><code>SQLCipher</code>
+    </div>
+  </div>
+</section>
+
+<!-- IDENTITY -->
+<section class="section" id="identity">
+  <div class="wrap split">
+    <div class="idtree reveal">
+      <div class="svg-scroll"><svg viewBox="0 0 560 340" role="img" aria-labelledby="id-title">
+        <title id="id-title">A root key certifies one key per device; the signed device list travels end to end to contacts.</title>
+        <style>
+          .it { font: 600 13px 'Fira Code', monospace; fill: #1B1720; }
+          .is { font: 11px 'Fira Code', monospace; fill: #6B6478; }
+          .iw { font: 600 11px 'Fira Code', monospace; fill: #6640AF; }
+        </style>
+        <rect x="150" y="14" width="260" height="84" rx="14" fill="#6640AF"/>
+        <text x="280" y="44" text-anchor="middle" style="font: 600 14px 'Fira Code', monospace; fill: #fff;" data-i18n="id_root">🔑 root key</text>
+        <text x="280" y="64" text-anchor="middle" style="font: 11px 'Fira Code', monospace; fill: #E3D9F7;">Ed25519 · in the encrypted database</text>
+        <text x="280" y="84" text-anchor="middle" style="font: 11px 'Fira Code', monospace; fill: #E3D9F7;" data-i18n="id_phrase">backed up as 24 words</text>
+        <g stroke="#B9A6E0" stroke-width="1.8" fill="none" stroke-dasharray="5 5">
+          <path d="M280 98 C280 140 100 130 100 182"/>
+          <path d="M280 98 L280 182"/>
+          <path d="M280 98 C280 140 460 130 460 182"/>
+        </g>
+        <text class="iw" x="160" y="140" text-anchor="middle" data-i18n="id_signs">signs</text>
+        <text class="iw" x="400" y="140" text-anchor="middle" data-i18n="id_signs">signs</text>
+        <rect x="20" y="182" width="160" height="80" rx="12" fill="#fff" stroke="#D8D0E6"/>
+        <text class="it" x="100" y="210" text-anchor="middle" data-i18n="id_d1">📱 phone</text>
+        <text class="is" x="100" y="230" text-anchor="middle" data-i18n="id_dk">own device key</text>
+        <text class="is" x="100" y="246" text-anchor="middle" data-i18n="id_dc">+ certificate</text>
+        <rect x="200" y="182" width="160" height="80" rx="12" fill="#fff" stroke="#D8D0E6"/>
+        <text class="it" x="280" y="210" text-anchor="middle" data-i18n="id_d2">💻 laptop</text>
+        <text class="is" x="280" y="230" text-anchor="middle" data-i18n="id_dk">own device key</text>
+        <text class="is" x="280" y="246" text-anchor="middle" data-i18n="id_dc">+ certificate</text>
+        <rect x="380" y="182" width="160" height="80" rx="12" fill="#FDF0F2" stroke="#E7A5B2" stroke-dasharray="5 4"/>
+        <text class="it" x="460" y="210" text-anchor="middle" style="fill: #B8455A;" data-i18n="id_d3">📱 stolen phone</text>
+        <text class="is" x="460" y="230" text-anchor="middle" data-i18n="id_rev">revoked in one tap</text>
+        <text class="is" x="460" y="246" text-anchor="middle" data-i18n="id_rev2">nothing else lost</text>
+        <rect x="20" y="284" width="520" height="42" rx="10" fill="#EFEAF9"/>
+        <text x="280" y="310" text-anchor="middle" class="iw" data-i18n="id_list">signed device list · sent end to end to your contacts</text>
+      </svg></div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="id_eyebrow">// identity</div>
+      <h2 class="h2" data-i18n="id_h2">You are a key, not a phone number.</h2>
+      <p class="lead" data-i18n="id_p">Your account is a cryptographic key created on your device. No phone number, no email, no sign-up server that could leak your address book.</p>
+      <div class="feature-list">
+        <div><h4 data-i18n="if1_t">Up to 8 devices</h4><p data-i18n="if1_p">Each device gets its own key, certified by your root key. Bring your history along, encrypted.</p></div>
+        <div><h4 data-i18n="if2_t">Safety codes</h4><p data-i18n="if2_p">Compare a code in person to verify a contact. You are warned if their key ever changes.</p></div>
+        <div><h4 data-i18n="if3_t">Recoverable</h4><p data-i18n="if3_p">A 24-word phrase, kept offline, restores your identity without depending on any provider.</p></div>
+        <div><h4 data-i18n="if4_t">Encrypted at rest</h4><p data-i18n="if4_p">Contacts and history live in an encrypted SQLCipher database on your device.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RUN A NODE -->
+<section class="section dark" id="node">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="node_eyebrow">// run a node</div>
+      <h2 class="h2" data-i18n="node_h2">The network is the people who run it.</h2>
+      <p class="lead" data-i18n="node_p">A relay is one static binary with an embedded database. Run it on a VPS, a home server or a Raspberry Pi: no sign-up, no permission needed. Every new node makes the network harder to shut down.</p>
+      <div class="node-facts">
+        <div><h4 data-i18n="nf1_t">Blind by design</h4><p data-i18n="nf1_p">Your node stores encrypted packets for temporary mailboxes. It cannot read them, and it never writes client IP addresses to disk or logs.</p></div>
+        <div><h4 data-i18n="nf2_t">Light footprint</h4><p data-i18n="nf2_p">SQLite inside, no external service, caps on storage, connections and bandwidth. Raspberry Pi presets included.</p></div>
+        <div><h4 data-i18n="nf3_t">Self-healing</h4><p data-i18n="nf3_p">Nodes find each other with S/Kademlia and replicate packets to the other responsible nodes.</p></div>
+        <div><h4 data-i18n="nf4_t">Verifiable</h4><p data-i18n="nf4_p">Reproducible builds and GitHub build attestations, produced automatically by the CI: check that the binary matches the source.</p></div>
+      </div>
+    </div>
+    <div class="term reveal">
+      <div class="term-bar"><i></i><i></i><i></i><span>~/barking</span></div>
+<pre><span class="c"># build the relay</span>
+<span class="p">$</span> cargo build --release -p barking-node
+
+<span class="c"># create its key and database, then start it</span>
+<span class="p">$</span> barking-node init --config barking-node.toml
+<span class="p">$</span> barking-node run --config barking-node.toml
+
+<span class="c"># meanwhile, on a laptop: the CLI client</span>
+<span class="p">$</span> barking init --name laptop
+<span class="p">$</span> barking card --display-name Alice
+<span class="p">$</span> barking add '&lt;contact-card&gt;' --alias bob
+<span class="p">$</span> barking node add &lt;IP:port&gt; &lt;node-id&gt;
+<span class="p">$</span> barking send bob 'Hello!' --out ./packets
+<span class="p">$</span> barking sync</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section tint" id="roadmap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="rm_eyebrow">// roadmap</div>
+      <h2 class="h2" data-i18n="rm_h2">Built in the open, one layer at a time.</h2>
+      <p class="lead" data-i18n="rm_p">The protocol core, the command-line client and the relay network already work. The mobile apps and the radio mesh come next.</p>
+    </div>
+    <div class="roadmap">
+      <div class="phase done reveal">
+        <span class="phase-tag" data-i18n="ph1_tag">✓ working today</span>
+        <h3 data-i18n="ph1_t">Core &amp; relays</h3>
+        <ul>
+          <li data-i18n="ph1_1">Encrypted 1:1 messaging, receipts, history</li>
+          <li data-i18n="ph1_2">Command-line client</li>
+          <li data-i18n="ph1_3">Self-hosted QUIC relays</li>
+          <li data-i18n="ph1_4">S/Kademlia discovery and replication</li>
+          <li data-i18n="ph1_5">Multi-device, up to 8</li>
+          <li data-i18n="ph1_6">Reproducible, attested release builds</li>
+        </ul>
+      </div>
+      <div class="phase now reveal">
+        <span class="phase-tag" data-i18n="ph2_tag">● next</span>
+        <h3 data-i18n="ph2_t">Mobile apps</h3>
+        <ul>
+          <li data-i18n="ph2_1">Android app with transparency view</li>
+          <li data-i18n="ph2_2">iOS app with background wake-ups</li>
+          <li data-i18n="ph2_3">Public bootstrap relays</li>
+        </ul>
+      </div>
+      <div class="phase next reveal">
+        <span class="phase-tag" data-i18n="ph3_tag">○ then</span>
+        <h3 data-i18n="ph3_t">The mesh</h3>
+        <ul>
+          <li data-i18n="ph3_1">Bluetooth LE and mesh gateways</li>
+          <li data-i18n="ph3_2">Wi-Fi Aware / Multipeer</li>
+          <li data-i18n="ph3_3">LoRa stations on Raspberry Pi, then pocket modules</li>
+        </ul>
+      </div>
+      <div class="phase later reveal">
+        <span class="phase-tag" data-i18n="ph4_tag">○ later</span>
+        <h3 data-i18n="ph4_t">Groups, media, audit</h3>
+        <ul>
+          <li data-i18n="ph4_1">Serverless groups up to 500</li>
+          <li data-i18n="ph4_2">Photos and videos, chunked and encrypted</li>
+          <li data-i18n="ph4_3">External security audit</li>
+        </ul>
+      </div>
+    </div>
+    <div class="warning reveal">
+      <span style="font-size: 20px;">⚠</span>
+      <span data-i18n="rm_warn"><b>Barking is a prototype and has not been audited yet.</b> Don't rely on it where your safety is at stake. Try it, break it, and tell us what you find.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section dark cta" id="contribute">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="cta_eyebrow">// join us</div>
+    <h2 data-i18n="cta_h2">Help build a messenger nobody can switch off.</h2>
+    <p class="lead" data-i18n="cta_p">Barking is free software, made by NakoCorp and open to everyone. Every star, relay, bug report and pull request counts.</p>
+    <div class="cta-grid">
+      <a class="cta-card reveal" href="https://github.com/nakocorp/barking" target="_blank" rel="noopener">
+        <span style="font-size: 22px;">★</span>
+        <h4 data-i18n="cc1_t">Star and follow</h4>
+        <p data-i18n="cc1_p">Watch the repository to follow each step toward the apps and the mesh.</p>
+      </a>
+      <a class="cta-card reveal" href="#node">
+        <span style="font-size: 22px;">◎</span>
+        <h4 data-i18n="cc2_t">Run a relay</h4>
+        <p data-i18n="cc2_p">One binary, a small VPS or a Raspberry Pi. Make the network stronger.</p>
+      </a>
+      <a class="cta-card reveal" href="https://github.com/nakocorp/barking/issues" target="_blank" rel="noopener">
+        <span style="font-size: 22px;">⌘</span>
+        <h4 data-i18n="cc3_t">Contribute</h4>
+        <p data-i18n="cc3_p">Rust, Swift, Kotlin, radio, cryptography review, translations: there's room for you.</p>
+      </a>
+    </div>
+    <a class="btn btn-primary" href="https://github.com/nakocorp/barking" target="_blank" rel="noopener" data-i18n="cta_btn">Open the repository ↗</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <span class="logo-tile logo-tile-sm"><img src="assets/nakocorp-logo.svg" alt="" width="36" height="34"></span>
+      <span data-i18n="footer_copy">© 2026 NakoCorp. Barking is free software under AGPL-3.0.</span>
+    </div>
+    <div class="footer-links">
+      <a href="/en/blog/" data-i18n="nav_blog" data-blog-link>Blog</a>
+      <a href="https://github.com/nakocorp/barking" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/nakocorp" target="_blank" rel="noopener">github.com/nakocorp</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

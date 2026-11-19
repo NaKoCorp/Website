@@ -1,0 +1,13 @@
+{#- The article's own call to action (front matter `cta`, optional), then the
+    common block. -#}
+{%- set l = site.labels[lang] -%}
+<section class="cta-block">
+  <h2>{{ l.ctaTitle }}</h2>
+  {% if cta %}<p class="cta-own">{{ cta }}</p>{% endif %}
+  <p>{{ l.ctaBody }}</p>
+  <ul class="cta-links">
+    <li><a href="https://github.com/nakocorp/barking"><span aria-hidden="true">★</span> {{ l.ctaStar }}</a></li>
+    <li><a href="https://github.com/nakocorp/barking/tree/main/deploy">{{ l.ctaRelay }}</a></li>
+    <li><a href="https://github.com/sponsors/NaKoCorp">{{ l.ctaSponsor }}</a></li>
+  </ul>
+</section>

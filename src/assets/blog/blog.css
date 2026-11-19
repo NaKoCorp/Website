@@ -1,0 +1,391 @@
+/* Blog reading styles. Load after tokens.css. Only the semantic tokens are
+   used, except in code blocks, which keep the terminal colours in both themes. */
+
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/blog/fonts/fira-code-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/blog/fonts/fira-code-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/blog/fonts/fira-code-latin-600-normal.woff2") format("woff2");
+}
+
+/* BASE */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--size-reading);
+  line-height: var(--leading-prose);
+  -webkit-font-smoothing: antialiased;
+  /* The footer sits at the bottom of short pages. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body > main { flex: 1 0 auto; }
+img, svg, video { max-width: 100%; height: auto; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+h1, h2, h3, h4 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: var(--tracking-heading);
+  color: var(--fg);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* LAYOUT */
+.blog-wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+.article { max-width: var(--measure); margin: 0 auto; padding: 72px 0 var(--section-y); }
+
+/* KICKER: a code comment ("// notes"), in the accent colour. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--size-eyebrow);
+  line-height: 1.4;
+  color: var(--accent);
+  margin: 0 0 16px;
+}
+
+/* ARTICLE HEAD */
+.article-head { margin-bottom: 40px; }
+.article-head h1 {
+  font-size: var(--size-heading-section);
+  line-height: var(--leading-display);
+  margin: 0 0 18px;
+}
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  line-height: 1.5;
+  color: var(--fg-soft);
+}
+
+/* PROSE */
+.prose > * + * { margin-top: 1.1em; }
+.prose p, .prose ul, .prose ol, .prose blockquote, .prose figure, .prose table { margin-bottom: 0; }
+.prose h2 {
+  font-size: var(--size-heading-feature);
+  line-height: var(--leading-feature);
+  margin: 2em 0 0;
+}
+.prose h3 {
+  font-size: var(--size-heading-card);
+  line-height: var(--leading-card);
+  margin: 1.75em 0 0;
+}
+.prose h2 + *, .prose h3 + * { margin-top: 0.6em; }
+/* Linked headings (ids from the build) land below the sticky nav. */
+.prose :is(h2, h3)[id] { scroll-margin-top: 88px; }
+.prose ul, .prose ol { padding-left: 1.4em; }
+.prose li + li { margin-top: 0.35em; }
+.prose blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--accent);
+  color: var(--fg-muted);
+}
+.prose hr { border: 0; border-top: 1px solid var(--border); margin: 2.5em 0; }
+.prose figure { margin-left: 0; margin-right: 0; }
+.prose figcaption {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  color: var(--fg-soft);
+}
+.prose table { width: 100%; border-collapse: collapse; font-size: var(--size-body); }
+.prose th, .prose td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+.prose th { background: var(--surface-alt); font-family: var(--font-mono); font-weight: 600; font-size: var(--size-body-sm); }
+.prose a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+
+/* CODE: inline chips follow the theme; blocks keep term-bg and the terminal
+   palette in both themes. */
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  background: var(--surface-alt);
+  color: var(--fg);
+}
+.prose pre {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  border-radius: var(--radius-card);
+  background: var(--term-bg);
+  color: var(--term-fg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.7;
+  tab-size: 2;
+}
+.prose pre code { padding: 0; border: 0; border-radius: 0; font-size: inherit; background: none; color: inherit; }
+pre .token.keyword, pre .token.builtin, pre .token.function, pre .token.operator, pre .token.macro { color: var(--purple-l); }
+pre .token.string, pre .token.char, pre .token.attr-value { color: var(--ok); }
+pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
+
+/* PROTOTYPE WARNING */
+.warning {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 30px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--warn-border);
+  border-radius: var(--radius-card);
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.warning b, .warning strong { color: var(--warn-strong); }
+
+/* CALL TO ACTION */
+.cta-block {
+  margin-top: 56px;
+  padding: var(--card-pad);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+}
+.cta-block h2 {
+  font-size: var(--size-heading-feature);
+  line-height: var(--leading-feature);
+  margin: 0 0 8px;
+}
+.cta-block p { margin: 0; color: var(--fg-muted); }
+.cta-block a { font-family: var(--font-mono); font-weight: 600; font-size: var(--size-body); }
+
+/* POST LIST */
+.post-list { list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
+.post-item { padding: 28px 0; border-top: 1px solid var(--border); }
+.post-item:last-child { border-bottom: 1px solid var(--border); }
+.post-item h2 {
+  font-size: var(--size-heading-feature);
+  line-height: var(--leading-feature);
+  margin: 0 0 8px;
+}
+.post-item h2 a { color: var(--fg); }
+.post-item h2 a:hover { color: var(--accent); }
+.post-item p { margin: 8px 0 0; color: var(--fg-muted); }
+
+/* LANGUAGE SWITCH AND THEME TOGGLE */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  color: var(--fg-soft);
+}
+.lang-switch a { color: var(--fg-muted); }
+.lang-switch a:hover { color: var(--accent-hover); }
+.lang-switch [aria-current] { color: var(--fg); font-weight: 600; }
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  background: none;
+  color: var(--fg-muted);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease;
+}
+.theme-toggle[hidden] { display: none; }
+.theme-toggle:hover { color: var(--accent-hover); border-color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle { transition: none; }
+}
+
+/* NAV: the homepage header (src/assets/css/site.css, "NAV"), Ink in both
+   themes, so it reads the raw palette like the homepage does. */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--ink) 85%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--ink-line);
+  color: var(--on-dark);
+}
+.site-nav .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+.site-nav .brand { display: flex; align-items: center; gap: 10px; flex: none; color: var(--on-dark); }
+.site-nav .brand:hover { color: var(--white); }
+.site-nav .brand-name { font-family: var(--font-mono); font-weight: 600; font-size: 19px; }
+.site-nav .brand-by { font-family: var(--font-mono); font-size: 11px; color: var(--on-dark-muted); border-left: 1px solid var(--ink-line); padding-left: 10px; margin-left: 2px; }
+.site-nav .nav-links { display: flex; align-items: center; gap: 16px; }
+.site-nav .nav-links a { font-family: var(--font-mono); font-size: 13px; color: var(--on-dark-muted); }
+.site-nav .nav-links a:hover, .site-nav .nav-links a[aria-current] { color: var(--white); }
+.site-nav .nav-right { display: flex; align-items: center; gap: 20px; flex: none; white-space: nowrap; }
+.site-nav .nav-links a { white-space: nowrap; }
+.site-nav .lang-switch { font-size: 12px; color: var(--ink-line); }
+.site-nav .lang-switch a { color: var(--on-dark-muted); }
+.site-nav .lang-switch a:hover { color: var(--white); }
+.site-nav .lang-switch [aria-current] { color: var(--on-dark); }
+.site-nav .nav-gh { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink); background: var(--on-dark); padding: 9px 16px; border-radius: 4px; }
+.site-nav .nav-gh:hover { color: var(--ink); background: var(--white); }
+.site-nav .theme-toggle { min-width: 36px; min-height: 36px; font-size: 16px; color: var(--on-dark-muted); border-color: var(--ink-line); }
+.site-nav .theme-toggle:hover { color: var(--white); border-color: var(--purple-l); }
+.site-nav :focus-visible { outline-color: var(--purple-l); }
+@media (max-width: 1150px) {
+  .site-nav .nav-links a { font-size: 12px; }
+}
+@media (max-width: 1080px) {
+  .site-nav .nav-links { display: none; }
+}
+/* The theme toggle takes room the homepage nav does not need: the longer
+   French links are set at 12px and collapse a little earlier. */
+.site-nav .nav-links:lang(fr) { gap: 12px; }
+.site-nav .nav-links:lang(fr) a { font-size: 12px; }
+@media (max-width: 1150px) {
+  .site-nav .nav-links:lang(fr) { display: none; }
+}
+
+/* LOGO TILE: the NakoCorp mark, white, on the brand gradient (a brand-fixed
+   part, so it reads the raw palette). */
+.logo-tile {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-card);
+  background: linear-gradient(145deg, var(--logo-tile-top), var(--purple-d));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--net) 40%, transparent);
+}
+.logo-tile img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  max-width: none;
+  filter: brightness(0) invert(1);
+}
+.logo-tile-sm { width: 36px; height: 36px; border-radius: 9px; }
+
+/* INDEX HEAD */
+.blog-index { padding: 72px 0 var(--section-y); }
+.index-head { max-width: var(--measure); margin-bottom: 40px; }
+.index-head h1 { font-size: var(--size-heading-section); line-height: var(--leading-display); margin: 0 0 14px; }
+.index-lead { margin: 0; font-size: var(--size-lead); color: var(--fg-muted); }
+.index-empty { color: var(--fg-soft); }
+
+/* TAGS, CTA LINKS AND PREVIOUS / NEXT */
+.article-tags { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+.cta-block .cta-own { margin-bottom: 8px; color: var(--fg); }
+.cta-links { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 16px 0 0; padding: 0; }
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--grid-gap);
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.post-nav a { display: flex; flex-direction: column; gap: 4px; color: var(--fg); font-family: var(--font-mono); font-weight: 600; font-size: var(--size-body); }
+.post-nav a:hover { color: var(--accent-hover); }
+.post-nav a span { font-weight: 400; font-size: var(--size-caption); color: var(--fg-soft); }
+.post-nav-next { grid-column: 2; text-align: right; }
+
+/* DIAGRAMS */
+.diagram { display: block; width: 100%; color: var(--fg); }
+/* A figure scrolls sideways rather than shrink its diagram's text out of reach. */
+.prose figure:has(> .diagram) { overflow-x: auto; }
+
+/* FOOTER */
+.site-footer { border-top: 1px solid var(--border); background: var(--surface-alt); }
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  color: var(--fg-muted);
+}
+.footer-inner p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.footer-links a { color: var(--fg-muted); }
+.footer-links a:hover { color: var(--accent-hover); }
+
+/* FRENCHMARK: coq-light on Paper, coq-dark on Ink. */
+.french-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--fg-muted);
+}
+.french-mark img { display: block; }
+.french-mark .coq-dark { display: none; }
+[data-theme="dark"] .french-mark .coq-light { display: none; }
+[data-theme="dark"] .french-mark .coq-dark { display: block; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .blog-wrap { padding: 0 var(--gutter-mobile); }
+  .article { padding: 40px 0 var(--section-y-mobile); }
+  .article-head h1, .index-head h1 { font-size: var(--size-heading-mobile); }
+  .blog-index { padding: 40px 0 var(--section-y-mobile); }
+  .site-nav .brand-by { display: none; }
+  .site-nav .nav-right { gap: 10px; }
+  .site-nav .nav-gh { padding: 8px 12px; }
+  .site-nav .theme-toggle { min-width: 32px; min-height: 32px; }
+  .post-nav { grid-template-columns: 1fr; }
+  .post-nav-next { grid-column: 1; text-align: left; }
+  /* Below ~600px a 640-wide diagram would set its 13px labels under 8px. */
+  .prose figure > .diagram { min-width: 600px; }
+  /* A wide table scrolls on its own instead of widening the page. */
+  .prose table { display: block; overflow-x: auto; }
+}

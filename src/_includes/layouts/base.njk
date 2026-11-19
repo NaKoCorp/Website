@@ -1,0 +1,67 @@
+{#- Every blog page. `data-theme="light"` is the no-JS default; the theme
+    script replaces it before the first paint. -#}
+{%- set l = site.labels[lang] -%}
+{%- set pageTitle = (title + " · " + l.blogTitle) if title else l.blogTitle -%}
+{%- set pageDescription = description or l.blogDescription -%}
+{%- set canonical = site.url + page.url -%}
+{%- set ogImage = site.url + "/assets/blog/og-" + lang + ".png" -%}
+{#- hreflang alternates: an article and its translation in this build, x-default
+    on the English version; a list and the other list. -#}
+{%- if translationKey -%}
+  {%- set translation = { data: { translationKey: translationKey, lang: lang } } | translationOf(collections.posts) -%}
+  {%- if translation -%}
+    {%- set alternates = [{ lang: lang, url: page.url }, { lang: translation.data.lang, url: translation.url }] -%}
+  {%- else -%}
+    {%- set alternates = [{ lang: lang, url: page.url }] -%}
+  {%- endif -%}
+{%- else -%}
+  {%- set alternates = [{ lang: "en", url: "/en/blog/" }, { lang: "fr", url: "/fr/blog/" }] -%}
+{%- endif -%}
+<!doctype html>
+<html lang="{{ lang }}" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% include "partials/theme-script.njk" %}
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDescription }}">
+<link rel="canonical" href="{{ canonical }}">
+{%- for alt in alternates %}
+<link rel="alternate" hreflang="{{ alt.lang }}" href="{{ site.url }}{{ alt.url }}">
+{%- endfor %}
+{%- for alt in alternates %}{% if alt.lang == "en" %}
+<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ alt.url }}">
+{%- endif %}{% endfor %}
+<link rel="alternate" type="application/atom+xml" title="{{ l.feedTitle }}" href="/{{ lang }}/feed.xml">
+<meta property="og:type" content="{{ 'article' if translationKey else 'website' }}">
+<meta property="og:site_name" content="{{ l.blogTitle }}">
+<meta property="og:title" content="{{ title or l.blogTitle }}">
+<meta property="og:description" content="{{ pageDescription }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:locale" content="{{ 'fr_FR' if lang == 'fr' else 'en_US' }}">
+<meta property="og:locale:alternate" content="{{ 'en_US' if lang == 'fr' else 'fr_FR' }}">
+<meta property="og:image" content="{{ ogImage }}">
+{%- if translationKey %}
+<meta property="article:published_time" content="{{ page.date | isoDate }}">
+{%- if updated %}
+<meta property="article:modified_time" content="{{ updated | isoDate }}">
+{%- endif %}
+{%- endif %}
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title or l.blogTitle }}">
+<meta name="twitter:description" content="{{ pageDescription }}">
+<meta name="twitter:image" content="{{ ogImage }}">
+<link rel="icon" href="/assets/nakocorp-logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/blog/tokens.css">
+<link rel="stylesheet" href="/assets/blog/blog.css">
+</head>
+<body>
+{% include "partials/nav.njk" %}
+<main id="main">
+{{ content | safe }}
+</main>
+{% include "partials/footer.njk" %}
+</body>
+</html>

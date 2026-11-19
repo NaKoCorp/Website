@@ -1,0 +1,31 @@
+{#- Sample diagram: a message through one relay. Colours come from the theme
+    (currentColor and the semantic tokens); no blank line, so Markdown keeps it
+    as one HTML block. -#}
+{%- set t = {
+  en: { title: "A message through a relay", desc: "Alice's phone seals the message and hands it to a relay, which keeps it until Bob's phone fetches it.", alice: "Alice's phone", relay: "Relay", bob: "Bob's phone", sealed: "sealed envelope", fetched: "fetched later", note: "the relay only sees ciphertext" },
+  fr: { title: "Un message via un relais", desc: "Le téléphone d’Alice scelle le message et le confie à un relais, qui le garde jusqu’à ce que le téléphone de Bob le récupère.", alice: "Téléphone d’Alice", relay: "Relais", bob: "Téléphone de Bob", sealed: "enveloppe scellée", fetched: "récupérée plus tard", note: "le relais ne voit que du chiffré" }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 640 170" role="img" aria-labelledby="flow-title flow-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="flow-title">{{ t.title }}</title>
+<desc id="flow-desc">{{ t.desc }}</desc>
+<defs><marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+<g fill="var(--surface-card)" stroke="var(--border)" stroke-width="1.5">
+<rect x="10" y="40" width="160" height="56" rx="12"/>
+<rect x="470" y="40" width="160" height="56" rx="12"/>
+</g>
+<rect x="240" y="40" width="160" height="56" rx="12" fill="var(--surface-alt)" stroke="var(--accent)" stroke-width="1.5"/>
+<g fill="currentColor" text-anchor="middle">
+<text x="90" y="73">{{ t.alice }}</text>
+<text x="320" y="73" fill="var(--accent)" font-weight="600">{{ t.relay }}</text>
+<text x="550" y="73">{{ t.bob }}</text>
+</g>
+<g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#flow-arrow)">
+<path d="M172 68 H236"/>
+<path d="M402 68 H466" stroke-dasharray="5 4"/>
+</g>
+<g fill="var(--fg-soft)" font-size="11.5" text-anchor="middle">
+<text x="204" y="28">{{ t.sealed }}</text>
+<text x="434" y="28">{{ t.fetched }}</text>
+<text x="320" y="132">{{ t.note }}</text>
+</g>
+</svg>

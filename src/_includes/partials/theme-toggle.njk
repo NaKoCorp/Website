@@ -1,0 +1,4 @@
+{#- Hidden until the theme script runs: without JS there is nothing to toggle.
+    The button is named after the dark (Ink) theme and aria-pressed is "true"
+    while it is active, so the state is announced ("Dark theme, pressed"). -#}
+<button type="button" class="theme-toggle" aria-pressed="false" title="{{ site.labels[lang].themeToggle }}" hidden><span aria-hidden="true">◐</span><span class="visually-hidden">{{ site.labels[lang].themeDark }}</span></button>

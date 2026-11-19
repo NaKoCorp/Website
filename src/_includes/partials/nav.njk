@@ -1,0 +1,26 @@
+{#- Same header as the homepage (src/index.html): Ink bar in both themes,
+    Barking lockup, section links, EN / FR, GitHub button. The blog adds its
+    theme toggle at the end. -#}
+{%- set l = site.labels[lang] -%}
+<header class="site-nav">
+  <div class="blog-wrap nav-inner">
+    <a class="brand" href="/" aria-label="Barking">
+      <span class="logo-tile"><img src="/assets/nakocorp-logo.svg" alt="" width="48" height="45"></span>
+      <span class="brand-name">Barking</span>
+      <span class="brand-by">by NakoCorp</span>
+    </a>
+    <nav class="nav-links" aria-label="{{ l.navSections }}">
+      <a href="/#how">{{ l.navHow }}</a>
+      <a href="/#transparency">{{ l.navTransparency }}</a>
+      <a href="/#security">{{ l.navSecurity }}</a>
+      <a href="/#node">{{ l.navNode }}</a>
+      <a href="/#roadmap">{{ l.navRoadmap }}</a>
+      <a href="/{{ lang }}/blog/"{% if (page.url | string).indexOf("/" + lang + "/blog/") == 0 %} aria-current="page"{% endif %}>{{ l.blog }}</a>
+    </nav>
+    <div class="nav-right">
+      {% include "partials/lang-switch.njk" %}
+      <a class="nav-gh" href="https://github.com/nakocorp/barking" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      {% include "partials/theme-toggle.njk" %}
+    </div>
+  </div>
+</header>

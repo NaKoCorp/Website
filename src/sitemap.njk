@@ -1,0 +1,35 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>{{ site.url }}/</loc>
+  </url>
+{%- for lang in site.languages %}
+  <url>
+    <loc>{{ site.url }}/{{ lang }}/blog/</loc>
+{%- for alt in site.languages %}
+    <xhtml:link rel="alternate" hreflang="{{ alt }}" href="{{ site.url }}/{{ alt }}/blog/"/>
+{%- endfor %}
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}/en/blog/"/>
+  </url>
+{%- endfor %}
+{%- for post in collections.published_posts %}
+{%- set translation = post | translationOf(collections.published_posts) %}
+{%- set modified = post.data.updated or post.date %}
+  <url>
+    <loc>{{ site.url }}{{ post.url }}</loc>
+    <lastmod>{{ modified.toISOString().slice(0, 10) }}</lastmod>
+    <xhtml:link rel="alternate" hreflang="{{ post.data.lang }}" href="{{ site.url }}{{ post.url }}"/>
+{%- if translation %}
+    <xhtml:link rel="alternate" hreflang="{{ translation.data.lang }}" href="{{ site.url }}{{ translation.url }}"/>
+{%- endif %}
+{%- set enUrl = post.url if post.data.lang == "en" else (translation.url if translation) %}
+{%- if enUrl %}
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ enUrl }}"/>
+{%- endif %}
+  </url>
+{%- endfor %}
+</urlset>

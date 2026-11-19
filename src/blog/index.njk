@@ -1,0 +1,54 @@
+---
+permalink: /blog/
+eleventyExcludeFromCollections: true
+---
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  var root = document.documentElement;
+  var theme = null;
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") theme = t;
+  } catch (e) {}
+  if (!theme) theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  root.dataset.theme = theme;
+})();
+</script>
+<title>NakoCorp blog</title>
+<meta name="robots" content="noindex">
+<style>
+/* Brand values from tokens.css: Paper (paper, text, muted, purple) and Ink (ink, on-dark, on-dark-muted, purple-l). */
+:root, :root[data-theme="light"] { --surface: #FBFAFC; --fg: #1B1720; --fg-muted: #4A4356; --accent: #6640AF; }
+:root[data-theme="dark"] { --surface: #120E19; --fg: #F2EFF7; --fg-muted: #ABA0C2; --accent: #B9A6E0; }
+body { margin: 0; min-height: 100vh; display: grid; place-content: center; gap: 1rem; padding: 1.5rem; background: var(--surface); color: var(--fg); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; }
+h1 { margin: 0; font-size: 1.5rem; }
+p { margin: 0; color: var(--fg-muted); }
+nav { display: flex; gap: 1.5rem; justify-content: center; }
+a { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>NakoCorp blog</h1>
+<p>Choose a language / Choisissez une langue</p>
+<nav>
+  <a href="/en/blog/" hreflang="en" lang="en">English</a>
+  <a href="/fr/blog/" hreflang="fr" lang="fr">Fran&ccedil;ais</a>
+</nav>
+<script>
+(function () {
+  var lang = null;
+  try {
+    var saved = localStorage.getItem("nakocorp-lang");
+    if (saved === "en" || saved === "fr") lang = saved;
+  } catch (e) {}
+  if (!lang) lang = (navigator.language || "").slice(0, 2).toLowerCase() === "fr" ? "fr" : "en";
+  location.replace("/" + lang + "/blog/");
+})();
+</script>
+</body>
+</html>
