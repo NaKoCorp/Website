@@ -5,7 +5,7 @@
     other language's code, marked with that language. -#}
 {%- set otherLang = "fr" if lang == "en" else "en" -%}
 {%- set translation = ({ data: { translationKey: translationKey, lang: lang } } | translationOf(collections.posts)) if translationKey else undefined -%}
-{%- set otherUrl = translation.url if translation else "/" + otherLang + "/blog/" -%}
+{%- set otherUrl = translation.url if translation else (altUrl or "/" + otherLang + "/blog/") -%}
 {%- set current %}<span aria-current="true" lang="{{ lang }}">{{ lang | upper }}</span>{% endset -%}
 {%- set other %}<a href="{{ otherUrl }}" hreflang="{{ otherLang }}" aria-label="{{ site.labels[lang].readIn }}"><span lang="{{ otherLang }}">{{ otherLang | upper }}</span></a>{% endset -%}
 <span class="lang-switch">{{ (current if lang == "en" else other) | safe }}<span aria-hidden="true">/</span>{{ (other if lang == "en" else current) | safe }}</span>
