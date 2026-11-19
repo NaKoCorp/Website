@@ -1,7 +1,9 @@
 {#- Every blog page. `data-theme="light"` is the no-JS default; the theme
     script replaces it before the first paint. -#}
 {%- set l = site.labels[lang] -%}
-{%- set pageTitle = (title + " · " + l.blogTitle) if title else l.blogTitle -%}
+{#- A standalone page (privacy, support) belongs to the site, not the blog. -#}
+{%- set siteName = "NakoCorp" if altUrl else l.blogTitle -%}
+{%- set pageTitle = (title + " · " + siteName) if title else siteName -%}
 {%- set pageDescription = description or l.blogDescription -%}
 {%- set canonical = site.url + page.url -%}
 {%- set ogImage = site.url + "/assets/blog/og-" + lang + ".png" -%}
@@ -14,6 +16,9 @@
   {%- else -%}
     {%- set alternates = [{ lang: lang, url: page.url }] -%}
   {%- endif -%}
+{%- elif altUrl -%}
+  {#- A standalone page (layouts/page.njk) names its translation itself. -#}
+  {%- set alternates = [{ lang: lang, url: page.url }, { lang: ("fr" if lang == "en" else "en"), url: altUrl }] -%}
 {%- else -%}
   {%- set alternates = [{ lang: "en", url: "/en/blog/" }, { lang: "fr", url: "/fr/blog/" }] -%}
 {%- endif -%}
@@ -38,7 +43,7 @@
 <link rel="alternate" type="application/atom+xml" title="{{ l.feedTitle }}" href="/{{ lang }}/feed.xml">
 <link rel="alternate" type="application/rss+xml" title="{{ l.rssTitle }}" href="/{{ lang }}/rss.xml">
 <meta property="og:type" content="{{ 'article' if translationKey else 'website' }}">
-<meta property="og:site_name" content="{{ l.blogTitle }}">
+<meta property="og:site_name" content="{{ siteName }}">
 <meta property="og:title" content="{{ title or l.blogTitle }}">
 <meta property="og:description" content="{{ pageDescription }}">
 <meta property="og:url" content="{{ canonical }}">

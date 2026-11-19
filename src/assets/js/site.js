@@ -244,7 +244,9 @@
     cc3_t: "Contribuer",
     cc3_p: "Rust, Swift, Kotlin, radio, relecture crypto, traductions : il y a de la place pour vous.",
     cta_btn: "Ouvrir le dépôt ↗",
-    footer_copy: "© 2026 NakoCorp. Barking est un logiciel libre sous AGPL-3.0."
+    footer_copy: "© 2026 NakoCorp. Barking est un logiciel libre sous AGPL-3.0.",
+    footer_privacy: "Confidentialité",
+    footer_support: "Assistance"
   };
 
   var STORAGE_KEY = "nakocorp-lang";
@@ -259,6 +261,11 @@
     });
     document.querySelectorAll("[data-blog-link]").forEach(function (a) {
       a.setAttribute("href", "/" + lang + "/blog/");
+    });
+    // Pages whose French URL differs: the English one stays in href.
+    document.querySelectorAll("[data-href-fr]").forEach(function (a) {
+      if (!a._enHref) a._enHref = a.getAttribute("href");
+      a.setAttribute("href", lang === "fr" ? a.getAttribute("data-href-fr") : a._enHref);
     });
     document.querySelectorAll("[data-lang-btn]").forEach(function (btn) {
       btn.setAttribute("aria-pressed", String(btn.getAttribute("data-lang-btn") === lang));

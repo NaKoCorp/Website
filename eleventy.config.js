@@ -65,6 +65,13 @@ export default function (eleventyConfig) {
     );
     return all;
   });
+  // Standalone pages (privacy policy, support), for the sitemap.
+  eleventyConfig.addCollection("pages", (api) =>
+    api
+      .getAll()
+      .filter((item) => item.data.layout === "layouts/page.njk")
+      .sort((a, b) => a.url.localeCompare(b.url)),
+  );
   for (const lang of ["en", "fr"]) {
     eleventyConfig.addCollection(`posts_${lang}`, (api) =>
       // Unpublished drafts are already excluded from collections (blog-data.js);

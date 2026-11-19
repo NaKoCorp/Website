@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+---
+{#- A standalone page in one language (privacy policy, support): no cover, no
+    reading time, no call to action. `altUrl` is its translation; `updated` is
+    the date shown under the title. -#}
+{%- set l = site.labels[lang] -%}
+<article>
+  <header class="article-hero">
+    <div class="blog-wrap">
+      <div class="article-head">
+        <p class="eyebrow">// {{ eyebrow }}</p>
+        <h1>{{ title }}</h1>
+        <p class="article-lead">{{ description }}</p>
+        {%- if updated %}
+        <p class="article-meta"><span>{{ l.updatedOn }} <time datetime="{{ updated | isoDate }}">{{ updated | formatDate(lang) }}</time></span></p>
+        {%- endif %}
+      </div>
+    </div>
+  </header>
+  <div class="blog-wrap article-layout">
+    <div class="article">
+      <div class="prose">
+{{ content | safe }}
+      </div>
+    </div>
+  </div>
+</article>

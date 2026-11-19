@@ -16,6 +16,14 @@ eleventyExcludeFromCollections: true
     <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}/en/blog/"/>
   </url>
 {%- endfor %}
+{%- for p in collections.pages %}
+  <url>
+    <loc>{{ site.url }}{{ p.url }}</loc>
+    <xhtml:link rel="alternate" hreflang="{{ p.data.lang }}" href="{{ site.url }}{{ p.url }}"/>
+    <xhtml:link rel="alternate" hreflang="{{ 'fr' if p.data.lang == 'en' else 'en' }}" href="{{ site.url }}{{ p.data.altUrl }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ p.url if p.data.lang == 'en' else p.data.altUrl }}"/>
+  </url>
+{%- endfor %}
 {%- for post in collections.published_posts %}
 {%- set translation = post | translationOf(collections.published_posts) %}
 {%- set modified = post.data.updated or post.date %}
