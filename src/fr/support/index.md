@@ -35,7 +35,7 @@ Ouvrez la conversation, touchez le nom du contact et comparez avec lui le code d
 - **En attente** : le message est scellé et enregistré sur votre iPhone, en attente de réseau.
 - **Sur le réseau** : un relais le garde pour votre contact.
 - **Reçu** : l’appareil de votre contact l’a confirmé (deux coches).
-- **Non distribué** : aucune confirmation n’est revenue avant l’expiration du message, au bout de 24 heures environ. Touchez **Réessayer** pour l’envoyer à nouveau.
+- **Non distribué** : aucune confirmation n’est revenue avant l’expiration du message, au bout de 7 jours environ. Touchez **Réessayer** pour l’envoyer à nouveau.
 
 ## Notifications
 
