@@ -35,7 +35,7 @@ Open the conversation, tap the contact's name, and compare the safety code with 
 - **Pending**: the message is sealed and saved on your iPhone, waiting for a network.
 - **On the network**: a relay holds it for your contact.
 - **Received**: your contact's device confirmed it (two checkmarks).
-- **Not delivered**: no confirmation came back before the message expired, after about 24 hours. Tap **Retry** to send it again.
+- **Not delivered**: no confirmation came back before the message expired, after about 7 days. Tap **Retry** to send it again.
 
 ## Notifications
 

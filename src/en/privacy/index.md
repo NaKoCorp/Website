@@ -6,7 +6,7 @@ altUrl: /fr/confidentialite/
 eyebrow: privacy
 layout: layouts/page.njk
 permalink: /en/privacy/
-updated: 2026-11-19
+updated: 2026-11-20
 ---
 
 This policy covers the Barking app for iPhone and the network services NakoCorp runs for it (relay nodes and the notification relay). Barking is free software under AGPL-3.0: every statement below can be checked in [the source code](https://github.com/nakocorp/barking).
@@ -41,7 +41,7 @@ Your contacts, your messages, your keys and the app's journal are stored in one 
 
 ## Who can see what
 
-**Nodes** (relays) store sealed packets for at most 24 hours, plus the receipt that a packet arrived. Like any internet server, a node sees the IP address your iPhone connects from. Nodes use addresses only in memory, to limit abuse, for the duration of the connection: they do not write them to disk or to their logs. Their logs contain no address, no mailbox and no message.
+**Nodes** (relays) store sealed packets for at most 7 days, plus the receipt that a packet arrived. Like any internet server, a node sees the IP address your iPhone connects from. Nodes use addresses only in memory, to limit abuse, for the duration of the connection: they do not write them to disk or to their logs. Their logs contain no address, no mailbox and no message.
 
 **The notification relay** (`barking-push`) opens a sealed token only to ask Apple to wake an iPhone. It stores nothing: no token, no address, no mailbox. To limit abuse it keeps, in memory and for at most an hour, a hash of the token.
 

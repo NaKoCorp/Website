@@ -6,7 +6,7 @@ altUrl: /en/privacy/
 eyebrow: confidentialité
 layout: layouts/page.njk
 permalink: /fr/confidentialite/
-updated: 2026-11-19
+updated: 2026-11-20
 ---
 
 Cette politique couvre l’app Barking pour iPhone et les services réseau que NakoCorp exploite pour elle (nœuds relais et relais de notifications). Barking est un logiciel libre sous AGPL-3.0 : chaque affirmation ci-dessous peut être vérifiée dans [le code source](https://github.com/nakocorp/barking).
@@ -41,7 +41,7 @@ Vos contacts, vos messages, vos clés et le journal de l’app sont stockés dan
 
 ## Qui voit quoi
 
-**Les nœuds** (relais) stockent les paquets scellés 24 heures au plus, ainsi que l’accusé indiquant qu’un paquet est arrivé. Comme tout serveur sur internet, un nœud voit l’adresse IP depuis laquelle votre iPhone se connecte. Les nœuds n’utilisent les adresses qu’en mémoire, pour limiter les abus, le temps de la connexion : ils ne les écrivent ni sur disque ni dans leurs journaux. Leurs journaux ne contiennent ni adresse, ni boîte aux lettres, ni message.
+**Les nœuds** (relais) stockent les paquets scellés 7 jours au plus, ainsi que l’accusé indiquant qu’un paquet est arrivé. Comme tout serveur sur internet, un nœud voit l’adresse IP depuis laquelle votre iPhone se connecte. Les nœuds n’utilisent les adresses qu’en mémoire, pour limiter les abus, le temps de la connexion : ils ne les écrivent ni sur disque ni dans leurs journaux. Leurs journaux ne contiennent ni adresse, ni boîte aux lettres, ni message.
 
 **Le relais de notifications** (`barking-push`) n’ouvre un jeton scellé que pour demander à Apple de réveiller un iPhone. Il ne stocke rien : ni jeton, ni adresse, ni boîte aux lettres. Pour limiter les abus, il garde en mémoire, une heure au plus, une empreinte du jeton.
 
