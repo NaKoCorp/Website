@@ -74,12 +74,13 @@ test("sitemap links each article to its translation and omits /blog/", async () 
 
 test("drafts never reach the feeds or the sitemap, even with BLOG_DRAFTS=1", async () => {
   const drafts = {
-    "en/blog/secret.md": article("Secret", "draft: true\n").replace("pair", "hidden"),
-    "fr/blog/secret-fr.md": article("Secret FR", "draft: true\n").replace("pair", "hidden"),
+    // A marker no real article uses: the build copies the real articles too.
+    "en/blog/draft-canary.md": article("Draft canary", "draft: true\n").replace("pair", "hidden"),
+    "fr/blog/draft-canary-fr.md": article("Draft canary FR", "draft: true\n").replace("pair", "hidden"),
   };
   for (const out of [await build(drafts), await build(drafts, { drafts: true })]) {
     for (const text of [out.enFeed, out.frFeed, out.sitemap]) {
-      assert.ok(!text.includes("secret"), "draft leaked");
+      assert.ok(!/draft.canary/i.test(text), "draft leaked");
     }
     assert.ok(out.sitemap.includes("/en/blog/hello/"));
   }
