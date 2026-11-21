@@ -1,0 +1,36 @@
+{#- Cover of article 02, drawn with the theme's colours. Decorative: the title
+    sits next to it. A terminal runs the tutorial's commands; the last line is
+    the message (purple), which leaves as a sealed packet along a dashed
+    net-coloured path and lands as a bubble on a phone. The packet moves only
+    without reduced motion. -#}
+<svg class="cover-art" viewBox="0 0 640 360" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<rect width="640" height="360" fill="var(--cover-bg)"/>
+<g fill="none" stroke="var(--cover-grid)" stroke-width="1" opacity=".6">
+<path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640"/>
+<path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/>
+</g>
+<rect x="64" y="84" width="300" height="192" rx="12" fill="var(--term-bg)" stroke="var(--ink-line)"/>
+<path d="M64 112H364" stroke="var(--ink-line)"/>
+<g fill="var(--ink-line)"><circle cx="82" cy="98" r="4.5"/><circle cx="98" cy="98" r="4.5"/><circle cx="114" cy="98" r="4.5"/></g>
+<g fill="none" stroke="var(--net)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M84 136l6 4-6 4M84 192l6 4-6 4M84 248l6 4-6 4"/>
+</g>
+<g fill="var(--term-fg)" opacity=".55">
+<rect x="100" y="136" width="64" height="8" rx="4"/><rect x="170" y="136" width="96" height="8" rx="4"/>
+<rect x="100" y="192" width="64" height="8" rx="4"/><rect x="170" y="192" width="52" height="8" rx="4"/>
+<rect x="100" y="248" width="64" height="8" rx="4"/>
+</g>
+<g fill="var(--term-comment)">
+<rect x="100" y="160" width="140" height="8" rx="4"/><rect x="100" y="216" width="180" height="8" rx="4"/>
+</g>
+<rect x="170" y="246" width="104" height="12" rx="6" fill="var(--purple)"/>
+<path d="M284 252C380 252 404 180 484 180" fill="none" stroke="var(--transport-net)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round"/>
+<rect x="484" y="116" width="72" height="124" rx="14" fill="var(--cover-node)" stroke="var(--cover-line)" stroke-width="1.5"/>
+<rect x="510" y="126" width="20" height="3" rx="1.5" fill="var(--cover-line)"/>
+<rect x="496" y="150" width="34" height="12" rx="6" fill="var(--cover-chip)"/>
+<rect x="496" y="174" width="48" height="12" rx="6" fill="var(--purple)"/>
+<g class="cover-packet cover-packet-first">
+<rect x="-14" y="-10" width="28" height="20" rx="4" fill="var(--accent)"/>
+<path d="M-14 -7L0 3L14 -7" fill="none" stroke="var(--cover-node)" stroke-width="1.5"/>
+</g>
+</svg>

@@ -1,0 +1,68 @@
+{#- Article 03: the client deposits a packet on one responsible (net
+    transport colour, it is a message path), that relay copies it to the
+    four other responsibles in its hourly replication pass (neutral dashed
+    arrows, node to node), the recipient fetches from the best scored one
+    (net colour). One responsible lost the packet: crossed out and dashed,
+    with its score penalty written out, not shown by colour alone.
+    Coordinates come from a small generator script. No blank line
+    (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "One deposit, then relays replicate to the other responsibles",
+    desc: "Alice deposits a packet on one of the five relays responsible for the mailbox. In its hourly replication pass, that relay copies the packet to the four others. Bob fetches it from the relay he scores best. One relay lost the packet: Bob's device lowers its score by 0.3.",
+    resp: "5 responsibles of the mailbox", deposit: "deposit", repl: "hourly replication", fetch: "fetch",
+    relay: "relay", lost: "lost it → score −0.3"
+  },
+  fr: {
+    title: "Un dépôt, puis les relais recopient vers les autres responsables",
+    desc: "Alice dépose un paquet chez l’un des cinq relais responsables de la boîte. Lors de sa réplication horaire, ce relais le recopie chez les quatre autres. Bob le relève chez le relais qu’il note le mieux. Un relais a perdu le paquet : l’appareil de Bob baisse son score de 0,3.",
+    resp: "5 responsables de la boîte", deposit: "dépôt", repl: "réplication horaire", fetch: "relève",
+    relay: "relais", lost: "l’a perdu → score −0,3"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 320" role="img" aria-labelledby="deposit-replication-title deposit-replication-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="deposit-replication-title">{{ t.title }}</title>
+<desc id="deposit-replication-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="deposit-replication-net" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--transport-net)"/></marker>
+<marker id="deposit-replication-copy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--fg-muted)"/></marker>
+</defs>
+<text x="360" y="22" text-anchor="middle" font-size="12" fill="var(--fg-muted)">{{ t.resp }}</text>
+<g fill="none" stroke="var(--fg-muted)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round">
+<path d="M291.8 119.5L333.4 89.4" marker-end="url(#deposit-replication-copy)"/>
+<path d="M316.8 137.7L401.2 137.7" marker-end="url(#deposit-replication-copy)"/>
+<path d="M291.8 155.9L391 227.9" marker-end="url(#deposit-replication-copy)"/>
+<path d="M273.6 158.5L295 224.6" marker-end="url(#deposit-replication-copy)"/>
+</g>
+<g fill="none" stroke="var(--transport-net)" stroke-width="2" stroke-linecap="round">
+<path d="M140 168C200 168 156.8 137.7 214.8 137.7" marker-end="url(#deposit-replication-net)"/>
+<path d="M503.2 137.7C563.2 137.7 520 168 574 168" marker-end="url(#deposit-replication-net)"/>
+</g>
+<g fill="var(--surface-alt)" stroke-width="1.5">
+<rect x="314" y="53" width="92" height="34" rx="17" stroke="currentColor"/>
+<rect x="407.2" y="120.7" width="92" height="34" rx="17" stroke="currentColor"/>
+<rect x="371.6" y="230.3" width="92" height="34" rx="17" stroke="var(--danger)" stroke-dasharray="4 4"/>
+<rect x="256.4" y="230.3" width="92" height="34" rx="17" stroke="currentColor"/>
+<rect x="220.8" y="120.7" width="92" height="34" rx="17" stroke="currentColor"/>
+</g>
+<g font-size="12" fill="currentColor" text-anchor="middle">
+<text x="360" y="74">{{ t.relay }}</text>
+<text x="453.2" y="141.7">{{ t.relay }}</text>
+<text x="417.6" y="251.3">{{ t.relay }}</text>
+<text x="302.4" y="251.3">{{ t.relay }}</text>
+<text x="266.8" y="141.7">{{ t.relay }}</text>
+</g>
+<path d="M387.6 236.3L447.6 258.3M387.6 258.3L447.6 236.3" stroke="var(--danger)" stroke-width="2" stroke-linecap="round"/>
+<text x="417.6" y="286.3" text-anchor="middle" font-size="12" fill="var(--danger)">{{ t.lost }}</text>
+<text x="408" y="182" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.repl }}</text>
+<g fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5">
+<rect x="40" y="120" width="100" height="96" rx="14"/>
+<rect x="580" y="120" width="100" height="96" rx="14"/>
+</g>
+<text x="90" y="173" text-anchor="middle" font-weight="600" fill="currentColor">Alice</text>
+<text x="630" y="173" text-anchor="middle" font-weight="600" fill="currentColor">Bob</text>
+<g font-size="12" text-anchor="middle" fill="var(--accent)">
+<text x="90" y="240">{{ t.deposit }}</text>
+<text x="630" y="240">{{ t.fetch }}</text>
+</g>
+</svg>

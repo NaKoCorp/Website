@@ -1,0 +1,66 @@
+{#- Article 03: a mailbox key sits on the ring of node identifiers; its 5
+    closest nodes (XOR distance, drawn here as nearness on the ring) are its
+    responsibles. Conversation mailboxes change every day, so the key and the
+    responsibles move. No message path here, so no transport colour: the
+    responsibles are filled accent dots, the others hollow. Coordinates come
+    from a small generator script. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "A mailbox lives on the five closest relays, and moves every day",
+    desc: "Two rings of node identifiers, the same network on two days. On day N the mailbox key falls in one place and the five nodes closest to it are its responsibles. On day N+1 the conversation uses a new mailbox, its key falls elsewhere, and five other nodes are responsible.",
+    key: "mailbox key", resp: "responsibles", ids: "node IDs", dayN: "day N", dayN1: "day N+1"
+  },
+  fr: {
+    title: "Une boîte vit sur les cinq relais les plus proches et change chaque jour",
+    desc: "Deux anneaux d’identifiants de nœuds, le même réseau deux jours de suite. Le jour N, la clé de la boîte tombe à un endroit et les cinq nœuds les plus proches en sont les responsables. Le jour N+1, la conversation utilise une nouvelle boîte, sa clé tombe ailleurs et cinq autres nœuds en sont responsables.",
+    key: "clé de la boîte", resp: "responsables", ids: "identifiants", dayN: "jour N", dayN1: "jour N+1"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 320" role="img" aria-labelledby="mailbox-placement-title mailbox-placement-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="mailbox-placement-title">{{ t.title }}</title>
+<desc id="mailbox-placement-desc">{{ t.desc }}</desc>
+<circle cx="180" cy="160" r="100" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+<path d="M181.7 60A100 100 0 0 1 274 125.8" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round" opacity=".16"/>
+<circle cx="193.9" cy="61" r="6.5" fill="var(--accent)"/>
+<circle cx="217.5" cy="67.3" r="6.5" fill="var(--accent)"/>
+<circle cx="235.9" cy="77.1" r="6.5" fill="var(--accent)"/>
+<circle cx="256.6" cy="95.7" r="6.5" fill="var(--accent)"/>
+<circle cx="269.1" cy="114.6" r="6.5" fill="var(--accent)"/>
+<circle cx="279.6" cy="168.7" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="256.6" cy="224.3" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="214.2" cy="254" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="145.8" cy="254" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="105.7" cy="226.9" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="83.4" cy="185.9" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="80" cy="160" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="86" cy="125.8" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="115.7" cy="83.4" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="154.1" cy="63.4" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<path d="M250.1 76.5L258.4 66.5" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+<text x="266.1" y="61.4" text-anchor="start" font-size="12" fill="var(--accent)">{{ t.key }}</text>
+<text x="224.1" y="102.1" text-anchor="end" font-size="12" fill="currentColor">{{ t.resp }}</text>
+<text x="180" y="164" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.ids }}</text>
+<text x="180" y="304" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.dayN }}</text>
+<circle cx="540" cy="160" r="100" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+<path d="M517.5 257.4A100 100 0 0 1 450.9 114.6" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round" opacity=".16"/>
+<circle cx="553.9" cy="61" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="577.5" cy="67.3" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="595.9" cy="77.1" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="616.6" cy="95.7" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="629.1" cy="114.6" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="639.6" cy="168.7" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="616.6" cy="224.3" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="574.2" cy="254" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="505.8" cy="254" r="6.5" fill="var(--accent)"/>
+<circle cx="465.7" cy="226.9" r="6.5" fill="var(--accent)"/>
+<circle cx="443.4" cy="185.9" r="6.5" fill="var(--accent)"/>
+<circle cx="440" cy="160" r="6.5" fill="var(--accent)"/>
+<circle cx="446" cy="125.8" r="6.5" fill="var(--accent)"/>
+<circle cx="475.7" cy="83.4" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="514.1" cy="63.4" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<path d="M441.2 206.1L429.4 211.6" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+<text x="418.6" y="220.6" text-anchor="end" font-size="12" fill="var(--accent)">{{ t.key }}</text>
+<text x="471.1" y="196.1" text-anchor="start" font-size="12" fill="currentColor">{{ t.resp }}</text>
+<text x="540" y="164" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.ids }}</text>
+<text x="540" y="304" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.dayN1 }}</text>
+</svg>
