@@ -1,0 +1,53 @@
+{#- Article 04: what a hostile relay sees of a Barking packet, as three nested
+    layers. Outer: the connection (client IP, timing), visible. Middle: the
+    clear header and its fields, visible. Inner: the sealed content, which
+    only the recipient's devices open. No Noise XX layer (that belongs to the
+    planned mesh). No transport colour: nothing here is a message path.
+    No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "What a hostile relay sees in a Barking packet",
+    desc: "Three nested layers. The connection, with the client's IP address and timing, is visible to the relay. The clear header is visible too: version, type, hops left, packet ID, expiry rounded to 10 minutes, mailbox and size tier. The sealed content, holding the sender, the message and the receipt secret, opens only on the recipient's devices.",
+    conn: "connection", connWhat: "client IP, timing",
+    head: "clear header", fields: ["version", "type", "hops left", "packet ID", "expiry (10 min)", "mailbox", "size tier"],
+    body: "sealed content", bodyWhat: "sender, message, receipt secret", only: "only the recipient's devices",
+    sees: "the relay sees", blind: "the relay sees nothing"
+  },
+  fr: {
+    title: "Ce qu’un relais hostile voit d’un paquet Barking",
+    desc: "Trois couches emboîtées. La connexion, avec l’adresse IP du client et l’heure, est visible du relais. L’en-tête en clair l’est aussi : version, type, sauts restants, identifiant de paquet, expiration arrondie à 10 minutes, boîte aux lettres et palier de taille. Le contenu scellé, qui porte l’expéditeur, le message et le secret d’accusé, ne s’ouvre que sur les appareils du destinataire.",
+    conn: "connexion", connWhat: "IP du client, heure",
+    head: "en-tête en clair", fields: ["version", "type", "sauts restants", "id de paquet", "expiration (10 min)", "boîte aux lettres", "palier de taille"],
+    body: "contenu scellé", bodyWhat: "expéditeur, message, secret d’accusé", only: "seulement les appareils du destinataire",
+    sees: "le relais voit", blind: "le relais ne voit rien"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 360" role="img" aria-labelledby="relay-view-title relay-view-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="relay-view-title">{{ t.title }}</title>
+<desc id="relay-view-desc">{{ t.desc }}</desc>
+<rect x="24" y="20" width="672" height="320" rx="20" fill="none" stroke="var(--fg-muted)" stroke-width="1.5" stroke-dasharray="6 6"/>
+<text x="48" y="50" font-weight="600" fill="currentColor">{{ t.conn }}</text>
+<text x="48" y="70" font-size="12" fill="var(--fg-muted)">{{ t.connWhat }}</text>
+<text x="672" y="50" text-anchor="end" font-size="12" fill="var(--fg-muted)">{{ t.sees }}</text>
+<rect x="48" y="88" width="624" height="228" rx="14" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="72" y="116" font-weight="600" fill="currentColor">{{ t.head }}</text>
+<text x="648" y="116" text-anchor="end" font-size="12" fill="var(--fg-muted)">{{ t.sees }}</text>
+{%- set xs = [72, 152, 212, 334, 72, 266, 446] -%}
+{%- set ys = [134, 134, 134, 134, 170, 170, 170] -%}
+{%- set ws = [72, 52, 114, 120, 186, 172, 140] %}
+<g font-size="12" fill="currentColor">
+{%- for f in t.fields %}
+<rect x="{{ xs[loop.index0] }}" y="{{ ys[loop.index0] }}" width="{{ ws[loop.index0] }}" height="26" rx="6" fill="var(--surface-alt)" stroke="var(--border-strong)"/>
+<text x="{{ xs[loop.index0] + ws[loop.index0] / 2 }}" y="{{ ys[loop.index0] + 17 }}" text-anchor="middle">{{ f }}</text>
+{%- endfor %}
+</g>
+<rect x="72" y="214" width="576" height="82" rx="10" fill="var(--purple)"/>
+<g transform="translate(108 255)">
+<path d="M-7 -4V-10a7 7 0 0 1 14 0V-4" fill="none" stroke="#fff" stroke-width="2.5"/>
+<rect x="-11" y="-4" width="22" height="16" rx="3" fill="#fff"/>
+</g>
+<text x="136" y="244" font-weight="600" fill="#fff">{{ t.body }}</text>
+<text x="136" y="264" font-size="12" fill="#fff">{{ t.bodyWhat }}</text>
+<text x="136" y="282" font-size="12" fill="#fff">{{ t.only }}</text>
+<text x="632" y="244" text-anchor="end" font-size="12" fill="#fff">{{ t.blind }}</text>
+</svg>

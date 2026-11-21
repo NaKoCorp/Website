@@ -1,0 +1,49 @@
+{#- Article 04: what a hostile relay sees, can do and cannot do, as three
+    columns of short labels taken from the article's sections. The column
+    names carry the meaning; colour only repeats it (threat for "can",
+    purple for "cannot"). No transport colour. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "What a hostile relay sees, can do and cannot do",
+    desc: "Sees: the client's IP address, which mailboxes it fetches, packet IDs, expiry to 10 minutes, size tier, time of deposit. Can: lose or delay packets, answer nothing here, link deposit and fetch, spot a first message, flood an introduction mailbox, sit near an introduction mailbox. Cannot: read a message, learn the sender, forge or modify, replay an old message, fake a delivery, impersonate a relay, add a device.",
+    cols: [
+      { name: "Sees", items: ["client IP", "mailboxes fetched", "packet ID", "expiry (10 min)", "size tier", "time of deposit"] },
+      { name: "Can", items: ["lose or delay", "say \"nothing here\"", "link deposit and fetch", "spot a first message", "flood an intro mailbox", "sit near an intro mailbox"] },
+      { name: "Cannot", items: ["read a message", "learn the sender", "forge or modify", "replay an old message", "fake a delivery", "impersonate a relay", "add a device"] }
+    ]
+  },
+  fr: {
+    title: "Ce qu’un relais hostile voit, peut faire et ne peut pas faire",
+    desc: "Voit : l’adresse IP du client, les boîtes qu’il relève, les identifiants de paquet, l’expiration à 10 minutes près, le palier de taille, l’heure du dépôt. Peut : perdre ou retarder des paquets, répondre rien ici, relier dépôt et relève, repérer un premier message, inonder une boîte d’introduction, se placer près d’une boîte d’introduction. Ne peut pas : lire un message, savoir qui envoie, forger ou modifier, rejouer un vieux message, simuler une livraison, usurper un relais, ajouter un appareil.",
+    cols: [
+      { name: "Voit", items: ["IP du client", "boîtes relevées", "id de paquet", "expiration (10 min)", "palier de taille", "heure du dépôt"] },
+      { name: "Peut", items: ["perdre ou retarder", "dire « rien ici »", "relier dépôt et relève", "repérer un 1er message", "inonder une boîte d’intro", "viser une boîte d’intro"] },
+      { name: "Ne peut pas", items: ["lire un message", "savoir qui envoie", "forger ou modifier", "rejouer un vieux message", "simuler une livraison", "usurper un relais", "ajouter un appareil"] }
+    ]
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 360" role="img" aria-labelledby="sees-can-cannot-title sees-can-cannot-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="sees-can-cannot-title">{{ t.title }}</title>
+<desc id="sees-can-cannot-desc">{{ t.desc }}</desc>
+{%- set colours = ["var(--fg-muted)", "var(--danger)", "var(--accent)"] %}
+{%- for col in t.cols %}
+{%- set x = 6 + loop.index0 * 240 %}
+{%- set c = colours[loop.index0] %}
+{%- set outer = loop.index0 %}
+<rect x="{{ x }}" y="24" width="228" height="312" rx="14" fill="var(--surface-card)" stroke="var(--border-strong)" stroke-width="1.5"/>
+<rect x="{{ x + 20 }}" y="40" width="28" height="4" rx="2" fill="{{ c }}"/>
+<text x="{{ x + 20 }}" y="68" font-size="14" font-weight="600" fill="currentColor">{{ col.name }}</text>
+<path d="M{{ x + 20 }} 84H{{ x + 208 }}" stroke="var(--border-strong)"/>
+{%- for item in col.items %}
+{%- set y = 112 + loop.index0 * 32 %}
+{%- if outer == 2 %}
+<path d="M{{ x + 21 }} {{ y - 8 }}l7 7M{{ x + 28 }} {{ y - 8 }}l-7 7" stroke="{{ c }}" stroke-width="1.8" stroke-linecap="round"/>
+{%- elif outer == 1 %}
+<circle cx="{{ x + 24.5 }}" cy="{{ y - 4.5 }}" r="4" fill="{{ c }}"/>
+{%- else %}
+<circle cx="{{ x + 24.5 }}" cy="{{ y - 4.5 }}" r="3.5" fill="none" stroke="{{ c }}" stroke-width="1.5"/>
+{%- endif %}
+<text x="{{ x + 38 }}" y="{{ y }}" fill="currentColor">{{ item }}</text>
+{%- endfor %}
+{%- endfor %}
+</svg>
