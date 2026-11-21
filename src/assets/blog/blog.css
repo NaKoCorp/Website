@@ -510,8 +510,11 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 
 /* COVERS AND DIAGRAM MOTION: the packet travels its route; the relays it
    reaches pulse once per trip. Still under reduced motion. */
-.cover-art { width: 100%; height: auto; --cover-bg: var(--surface-alt); --cover-grid: var(--border); --cover-node: var(--surface-card); --cover-line: var(--fg-soft); --cover-chip: var(--border); }
-[data-theme="dark"] .cover-art { --cover-bg: var(--ink-2); --cover-grid: var(--ink-line); --cover-node: var(--ink); --cover-line: var(--on-dark-muted); --cover-chip: var(--ink-3); }
+.cover-art { width: 100%; height: auto; --cover-bg: var(--surface-alt); --cover-grid: var(--border); --cover-node: var(--surface-card); --cover-line: var(--fg-soft); --cover-chip: var(--border); --cover-threat: var(--no); }
+[data-theme="dark"] .cover-art { --cover-bg: var(--ink-2); --cover-grid: var(--ink-line); --cover-node: var(--ink); --cover-line: var(--on-dark-muted); --cover-chip: var(--ink-3); --cover-threat: var(--threat); }
+.cover-packet-first { offset-path: path("M284 252C380 252 404 180 484 180"); }
+.cover-gaze { animation: gaze 1.6s linear infinite; }
+@keyframes gaze { to { stroke-dashoffset: -20; } }
 .cover-packet, .diagram-packet { offset-rotate: 0deg; }
 .cover-packet { offset-path: path("M120 180C220 180 236 96 320 96C404 96 420 180 520 180"); animation: travel 5.5s cubic-bezier(.45, 0, .25, 1) infinite; }
 .diagram-packet { offset-path: path("M130 150C210 150 226 72 360 72C494 72 510 150 590 150"); animation: travel 6s cubic-bezier(.45, 0, .25, 1) infinite; }
@@ -533,6 +536,7 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 @media (prefers-reduced-motion: reduce) {
   .cover-packet, .diagram-packet { animation: none; offset-distance: 50%; }
   .cover-nodes circle { animation: none; }
+  .cover-gaze { animation: none; }
   .feature-card, .toc a { transition: none; }
   .feature-card:hover { transform: none; }
 }
