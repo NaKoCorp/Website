@@ -1,0 +1,28 @@
+{#- Cover of article 03, drawn with the theme's colours. Decorative: the title
+    sits next to it. Relays are scattered across the grid; the dashed slot on
+    the left is where a central server would sit, and it is empty. A mailbox
+    key (purple diamond) is held by the five relays closest to it, linked by
+    net-coloured lines. Those five pulse only without reduced motion. -#}
+<svg class="cover-art" viewBox="0 0 640 360" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<rect width="640" height="360" fill="var(--cover-bg)"/>
+<g fill="none" stroke="var(--cover-grid)" stroke-width="1" opacity=".6">
+<path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640"/>
+<path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/>
+</g>
+<rect x="132" y="132" width="96" height="96" rx="18" fill="none" stroke="var(--cover-line)" stroke-width="1.5" stroke-dasharray="6 7" opacity=".7"/>
+<g fill="var(--cover-node)" stroke="var(--cover-line)" stroke-width="1.5" opacity=".8">
+<circle cx="72" cy="80" r="7"/><circle cx="268" cy="70" r="7"/><circle cx="360" cy="40" r="7"/><circle cx="596" cy="70" r="7"/>
+<circle cx="604" cy="296" r="7"/><circle cx="320" cy="312" r="7"/><circle cx="104" cy="300" r="7"/><circle cx="276" cy="248" r="7"/>
+<circle cx="48" cy="196" r="7"/><circle cx="560" cy="330" r="7"/>
+</g>
+<g fill="none" stroke="var(--transport-net)" stroke-width="1.5" stroke-linecap="round">
+<path d="M440 176L388 124M440 176L502 132M440 176L520 200M440 176L478 240M440 176L398 236"/>
+</g>
+<g class="cover-nodes" stroke="var(--transport-net)" stroke-width="1.5" fill="var(--cover-node)">
+<circle cx="388" cy="124" r="14"/><circle cx="502" cy="132" r="14"/><circle cx="520" cy="200" r="14"/><circle cx="478" cy="240" r="14"/><circle cx="398" cy="236" r="14"/>
+</g>
+<g fill="var(--transport-net)">
+<circle cx="388" cy="124" r="3.5"/><circle cx="502" cy="132" r="3.5"/><circle cx="520" cy="200" r="3.5"/><circle cx="478" cy="240" r="3.5"/><circle cx="398" cy="236" r="3.5"/>
+</g>
+<rect x="428" y="164" width="24" height="24" rx="4" transform="rotate(45 440 176)" fill="var(--accent)"/>
+</svg>
