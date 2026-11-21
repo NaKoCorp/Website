@@ -98,7 +98,7 @@
     j3_t: "De saut en saut dans le mesh (prévu)",
     j3_p: "Les appareils proches le transmettront : l'en-tête du paquet porte déjà un nombre de sauts limité et une date d'expiration. Les doublons seront écartés, et les voisins n'échangeront que ce qui manque à l'autre.",
     j4_t: "Stocké sur plusieurs relais",
-    j4_p: "Votre appareil le confie au réseau de relais (plus tard, une passerelle du mesh le pourra aussi). Il est copié sur les nœuds responsables d'une boîte aux lettres qui change chaque jour, et gardé 24 h par défaut.",
+    j4_p: "Votre appareil le confie au réseau de relais (plus tard, une passerelle du mesh le pourra aussi). Il est copié sur les nœuds responsables d'une boîte aux lettres qui change chaque jour, et gardé 7 jours par défaut.",
     j5_t: "Relevé et ouvert",
     j5_p: "L'appareil de votre contact relève ses boîtes (ou est réveillé sur iOS), télécharge le paquet depuis n'importe quel relais et le déchiffre. Lui seul le peut.",
     j6_t: "L'accusé efface les copies",
