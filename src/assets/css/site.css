@@ -1,3 +1,26 @@
+/* Fira Code, self-hosted: the same files as the blog (copied from
+   @fontsource/fira-code at build time), so both headers render alike. */
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/blog/fonts/fira-code-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/blog/fonts/fira-code-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/blog/fonts/fira-code-latin-600-normal.woff2") format("woff2");
+}
 /* COLOURS
    Two themes on <html data-theme>, set by the inline script shared with the
    blog (localStorage "theme", else prefers-color-scheme): Paper (light) and
@@ -409,9 +432,15 @@ p { margin: 0; }
 @media (prefers-reduced-motion: reduce) { .theme-toggle { transition: none; } }
 
 /* RESPONSIVE */
-/* Keeps the six French nav links on one line until they collapse at 1080px. */
 @media (max-width: 1150px) {
   .nav-links a { font-size: 12px; }
+}
+/* The six French links are longer: set at 12px, they collapse at 1150px
+   instead of wrapping onto two lines. Same rule in the blog's blog.css. */
+.nav-links:lang(fr) { gap: 12px; }
+.nav-links:lang(fr) a { font-size: 12px; }
+@media (max-width: 1150px) {
+  .nav-links:lang(fr) { display: none; }
 }
 @media (max-width: 1080px) {
   .nav-links { display: none; }

@@ -215,15 +215,18 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   color: var(--fg);
+  /* The homepage header's text metrics, not the article body's (17px, 1.6). */
+  font-size: 16px;
+  line-height: normal;
 }
-.site-nav .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 68px; }
+.site-nav .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .site-nav .brand { display: flex; align-items: center; gap: 10px; flex: none; color: var(--fg); }
-.site-nav .brand:hover { color: var(--accent); }
+.site-nav .brand:hover { color: var(--fg); }
 .site-nav .brand-name { font-family: var(--font-mono); font-weight: 600; font-size: 19px; }
 .site-nav .brand-by { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); border-left: 1px solid var(--border); padding-left: 10px; margin-left: 2px; }
 .site-nav .nav-links { display: flex; align-items: center; gap: 16px; }
@@ -236,8 +239,8 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 .site-nav .lang-switch a:hover { color: var(--fg); }
 .site-nav .lang-switch [aria-current] { color: var(--fg); }
 .site-nav .nav-gh { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--surface); background: var(--fg); padding: 9px 16px; border-radius: 4px; }
-.site-nav .nav-gh:hover { color: var(--surface); background: var(--accent); }
-.site-nav .theme-toggle { min-width: 36px; min-height: 36px; font-size: 16px; color: var(--fg-muted); border-color: var(--border); }
+.site-nav .nav-gh:hover { color: var(--surface); background: var(--fg-muted); }
+.site-nav .theme-toggle { min-width: 36px; min-height: 36px; font-size: 16px; color: var(--fg-muted); border-color: var(--border-strong); }
 .site-nav .theme-toggle:hover { color: var(--fg); border-color: var(--accent); }
 
 @media (max-width: 1150px) {
@@ -246,8 +249,8 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 @media (max-width: 1080px) {
   .site-nav .nav-links { display: none; }
 }
-/* The theme toggle takes room the homepage nav does not need: the longer
-   French links are set at 12px and collapse a little earlier. */
+/* The six French links are longer: set at 12px, they collapse at 1150px
+   instead of wrapping. Same rule in the homepage's site.css. */
 .site-nav .nav-links:lang(fr) { gap: 12px; }
 .site-nav .nav-links:lang(fr) a { font-size: 12px; }
 @media (max-width: 1150px) {
@@ -570,8 +573,7 @@ html { scrollbar-color: var(--border) transparent; accent-color: var(--purple); 
   .prose .pull { font-size: 19px; }
   .site-nav .brand-by { display: none; }
   .site-nav .nav-right { gap: 10px; }
-  .site-nav .nav-gh { padding: 8px 12px; }
-  .site-nav .theme-toggle { min-width: 32px; min-height: 32px; }
+  .site-nav .nav-gh { padding: 9px 12px; }
   .post-nav { grid-template-columns: 1fr; }
   .post-nav-next { grid-column: 1; text-align: left; }
   /* Below ~600px a 640-wide diagram would set its 13px labels under 8px. */
