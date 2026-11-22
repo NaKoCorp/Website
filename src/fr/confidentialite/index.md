@@ -6,7 +6,7 @@ altUrl: /en/privacy/
 eyebrow: confidentialité
 layout: layouts/page.njk
 permalink: /fr/confidentialite/
-updated: 2026-11-20
+updated: 2026-11-23
 ---
 
 Cette politique couvre l’app Barking pour iPhone et les services réseau que NakoCorp exploite pour elle (nœuds relais et relais de notifications). Barking est un logiciel libre sous AGPL-3.0 : chaque affirmation ci-dessous peut être vérifiée dans [le code source](https://github.com/nakocorp/barking).
@@ -57,7 +57,7 @@ Si vous écrivez à [support@nakocorp.com](mailto:support@nakocorp.com), nous ut
 
 ## Ce site
 
-www.nakocorp.com n’utilise ni cookies, ni statistiques, ni publicité. Il retient votre langue et votre thème dans le stockage local de votre navigateur. Le site est hébergé par GitHub Pages, qui reçoit votre adresse IP pour servir les pages. La page d’accueil charge ses polices depuis Google Fonts, qui reçoit aussi votre adresse IP ; les pages du blog hébergent leurs polices elles-mêmes.
+www.nakocorp.com n’utilise ni cookies, ni statistiques, ni publicité. Il retient votre langue et votre thème dans le stockage local de votre navigateur. Le site est hébergé par GitHub Pages, qui reçoit votre adresse IP pour servir les pages. Le site héberge ses polices lui-même : aucun service de polices ne reçoit votre adresse IP.
 
 ## Vos droits
 
