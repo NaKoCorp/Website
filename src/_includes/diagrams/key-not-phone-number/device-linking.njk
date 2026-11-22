@@ -1,0 +1,46 @@
+{#- Article 05: linking a new device in four steps, between the admin device
+    and the new one. Files or QR code only, never a relay, so the arrows use a
+    neutral token, not a transport colour. ids are prefixed with the diagram
+    name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "Linking a new device in four steps",
+    desc: "1. The admin device makes an offer, valid 10 minutes and usable once. 2. The new device answers with a request carrying its key. 3. The admin device signs a new device list and returns a link bundle, with the history if asked. 4. The new device finishes. Everything moves as files or a QR code, never through relays.",
+    admin: "admin device", fresh: "new device", hasRoot: "holds the root key", noRoot: "own device key",
+    steps: ["offer (10 min, once)", "request", "bundle (+ history)", "finish"],
+    channel: "files or QR code, never through relays"
+  },
+  fr: {
+    title: "Lier un nouvel appareil en quatre temps",
+    desc: "1. L’appareil administrateur produit une offre, valable 10 minutes et à usage unique. 2. Le nouvel appareil répond par une demande qui porte sa clé. 3. L’appareil administrateur signe une nouvelle liste d’appareils et renvoie un paquet de liaison, avec l’historique si on le demande. 4. Le nouvel appareil termine. Tout passe par des fichiers ou un QR code, jamais par les relais.",
+    admin: "appareil administrateur", fresh: "nouvel appareil", hasRoot: "porte la clé racine", noRoot: "sa clé d’appareil",
+    steps: ["offre (10 min, une fois)", "demande", "paquet de liaison (+ historique)", "fin"],
+    channel: "fichiers ou QR code, jamais par les relais"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 340" role="img" aria-labelledby="device-linking-title device-linking-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="device-linking-title">{{ t.title }}</title>
+<desc id="device-linking-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="device-linking-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--fg-muted)"/></marker>
+</defs>
+<g fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5">
+<rect x="14" y="20" width="200" height="280" rx="14"/>
+<rect x="506" y="20" width="200" height="280" rx="14"/>
+</g>
+<text x="114" y="52" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.admin }}</text>
+<text x="114" y="72" text-anchor="middle" font-size="12" fill="var(--accent)">{{ t.hasRoot }}</text>
+<text x="606" y="52" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.fresh }}</text>
+<text x="606" y="72" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.noRoot }}</text>
+<g stroke="var(--border-strong)" stroke-dasharray="3 5"><path d="M114 88V288M606 88V288"/></g>
+{%- for s in t.steps %}
+{%- set y = 112 + loop.index0 * 52 %}
+{%- set right = (loop.index0 % 2 == 0) %}
+<path d="{% if right %}M118 {{ y }}H600{% else %}M602 {{ y }}H120{% endif %}" fill="none" stroke="var(--fg-muted)" stroke-width="1.5" marker-end="url(#device-linking-head)"/>
+<circle cx="{% if right %}114{% else %}606{% endif %}" cy="{{ y }}" r="11" fill="var(--purple)"/>
+<text x="{% if right %}114{% else %}606{% endif %}" y="{{ y + 4 }}" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">{{ loop.index }}</text>
+<rect x="{{ 360 - (s | length) * 4 - 12 }}" y="{{ y - 26 }}" width="{{ (s | length) * 8 + 24 }}" height="22" rx="6" fill="var(--surface-alt)" stroke="var(--border)"/>
+<text x="360" y="{{ y - 11 }}" text-anchor="middle" font-size="12" fill="currentColor">{{ s }}</text>
+{%- endfor %}
+<text x="360" y="326" text-anchor="middle" font-size="12" fill="var(--fg-soft)">{{ t.channel }}</text>
+</svg>

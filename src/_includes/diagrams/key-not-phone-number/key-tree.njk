@@ -1,0 +1,54 @@
+{#- Article 05: the root key signs a versioned device list; the list names
+    each device, each with its own key and certificate. A fourth device is
+    struck out: a newer list without it removes it. The list goes to the
+    contacts' cards, not to the relays. No transport colour. ids are prefixed
+    with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "A root key signs the list of a person's devices",
+    desc: "At the top, the root key, Ed25519, saved as 24 words. It signs the device list, version N. The list names a phone, a laptop and a tablet, each with its own device key and certificate. A fourth device, an old phone, is struck out: removed in version N+1. The signed list goes into the contact cards your contacts hold, not to the relays.",
+    root: "root key · Ed25519 · 24 words", list: "signed device list (vN)",
+    devices: ["phone", "laptop", "tablet"], own: "own key + certificate",
+    removed: "removed in vN+1", old: "old phone", cards: "contacts' cards", relays: "relays"
+  },
+  fr: {
+    title: "Une clé racine signe la liste des appareils d’une personne",
+    desc: "En haut, la clé racine, Ed25519, sauvegardée en 24 mots. Elle signe la liste d’appareils, version N. La liste nomme un téléphone, un ordinateur et une tablette, chacun avec sa clé d’appareil et son certificat. Un quatrième appareil, un ancien téléphone, est barré : retiré en version N+1. La liste signée part dans les cartes que gardent vos contacts, pas vers les relais.",
+    root: "clé racine · Ed25519 · 24 mots", list: "liste d’appareils signée (vN)",
+    devices: ["téléphone", "ordinateur", "tablette"], own: "sa clé + certificat",
+    removed: "retiré en vN+1", old: "ancien téléphone", cards: "cartes chez vos contacts", relays: "relais"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 380" role="img" aria-labelledby="key-tree-title key-tree-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="13">
+<title id="key-tree-title">{{ t.title }}</title>
+<desc id="key-tree-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="key-tree-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--fg-muted)"/></marker>
+</defs>
+<rect x="200" y="16" width="320" height="44" rx="22" fill="var(--accent)"/>
+<text x="360" y="43" text-anchor="middle" font-weight="600" fill="var(--surface)">{{ t.root }}</text>
+<path d="M360 60V98" stroke="var(--fg-muted)" stroke-width="1.5" marker-end="url(#key-tree-head)"/>
+<rect x="210" y="102" width="300" height="48" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="236" cy="126" r="9" fill="var(--purple)"/>
+<path d="M231.5 126l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="372" y="131" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.list }}</text>
+<g fill="none" stroke="var(--fg-muted)" stroke-width="1.5">
+<path d="M300 150C300 176 105 170 105 196M340 150C340 176 275 170 275 196M380 150C380 176 445 170 445 196"/>
+<path d="M420 150C420 176 615 170 615 196" stroke-dasharray="4 5" opacity=".5"/>
+</g>
+{%- for d in t.devices %}
+{%- set x = 30 + loop.index0 * 170 %}
+<rect x="{{ x }}" y="198" width="150" height="72" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="{{ x + 75 }}" y="228" text-anchor="middle" font-weight="600" fill="currentColor">{{ d }}</text>
+<text x="{{ x + 75 }}" y="250" text-anchor="middle" font-size="11" fill="var(--fg-soft)">{{ t.own }}</text>
+{%- endfor %}
+<rect x="540" y="198" width="150" height="72" rx="12" fill="none" stroke="var(--fg-muted)" stroke-width="1.5" stroke-dasharray="5 6"/>
+<text x="615" y="228" text-anchor="middle" font-weight="600" fill="var(--fg-muted)">{{ t.old }}</text>
+<path d="M{{ 615 - (t.old | length) * 4.2 }} 224H{{ 615 + (t.old | length) * 4.2 }}" stroke="var(--danger)" stroke-width="2" stroke-linecap="round"/>
+<text x="615" y="258" text-anchor="middle" font-size="11" fill="var(--danger)">{{ t.removed }}</text>
+<path d="M360 270V316" stroke="var(--fg-muted)" stroke-width="1.5" marker-end="url(#key-tree-head)"/>
+<rect x="240" y="320" width="240" height="40" rx="12" fill="var(--surface-alt)" stroke="var(--border-strong)" stroke-width="1.5"/>
+<text x="360" y="345" text-anchor="middle" font-size="12" fill="currentColor">{{ t.cards }}</text>
+<g stroke="var(--fg-muted)" stroke-width="1.5" stroke-linecap="round"><path d="M560 330l14 14M574 330l-14 14"/></g>
+<text x="586" y="342" font-size="12" fill="var(--fg-muted)" text-decoration="line-through">{{ t.relays }}</text>
+</svg>
