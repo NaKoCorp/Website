@@ -113,5 +113,7 @@ test("RSS 2.0 feeds sit next to the Atom ones, one per language, with absolute l
 test("drafts never reach the RSS feeds either", async () => {
   const draft = { "en/blog/secret.md": article("Secret", "draft: true\n").replace("translationKey: pair", "translationKey: secret") };
   const { enRss } = await build(draft, { drafts: true });
-  assert.ok(!enRss.includes("Secret") && !enRss.includes("/secret/"));
+  // The title element, not the bare word: real articles may quote code that
+  // contains it (article 06 shows `SessionSecrets`).
+  assert.ok(!enRss.includes("<title>Secret</title>") && !enRss.includes("/secret/"));
 });

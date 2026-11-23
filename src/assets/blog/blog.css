@@ -112,6 +112,8 @@ h1, h2, h3, h4 {
 .prose table { width: 100%; border-collapse: collapse; font-size: var(--size-body); }
 .prose th, .prose td { padding: 12px 12px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
 .prose th { background: var(--surface-alt); font-family: var(--font-mono); font-weight: 600; font-size: var(--size-body-sm); }
+.prose caption { caption-side: top; padding-bottom: 8px; text-align: left; font-family: var(--font-mono); font-size: var(--size-caption); color: var(--fg-soft); }
+.prose .status-list + table { margin-top: 1.6em; }
 .prose a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
 
 /* CODE: inline chips follow the theme; blocks keep term-bg and the terminal
@@ -517,6 +519,30 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   88% { opacity: 1; }
   100% { offset-distance: 100%; opacity: 0; }
 }
+/* Article 06: one value from each family enters the lock, then the classical
+   half breaks while the lock stays shut. Plays once on load, then rests:
+   the travelling packet stays the only loop. */
+.cover-pq .pq-classical { stroke: var(--cover-line); animation: pq-break 9s ease-in-out 1; }
+.cover-pq .pq-classical-dots { fill: var(--cover-line); animation: pq-break-dots 9s ease-in-out 1; }
+.cover-pq .pq-value { offset-rotate: 0deg; opacity: 0; animation: pq-enter 9s cubic-bezier(.45, 0, .25, 1) 1; }
+.cover-pq .pq-value-classical { offset-path: path("M150 180H284"); }
+.cover-pq .pq-value-pq { offset-path: path("M440 180H356"); }
+.cover-pq .pq-seal { animation: pq-seal 9s ease-in-out 1; }
+@keyframes pq-enter {
+  0% { offset-distance: 0%; opacity: 0; }
+  4% { opacity: 1; }
+  26% { offset-distance: 100%; opacity: 1; }
+  30%, 100% { offset-distance: 100%; opacity: 0; }
+}
+@keyframes pq-seal { 0%, 24%, 40%, 100% { stroke: var(--cover-line); } 30% { stroke: var(--accent); } }
+@keyframes pq-break {
+  0%, 42%, 96%, 100% { stroke: var(--cover-line); stroke-dasharray: none; opacity: 1; }
+  52%, 86% { stroke: var(--cover-threat); stroke-dasharray: 6 9; opacity: .55; }
+}
+@keyframes pq-break-dots {
+  0%, 42%, 96%, 100% { fill: var(--cover-line); opacity: 1; }
+  52%, 86% { fill: var(--cover-threat); opacity: .4; }
+}
 
 /* Figures below the fold settle in once (blog.js adds the classes). */
 .prose .will-reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1); }
@@ -524,6 +550,8 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 
 @media (prefers-reduced-motion: reduce) {
   .cover-packet, .diagram-packet { animation: none; offset-distance: 50%; }
+  .cover-pq .pq-classical, .cover-pq .pq-classical-dots, .cover-pq .pq-seal { animation: none; }
+  .cover-pq .pq-value { animation: none; display: none; }
   .feature-card, .toc a { transition: none; }
   .feature-card:hover { transform: none; }
 }

@@ -1,0 +1,96 @@
+{#- Article 06: how the PQXDH session secret is built. Alice's keys on the
+    left, Bob's prekey bundle on the right, the four X25519 exchanges and the
+    ML-KEM-768 encapsulation in the middle (DH4 dashed: absent from today's
+    cards). Below, the key material as a segmented bar, then HKDF-SHA256 and
+    its two outputs. Classical parts in the neutral line colour, the
+    post-quantum part in the accent. No transport colour: nothing travels
+    here. ids are prefixed with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "How Barking builds a session secret from X25519 and ML-KEM-768",
+    desc: "On the left, Alice's keys: identity key IK_A and ephemeral key EK_A. On the right, Bob's prekey bundle: identity key IK_B, signed prekey SPK_B and an ML-KEM-768 key. In the middle, four X25519 exchanges: DH1 = IK_A × SPK_B, DH2 = EK_A × IK_B, DH3 = EK_A × SPK_B, and DH4 = EK_A × a one-time prekey, optional and absent from current cards. Then an ML-KEM-768 encapsulation to Bob's key. Below, the key material: 32 bytes of 0xFF, DH1, DH2, DH3, optional DH4, then the ML-KEM secret, 192 bytes at most. It goes into HKDF-SHA256, which outputs the session key and the mailbox secret. The exchanges are classical; the ML-KEM secret is post-quantum.",
+    alice: "Alice", bob: "Bob · prekey bundle",
+    ik: "identity", ek: "ephemeral", spk: "signed prekey", pq: "ML-KEM-768 key",
+    optional: "optional, absent from current cards", kem: "ML-KEM-768 encapsulation",
+    km: "key material · 192 bytes at most",
+    classical: "classical (X25519)", post: "post-quantum (ML-KEM-768)",
+    sk: "session key", mb: "mailbox secret"
+  },
+  fr: {
+    title: "Comment Barking construit un secret de session à partir de X25519 et ML-KEM-768",
+    desc: "À gauche, les clés d’Alice : clé d’identité IK_A et clé éphémère EK_A. À droite, le paquet de préclés de Bob : clé d’identité IK_B, préclé signée SPK_B et clé ML-KEM-768. Au centre, quatre échanges X25519 : DH1 = IK_A × SPK_B, DH2 = EK_A × IK_B, DH3 = EK_A × SPK_B, et DH4 = EK_A × une clé à usage unique, optionnel et absent des cartes actuelles. Puis une encapsulation ML-KEM-768 vers la clé de Bob. En bas, le matériel de clé : 32 octets 0xFF, DH1, DH2, DH3, DH4 éventuel, puis le secret ML-KEM, 192 octets au plus. Il entre dans HKDF-SHA256, qui en sort la clé de session et le secret des boîtes. Les échanges sont classiques ; le secret ML-KEM est post-quantique.",
+    alice: "Alice", bob: "Bob · paquet de préclés",
+    ik: "identité", ek: "éphémère", spk: "préclé signée", pq: "clé ML-KEM-768",
+    optional: "optionnel, absent des cartes actuelles", kem: "encapsulation ML-KEM-768",
+    km: "matériel de clé · 192 octets au plus",
+    classical: "classique (X25519)", post: "post-quantique (ML-KEM-768)",
+    sk: "clé de session", mb: "secret des boîtes"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 470" role="img" aria-labelledby="pqxdh-km-title pqxdh-km-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="pqxdh-km-title">{{ t.title }}</title>
+<desc id="pqxdh-km-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="pqxdh-km-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--fg-muted)"/></marker>
+</defs>
+<rect x="14" y="24" width="190" height="184" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="26" y="50" font-weight="600" fill="currentColor">{{ t.alice }}</text>
+<path d="M14 64H204" stroke="var(--border-strong)"/>
+<text x="26" y="92" fill="currentColor">IK_A <tspan fill="var(--fg-soft)">· {{ t.ik }}</tspan></text>
+<text x="26" y="122" fill="currentColor">EK_A <tspan fill="var(--fg-soft)">· {{ t.ek }}</tspan></text>
+<rect x="516" y="24" width="190" height="184" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="528" y="50" font-weight="600" fill="currentColor">{{ t.bob }}</text>
+<path d="M516 64H706" stroke="var(--border-strong)"/>
+<text x="528" y="92" fill="currentColor">IK_B <tspan fill="var(--fg-soft)">· {{ t.ik }}</tspan></text>
+<text x="528" y="122" fill="currentColor">SPK_B <tspan fill="var(--fg-soft)">· {{ t.spk }}</tspan></text>
+<circle cx="533" cy="148" r="5" fill="var(--accent)"/>
+<text x="544" y="152" fill="currentColor">{{ t.pq }}</text>
+<g fill="var(--surface-alt)" stroke="currentColor" stroke-width="1.2">
+<rect x="224" y="24" width="272" height="28" rx="8"/>
+<rect x="224" y="58" width="272" height="28" rx="8"/>
+<rect x="224" y="92" width="272" height="28" rx="8"/>
+<rect x="224" y="126" width="272" height="28" rx="8" fill="none" stroke="var(--fg-muted)" stroke-dasharray="4 5"/>
+</g>
+<g text-anchor="middle" fill="currentColor">
+<text x="360" y="42">DH1 · IK_A × SPK_B</text>
+<text x="360" y="76">DH2 · EK_A × IK_B</text>
+<text x="360" y="110">DH3 · EK_A × SPK_B</text>
+<text x="360" y="144" fill="var(--fg-muted)">DH4 · EK_A × OPK_B</text>
+<text x="360" y="170" font-size="11" fill="var(--fg-soft)">{{ t.optional }}</text>
+</g>
+<rect x="224" y="180" width="272" height="28" rx="8" fill="var(--accent)"/>
+<text x="360" y="198" text-anchor="middle" font-weight="600" fill="var(--surface)">{{ t.kem }}</text>
+<path d="M360 208V248" stroke="var(--fg-muted)" stroke-width="1.5" marker-end="url(#pqxdh-km-head)"/>
+<text x="60" y="244" font-size="11" fill="var(--fg-soft)">{{ t.km }}</text>
+<g stroke="currentColor" stroke-width="1.2" fill="var(--surface-card)">
+<rect x="60" y="254" width="100" height="40"/>
+<rect x="160" y="254" width="90" height="40"/>
+<rect x="250" y="254" width="90" height="40"/>
+<rect x="340" y="254" width="90" height="40"/>
+<rect x="430" y="254" width="90" height="40" fill="none" stroke="var(--fg-muted)" stroke-dasharray="4 5"/>
+</g>
+<rect x="520" y="254" width="140" height="40" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
+<g text-anchor="middle" fill="currentColor">
+<text x="110" y="278">0xFF×32</text>
+<text x="205" y="278">DH1</text>
+<text x="295" y="278">DH2</text>
+<text x="385" y="278">DH3</text>
+<text x="475" y="278" fill="var(--fg-muted)">(DH4)</text>
+<text x="590" y="278" font-weight="600" fill="var(--surface)">ML-KEM</text>
+</g>
+<rect x="60" y="306" width="10" height="10" rx="2" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.2"/>
+<text x="78" y="315" font-size="11" fill="var(--fg-muted)">{{ t.classical }}</text>
+<rect x="650" y="306" width="10" height="10" rx="2" fill="var(--accent)"/>
+<text x="642" y="315" font-size="11" text-anchor="end" fill="var(--fg-muted)">{{ t.post }}</text>
+<path d="M360 294V334" stroke="var(--fg-muted)" stroke-width="1.5" marker-end="url(#pqxdh-km-head)"/>
+<rect x="270" y="338" width="180" height="40" rx="10" fill="var(--surface-alt)" stroke="var(--border-strong)" stroke-width="1.5"/>
+<text x="360" y="362" text-anchor="middle" font-weight="600" fill="currentColor">HKDF-SHA256</text>
+<g fill="none" stroke="var(--fg-muted)" stroke-width="1.5">
+<path d="M330 378C330 396 230 394 230 412" marker-end="url(#pqxdh-km-head)"/>
+<path d="M390 378C390 396 490 394 490 412" marker-end="url(#pqxdh-km-head)"/>
+</g>
+<rect x="130" y="416" width="200" height="38" rx="19" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="230" y="439" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.sk }}</text>
+<rect x="390" y="416" width="200" height="38" rx="19" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="490" y="439" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.mb }}</text>
+</svg>
