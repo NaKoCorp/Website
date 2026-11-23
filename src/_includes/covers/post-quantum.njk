@@ -1,0 +1,40 @@
+{#- Cover of article 06, drawn with the theme's colours. Decorative: the title
+    sits next to it. On the left, an elliptic curve (X25519) in the neutral
+    line colour; on the right, a lattice with its two basis vectors (ML-KEM,
+    lattice-based) in the accent. Both feed one padlock: the session secret.
+    Motion, only without reduced motion: one value from each side travels
+    into the lock, then the classical half breaks (threat colour, dashed)
+    while the lock stays shut, which is the article's point. No transport
+    colours: nothing here is a relay route. -#}
+<svg class="cover-art cover-pq" viewBox="0 0 640 360" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<rect width="640" height="360" fill="var(--cover-bg)"/>
+<g fill="none" stroke="var(--cover-grid)" stroke-width="1" opacity=".6">
+<path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640"/>
+<path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/>
+</g>
+<g class="pq-classical" fill="none" stroke-width="2" stroke-linecap="round">
+<ellipse cx="86" cy="180" rx="30" ry="46"/>
+<path d="M226 36C172 100 150 146 150 180C150 214 172 260 226 324"/>
+<path d="M150 180H280"/>
+</g>
+<g class="pq-classical-dots">
+<circle cx="86" cy="134" r="5"/><circle cx="116" cy="180" r="5"/><circle cx="150" cy="180" r="6"/><circle cx="183" cy="96" r="5"/>
+</g>
+<g fill="var(--accent)">
+{%- for j in range(-2, 4) %}{% for i in range(0, 5) %}
+<circle cx="{{ 440 + 36 * i + 10 * j }}" cy="{{ 180 - 14 * i + 38 * j }}" r="3.5" opacity="{{ '1' if (i + j) % 3 == 0 else '.45' }}"/>
+{%- endfor %}{% endfor %}
+</g>
+<g stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" fill="none">
+<path d="M360 180H440"/>
+<path d="M440 180L472 167.6M440 180L448.8 213.4"/>
+</g>
+<circle cx="440" cy="180" r="7" fill="var(--accent)"/>
+<circle class="pq-seal" cx="320" cy="180" r="44" fill="var(--cover-node)" stroke="var(--cover-line)" stroke-width="1.5"/>
+<path d="M309 180V168a11 11 0 0 1 22 0V180" fill="none" stroke="var(--cover-line)" stroke-width="3.5" stroke-linecap="round"/>
+<rect x="300" y="178" width="40" height="30" rx="6" fill="var(--accent)"/>
+<circle cx="320" cy="190" r="4" fill="var(--cover-node)"/>
+<path d="M320 192V199" stroke="var(--cover-node)" stroke-width="3" stroke-linecap="round"/>
+<circle class="pq-value pq-value-classical" r="6" fill="var(--cover-line)"/>
+<circle class="pq-value pq-value-pq" r="6" fill="var(--accent)"/>
+</svg>

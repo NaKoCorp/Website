@@ -1,0 +1,36 @@
+{#- Article 06: what is post-quantum in Barking today and what is still
+    classical, as an HTML table (more readable than an SVG at 375 px). Rows
+    follow the article's last list. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    caption: "What is post-quantum in Barking today, and what is still classical",
+    pq: "Post-quantum today", cl: "Classical",
+    rows: [
+      ["Session opening secret (X25519 + ML-KEM-768)", "Signatures (Ed25519): keys, cards, bundles, relays"],
+      ["Message content, through the root key", "Healing of the ratchet after a stolen state"],
+      ["Mailbox secret, derived with the session key", "Sealing of the first message: who opened it"],
+      ["", "QUIC transport (X25519, P-256, P-384)"],
+      ["", "Openings recorded before a later theft of prekeys"]
+    ]
+  },
+  fr: {
+    caption: "Ce qui est post-quantique dans Barking aujourd’hui, et ce qui reste classique",
+    pq: "Post-quantique aujourd’hui", cl: "Classique",
+    rows: [
+      ["Secret d’ouverture de session (X25519 + ML-KEM-768)", "Signatures (Ed25519) : clés, cartes, préclés, relais"],
+      ["Contenu des messages, via la clé racine", "Guérison du ratchet après le vol d’un état"],
+      ["Secret des boîtes, dérivé avec la clé de session", "Scellement du premier message : qui l’a ouvert"],
+      ["", "Transport QUIC (X25519, P-256, P-384)"],
+      ["", "Ouvertures enregistrées avant un vol ultérieur des préclés"]
+    ]
+  }
+}[lang] -%}
+<table class="pq-coverage">
+<caption>{{ t.caption }}</caption>
+<thead><tr><th scope="col">{{ t.pq }}</th><th scope="col">{{ t.cl }}</th></tr></thead>
+<tbody>
+{%- for r in t.rows %}
+<tr><td>{{ r[0] }}</td><td>{{ r[1] }}</td></tr>
+{%- endfor %}
+</tbody>
+</table>
