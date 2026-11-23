@@ -93,7 +93,7 @@
     <div>
       <span class="pill" style="background: var(--surface-card); border: 1px solid var(--border); color: var(--fg-muted);"><span class="pill-dot"></span><span data-i18n="hero_pill">Open source · AGPL-3.0 · prototype in progress</span></span>
       <h1 data-i18n="hero_h1">Messages that get through. <em>Even when the internet doesn't.</em></h1>
-      <p class="lead" data-i18n="hero_p">Barking is an end-to-end encrypted messenger built to keep working when networks fail. Today, an open network of relays that anyone can run carries messages across the internet, and a message can also travel as a file you carry. Next, phones will relay messages to each other over Bluetooth, Wi-Fi and LoRa. No phone number. No central server. Nothing to trust blindly.</p>
+      <p class="lead" data-i18n="hero_p">Barking is an end-to-end encrypted messenger with no phone number and no central server. Today, messages cross the internet through relays anyone can run, or travel as a file you carry. Next, phones will pass them to each other over Bluetooth, Wi-Fi and LoRa.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#how" data-i18n="hero_cta_primary">See how it works</a>
         <a class="btn btn-ghost" href="https://github.com/nakocorp/barking" target="_blank" rel="noopener" data-i18n="hero_cta_secondary">★ Star on GitHub</a>
@@ -109,12 +109,11 @@
     <div class="hero-art" aria-label="Concept illustration of the Barking app, with the planned mesh" role="img">
       <svg class="radar" viewBox="0 0 560 560" aria-hidden="true">
         <circle cx="280" cy="280" r="110"/><circle cx="280" cy="280" r="190"/><circle cx="280" cy="280" r="270"/>
-        <circle class="pulse" cx="280" cy="280" r="270"/><circle class="pulse p2" cx="280" cy="280" r="270"/>
-      </svg>
+              </svg>
 
-      <div class="chip chip-1"><span class="chip-ico" style="background: rgba(61,220,151,.15);">🔒</span><div><span data-i18n="chip1_t">End-to-end encrypted</span><small data-i18n="chip1_s">hybrid X25519 + ML-KEM-768</small></div></div>
-      <div class="chip chip-2"><span class="chip-ico" style="background: rgba(242,201,76,.15);">📡</span><div><span data-i18n="chip2_t">LoRa relay</span><small data-i18n="chip2_s">planned · 12 km, no internet needed</small></div></div>
-      <div class="chip chip-3"><span class="chip-ico" style="background: rgba(197,155,255,.15);">✓</span><div><span data-i18n="chip3_t">Delivered</span><small data-i18n="chip3_s">4 in-transit copies erased</small></div></div>
+      <div class="chip chip-1"><span class="chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><span data-i18n="chip1_t">End-to-end encrypted</span><small data-i18n="chip1_s">hybrid X25519 + ML-KEM-768</small></div></div>
+      <div class="chip chip-2"><span class="chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13v8"/><circle cx="12" cy="11" r="2"/><path d="M8.5 7.5a5 5 0 0 0 0 7M15.5 7.5a5 5 0 0 1 0 7M5.6 4.6a9 9 0 0 0 0 12.8M18.4 4.6a9 9 0 0 1 0 12.8"/></svg></span><div><span data-i18n="chip2_t">LoRa relay</span><small data-i18n="chip2_s">planned · 12 km, no internet needed</small></div></div>
+      <div class="chip chip-3"><span class="chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><span data-i18n="chip3_t">Delivered</span><small data-i18n="chip3_s">4 in-transit copies erased</small></div></div>
 
       <div class="phone">
         <div class="phone-screen">
@@ -127,7 +126,7 @@
               <div class="app-bar-sub"><span class="verified">●</span> <span data-i18n="ui_verified">verified · safety code matched</span></div>
             </div>
           </div>
-          <div class="banner"><span>📡</span><span data-i18n="ui_banner">No internet. Mesh mode (planned): messages hop from phone to phone.</span></div>
+          <div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13v8"/><circle cx="12" cy="11" r="2"/><path d="M8.5 7.5a5 5 0 0 0 0 7M15.5 7.5a5 5 0 0 1 0 7M5.6 4.6a9 9 0 0 0 0 12.8M18.4 4.6a9 9 0 0 1 0 12.8"/></svg><span data-i18n="ui_banner">No internet. Mesh mode (planned): messages hop from phone to phone.</span></div>
           <div class="chat">
             <div class="bubble in"><span data-i18n="ui_msg1">Power's out across the whole district. Are you OK?</span>
               <div class="meta">18:02 <span class="route-tag">LoRa · 2 hops</span></div></div>
@@ -550,7 +549,7 @@
           .iw { font: 600 11px 'Fira Code', monospace; fill: var(--accent); }
         </style>
         <rect x="150" y="14" width="260" height="84" rx="14" fill="var(--brand)"/>
-        <text x="280" y="44" text-anchor="middle" style="font: 600 14px 'Fira Code', monospace; fill: #fff;" data-i18n="id_root">🔑 root key</text>
+        <text x="280" y="44" text-anchor="middle" style="font: 600 14px 'Fira Code', monospace; fill: #fff;" data-i18n="id_root">root key</text>
         <text x="280" y="64" text-anchor="middle" style="font: 11px 'Fira Code', monospace; fill: #fff; fill-opacity: .85;">Ed25519 · in the encrypted database</text>
         <text x="280" y="84" text-anchor="middle" style="font: 11px 'Fira Code', monospace; fill: #fff; fill-opacity: .85;" data-i18n="id_phrase">backed up as 24 words</text>
         <g stroke="var(--accent)" stroke-width="1.8" fill="none" stroke-dasharray="5 5">
@@ -561,15 +560,15 @@
         <text class="iw" x="160" y="140" text-anchor="middle" data-i18n="id_signs">signs</text>
         <text class="iw" x="400" y="140" text-anchor="middle" data-i18n="id_signs">signs</text>
         <rect x="20" y="182" width="160" height="80" rx="12" fill="var(--surface-card)" stroke="var(--border-strong)"/>
-        <text class="it" x="100" y="210" text-anchor="middle" data-i18n="id_d1">📱 phone</text>
+        <text class="it" x="100" y="210" text-anchor="middle" data-i18n="id_d1">phone</text>
         <text class="is" x="100" y="230" text-anchor="middle" data-i18n="id_dk">own device key</text>
         <text class="is" x="100" y="246" text-anchor="middle" data-i18n="id_dc">+ certificate</text>
         <rect x="200" y="182" width="160" height="80" rx="12" fill="var(--surface-card)" stroke="var(--border-strong)"/>
-        <text class="it" x="280" y="210" text-anchor="middle" data-i18n="id_d2">💻 laptop</text>
+        <text class="it" x="280" y="210" text-anchor="middle" data-i18n="id_d2">laptop</text>
         <text class="is" x="280" y="230" text-anchor="middle" data-i18n="id_dk">own device key</text>
         <text class="is" x="280" y="246" text-anchor="middle" data-i18n="id_dc">+ certificate</text>
         <rect x="380" y="182" width="160" height="80" rx="12" fill="var(--danger)" fill-opacity=".08" stroke="var(--danger)" stroke-opacity=".6" stroke-dasharray="5 4"/>
-        <text class="it" x="460" y="210" text-anchor="middle" style="fill: var(--danger);" data-i18n="id_d3">📱 stolen phone</text>
+        <text class="it" x="460" y="210" text-anchor="middle" style="fill: var(--danger);" data-i18n="id_d3">stolen phone</text>
         <text class="is" x="460" y="230" text-anchor="middle" data-i18n="id_rev">revoked in one tap</text>
         <text class="is" x="460" y="246" text-anchor="middle" data-i18n="id_rev2">nothing else lost</text>
         <rect x="20" y="284" width="520" height="42" rx="10" fill="var(--wash)"/>
@@ -674,7 +673,7 @@
       </div>
     </div>
     <div class="warning reveal">
-      <span style="font-size: 20px;">⚠</span>
+      <span aria-hidden="true">⚠︎</span>
       <span data-i18n="rm_warn"><b>Barking is a prototype and has not been audited yet.</b> Don't rely on it where your safety is at stake. Try it, break it, and tell us what you find.</span>
     </div>
   </div>
