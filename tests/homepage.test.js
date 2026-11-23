@@ -31,21 +31,27 @@ test("homepage and blog share the theme script and the theme toggle", async () =
   assert.match(home, /<button type="button" class="theme-toggle" aria-pressed="false"[^>]* hidden>/);
 });
 
-test("homepage colours come from the theme tokens", async () => {
+test("homepage colours come from the shared design system tokens", async () => {
+  const html0 = await readFile("src/index.html", "utf8");
+  const tokensAt = html0.indexOf('href="assets/blog/tokens.css"');
+  assert.ok(tokensAt >= 0, "the homepage loads the blog's tokens.css");
+  assert.ok(tokensAt < html0.indexOf('href="assets/css/site.css"'), "tokens.css before site.css");
+
   const css = await readFile("src/assets/css/site.css", "utf8");
-  const block = (selector) => {
-    const start = css.indexOf(`${selector} {`);
-    assert.ok(start >= 0, `site.css has a ${selector} block`);
-    return css.slice(start, css.indexOf("}", start));
-  };
-  const light = block(':root,\n:root[data-theme="dark"] .phone-screen');
-  const dark = block(':root[data-theme="dark"]');
-  const tokens = ["surface", "surface-alt", "surface-card", "fg", "fg-muted", "fg-soft", "border",
-    "border-strong", "accent", "accent-hover", "wash", "field", "status-ok", "ok-bg", "danger",
-    "warn-bg", "warn-border", "warn-fg", "banner-bg", "banner-fg", "ble", "wifi", "lora", "net"];
-  for (const t of tokens) {
-    assert.match(light, new RegExp(`--${t}: #[0-9A-F]{6};`), `Paper defines --${t}`);
-    assert.match(dark, new RegExp(`--${t}: #[0-9A-F]{6};`), `Ink defines --${t}`);
+  const tokensCss = await readFile("src/assets/blog/tokens.css", "utf8");
+  const defined = (src, t) => new RegExp(`--${t}:`).test(src);
+  // Semantic tokens: defined once, in tokens.css; site.css never copies them
+  // as hex (it may only re-point them at palette tokens for the Paper phone).
+  for (const t of ["surface", "surface-alt", "surface-card", "fg", "fg-muted", "fg-soft", "border",
+    "border-strong", "accent", "accent-hover", "field", "status-ok", "danger",
+    "warn-bg", "warn-border", "warn-fg", "ble", "wifi", "lora", "net"]) {
+    assert.ok(defined(tokensCss, t), `tokens.css defines --${t}`);
+    assert.doesNotMatch(css, new RegExp(`--${t}: #`), `site.css does not copy --${t} as hex`);
+  }
+  // Homepage-only aliases are built in site.css, for Paper and for Ink.
+  for (const t of ["wash", "ok-bg", "banner-bg", "banner-fg"]) {
+    assert.match(css, new RegExp(`:root:not\\(\\[data-theme="dark"\\]\\)[\\s\\S]*?--${t}:`), `Paper alias --${t}`);
+    assert.match(css, new RegExp(`:root\\[data-theme="dark"\\] \\{[\\s\\S]*?--${t}:`), `Ink alias --${t}`);
   }
 
   // Inline SVG colours read the tokens. The only hex left is white text

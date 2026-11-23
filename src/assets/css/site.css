@@ -22,93 +22,68 @@
   src: url("/assets/blog/fonts/fira-code-latin-600-normal.woff2") format("woff2");
 }
 /* COLOURS
-   Two themes on <html data-theme>, set by the inline script shared with the
-   blog (localStorage "theme", else prefers-color-scheme): Paper (light) and
-   Ink (dark). Every rule reads the semantic tokens below, from the NakoCorp
-   design system, so each section and illustration follows the theme. */
+   The palette and the semantic tokens (surface, fg, border, accent, status,
+   danger, warn…) come from /assets/blog/tokens.css, the NakoCorp design
+   system's tokens, loaded before this file on the homepage as on the blog.
+   Themes: Paper on :root, Ink on <html data-theme="dark">. This file only
+   adds the homepage's own aliases, built from those tokens. */
 
-/* Semantic tokens: Paper. Also scoped on .phone-screen, which shows the light
-   app in both themes (the mockups are app concepts, not page chrome). */
-:root,
+/* The app screen inside the phone mockup stays Paper in both themes (the
+   mockups are app concepts, not page chrome). */
 :root[data-theme="dark"] .phone-screen {
-  --surface: #FBFAFC;
-  --surface-alt: #F3F0F8;
-  --surface-card: #FFFFFF;
-  --fg: #1B1720;
-  --fg-muted: #4A4356;
-  --fg-soft: #6B6478;
-  --border: #EAE5F2;
-  --border-strong: #D8D0E6;
-  --accent: #6640AF;
-  --accent-hover: #4E3189;
-  --wash: #EFEAF9;
-  --field: #EAE5F2;
-  --status-ok: #1E7A52;
-  --ok-bg: #E1F7EC;
-  --danger: #B8455A;
-  --warn-bg: #FFF8E6;
-  --warn-border: #F3DFA2;
-  --warn-fg: #5E4A12;
-  --banner-bg: #FFF6DA;
-  --banner-fg: #6B5413;
-  /* Transport colours: only the path a message took (strokes, borders, dots),
-     never body text on Paper. */
-  --ble: #5AB0FF;
-  --wifi: #3DBB85;
-  --lora: #D9A920;
-  --net: #9B6BE0;
-  /* Text on an fg-filled control (the nav GitHub button). */
-  --on-fg: #FBFAFC;
+  --surface: var(--paper);
+  --surface-alt: var(--paper-2);
+  --surface-card: var(--white);
+  --fg: var(--text);
+  --fg-muted: var(--muted);
+  --fg-soft: var(--soft);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --accent: var(--purple);
+  --accent-hover: var(--purple-d);
+  --field: var(--line);
+  --status-ok: var(--ok-paper);
+  --danger: var(--no);
+  --warn-bg: var(--warning-bg);
+  --warn-border: var(--warning-border);
+  --warn-fg: var(--warning-fg);
 }
 
-/* Page-level colours: Paper. */
-:root {
-  color-scheme: light;
+/* Homepage aliases: Paper (and the phone screen). Transport colours on Paper
+   are the darker dots: only the path a message took, never body text. */
+:root:not([data-theme="dark"]),
+:root[data-theme="dark"] .phone-screen {
+  --wash: var(--lilac);
+  --ok-bg: var(--done-bg);
+  --banner-bg: var(--caution-bg);
+  --banner-fg: var(--caution-fg);
+  --wifi: var(--done-dot);
+  --lora: var(--lora-dot);
+  --net: var(--net-dot);
+}
+:root:not([data-theme="dark"]) {
   /* Section rhythm: base, band (the former Ink sections) and tint never sit
      back to back with the same background. */
-  --section-base: #FBFAFC;
-  --section-band: #F3F0F8;
-  --section-tint: #EFEAF9;
+  --section-base: var(--paper);
+  --section-band: var(--paper-2);
+  --section-tint: var(--lilac);
   --nav-bg: rgba(251,250,252,.85);
   --shadow: rgba(40,20,80,.12);
-  --phone-ring: #D8D0E6;
+  --phone-ring: var(--line-strong);
   --phone-shadow: rgba(40,20,80,.18);
-  --packet-core: #6640AF;
-  --packet-lock: #FFFFFF;
+  --packet-core: var(--purple);
+  --packet-lock: var(--white);
 }
 
-/* Semantic and page-level tokens: Ink. */
+/* Homepage aliases: Ink. The transport colours keep their Ink values from
+   the tokens. */
 :root[data-theme="dark"] {
-  color-scheme: dark;
-  --surface: #120E19;
-  --surface-alt: #1B1524;
-  --surface-card: #1B1524;
-  --fg: #F2EFF7;
-  --fg-muted: #ABA0C2;
-  --fg-soft: #9A90B2;
-  --border: #33293F;
-  --border-strong: #4A4356;
-  --accent: #B9A6E0;
-  /* The deep purple fails on Ink: hover brightens to fg instead. */
-  --accent-hover: #F2EFF7;
-  --wash: #2A2236;
-  --field: #2A2236;
-  --status-ok: #3DDC97;
+  --wash: var(--ink-3);
   --ok-bg: #16261F;
-  --danger: #FF7A90;
-  --warn-bg: #2A2236;
-  --warn-border: #5E4A12;
-  --warn-fg: #F3DFA2;
   --banner-bg: #2A2412;
-  --banner-fg: #F2C94C;
-  --ble: #5AB0FF;
-  --wifi: #3DDC97;
-  --lora: #F2C94C;
-  --net: #C59BFF;
-  --on-fg: #120E19;
-
-  --section-base: #1B1524;
-  --section-band: #120E19;
+  --banner-fg: var(--lora);
+  --section-base: var(--ink-2);
+  --section-band: var(--ink);
   /* Midpoint of ink-2 and the wash: a third step so the tinted bands differ
      from both neighbours. */
   --section-tint: #221B2D;
@@ -116,29 +91,25 @@
   --shadow: rgba(0,0,0,.35);
   --phone-ring: #3A3046;
   --phone-shadow: rgba(0,0,0,.5);
-  --packet-core: #FFFFFF;
-  --packet-lock: #6640AF;
+  --packet-core: var(--white);
+  --packet-lock: var(--purple);
 }
 
 /* Brand-fixed in both themes: the purple fill of primary buttons (white
-   text), the logo tile, the terminal window and the phone hardware. */
+   text), the terminal window and the phone hardware. */
 :root {
-  --brand: #6640AF;
-  --brand-hover: #4E3189;
-  --term-bg: #0B0910;
-  --term-fg: #D9D2E8;
-  --term-line: #2A2236;
-  --term-soft: #9A90B2;
-  --term-prompt: #3DDC97;
-  --term-out: #B9A6E0;
-  --device: #0B0910;
+  --on-fg: var(--surface);
+  --brand: var(--purple);
+  --brand-hover: var(--purple-d);
+  --term-line: var(--ink-3);
+  --term-soft: var(--on-dark-soft);
+  --term-prompt: var(--ok);
+  --term-out: var(--purple-l);
+  --device: var(--term-bg);
   --device-ring: #3A3046;
   --device-inset: #241C2E;
-
-  --mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
-  --wrap: 1180px;
-  --gutter: 48px;
+  --mono: var(--font-mono);
+  --sans: var(--font-sans);
 }
 
 * { box-sizing: border-box; }
@@ -148,12 +119,12 @@ img, svg { max-width: 100%; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-hover); }
 code, .mono { font-family: var(--mono); }
-h1, h2, h3, h4 { font-family: var(--mono); font-weight: 600; letter-spacing: 0; margin: 0; }
-.h2, .cta h2, .receipt h3 { letter-spacing: -0.5px; }
+h1, h2, h3, h4 { font-family: var(--mono); font-weight: 600; letter-spacing: var(--tracking-heading); margin: 0; }
+.h2, .cta h2, .receipt h3 { letter-spacing: var(--tracking-display); }
 p { margin: 0; }
 
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
-.section { padding: 112px 0; }
+.section { padding: var(--section-y) 0; }
 /* "dark" names the band sections (Ink before the themes); they follow the theme. */
 .dark { background: var(--section-band); color: var(--fg); }
 .tint { background: var(--section-tint); }
@@ -193,7 +164,7 @@ p { margin: 0; }
 .lang button { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; color: var(--fg-soft); }
 .lang button[aria-pressed="true"] { color: var(--fg); font-weight: 600; }
 .nav-gh, .nav-gh:hover { color: var(--on-fg); }
-.nav-gh { font-family: var(--mono); font-size: 13px; font-weight: 600; background: var(--fg); padding: 9px 16px; border-radius: 4px; }
+.nav-gh { font-family: var(--mono); font-size: 13px; font-weight: 600; background: var(--fg); padding: 8px 16px; border-radius: 4px; }
 .nav-gh:hover { background: var(--fg-muted); }
 :root[data-theme="dark"] .nav-gh:hover { background: #fff; }
 
@@ -454,7 +425,7 @@ p { margin: 0; }
   .brand-by { display: none; }
   /* Room for the theme toggle at 375px: the brand and the GitHub button stay on one line. */
   .nav-right { gap: 12px; }
-  .nav-gh { padding: 9px 12px; white-space: nowrap; }
+  .nav-gh { padding: 8px 12px; white-space: nowrap; }
   .pillars, .transports, .journey, .roadmap, .cta-grid, .feature-list, .node-facts { grid-template-columns: 1fr; }
   .pillars .pillar:last-child { grid-column: auto; }
   .compare-row { grid-template-columns: 1.3fr 1fr 1fr; }
@@ -475,6 +446,6 @@ p { margin: 0; }
 .svg-scroll svg { display: block; width: 100%; height: auto; min-width: 480px; }
 
 /* Purple tile with the NakoCorp logo in white: brand-fixed in both themes. */
-.logo-tile { position: relative; display: inline-block; overflow: hidden; flex: none; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(145deg, #7C55C9, #4E3189); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.logo-tile { position: relative; display: inline-block; overflow: hidden; flex: none; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(145deg, var(--logo-tile-top), var(--purple-d)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
 .logo-tile img { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: block; max-width: none; filter: brightness(0) invert(1); }
 .logo-tile-sm { width: 36px; height: 36px; border-radius: 8px; }
