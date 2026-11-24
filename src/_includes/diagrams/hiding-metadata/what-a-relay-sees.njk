@@ -1,0 +1,39 @@
+{#- Article 07: what a Barking relay sees and what it does not, as an HTML
+    table (more readable than an SVG at 375 px). Rows follow the article's
+    sections; the left column lists, first, the leaks of "What still leaks".
+    No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    caption: "What a Barking relay sees, and what it does not",
+    sees: "Sees", not: "Does not see",
+    rows: [
+      ["The IP address of whoever deposits or fetches, during the connection", "The identity or keys of the sender"],
+      ["For one mailbox, which IP deposits and which IP fetches", "The identity or keys of the recipient"],
+      ["A mailbox ID, the same for one day and one direction", "Which conversation yesterday's or tomorrow's mailbox belongs to"],
+      ["The exact size of the encrypted payload, and its tier", "The content and the contact card"],
+      ["The expiry to 10 minutes, the arrival time to the minute", "The second the message was sealed"],
+      ["Message or acknowledgement", "A phone number or an account: there is none"]
+    ]
+  },
+  fr: {
+    caption: "Ce qu’un relais Barking voit, et ce qu’il ne voit pas",
+    sees: "Voit", not: "Ne voit pas",
+    rows: [
+      ["L’adresse IP de qui dépose ou relève, pendant la connexion", "L’identité ou les clés de l’expéditeur"],
+      ["Pour une boîte, quelle IP dépose et quelle IP relève", "L’identité ou les clés du destinataire"],
+      ["Un identifiant de boîte, le même pour un jour et un sens", "À quelle conversation appartient la boîte d’hier ou de demain"],
+      ["La taille exacte de la charge chiffrée, et son palier", "Le contenu et la carte de contact"],
+      ["L’expiration à 10 minutes près, l’heure d’arrivée à la minute", "La seconde où le message a été scellé"],
+      ["Message ou accusé de réception", "Un numéro de téléphone ou un compte : il n’y en a pas"]
+    ]
+  }
+}[lang] -%}
+<table class="relay-sees">
+<caption>{{ t.caption }}</caption>
+<thead><tr><th scope="col">{{ t.sees }}</th><th scope="col">{{ t.not }}</th></tr></thead>
+<tbody>
+{%- for r in t.rows %}
+<tr><td>{{ r[0] }}</td><td>{{ r[1] }}</td></tr>
+{%- endfor %}
+</tbody>
+</table>

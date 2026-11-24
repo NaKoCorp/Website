@@ -1,0 +1,46 @@
+{#- Article 07: one direction of one conversation over three days. Each day
+    has its own mailbox ID (accent chip, truncated hex, illustrative values)
+    and so its own set of responsible nodes, picked from the same fifteen
+    nodes drawn in each column. No transport colour: nothing travels here.
+    ids are prefixed with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "One conversation, a new mailbox every day",
+    desc: "Alice writes to Bob over three days. On Monday, day 20782, her messages go to the mailbox 3f9a…c21e; on Tuesday, day 20783, to 81d0…6b47; on Wednesday, day 20784, to e25c…09fa. Each mailbox ID is stored by a different group of five nodes out of the same network. A relay cannot link the three mailboxes: same conversation, three unlinkable mailboxes.",
+    top: "Alice → Bob, one session",
+    days: ["Mon · day 20782", "Tue · day 20783", "Wed · day 20784"],
+    held: "held by 5 nodes",
+    bottom: "same conversation, three unlinkable mailboxes"
+  },
+  fr: {
+    title: "Une conversation, une nouvelle boîte chaque jour",
+    desc: "Alice écrit à Bob pendant trois jours. Le lundi, jour 20782, ses messages vont dans la boîte 3f9a…c21e ; le mardi, jour 20783, dans 81d0…6b47 ; le mercredi, jour 20784, dans e25c…09fa. Chaque boîte est gardée par un groupe différent de cinq nœuds du même réseau. Un relais ne peut pas relier les trois boîtes : même conversation, trois boîtes impossibles à relier.",
+    top: "Alice → Bob, une session",
+    days: ["lun. · jour 20782", "mar. · jour 20783", "mer. · jour 20784"],
+    held: "gardée par 5 nœuds",
+    bottom: "même conversation, trois boîtes impossibles à relier"
+  }
+}[lang] -%}
+{%- set cols = [
+  { x: 130, id: "3f9a…c21e", on: [0, 2, 6, 7, 11] },
+  { x: 360, id: "81d0…6b47", on: [3, 4, 8, 13, 14] },
+  { x: 590, id: "e25c…09fa", on: [1, 5, 9, 10, 12] }
+] -%}
+<svg class="diagram" viewBox="0 0 720 300" role="img" aria-labelledby="daily-mailbox-title daily-mailbox-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="daily-mailbox-title">{{ t.title }}</title>
+<desc id="daily-mailbox-desc">{{ t.desc }}</desc>
+<text x="360" y="22" text-anchor="middle" fill="currentColor" font-weight="600">{{ t.top }}</text>
+<path d="M30 36H690" stroke="var(--border-strong)"/>
+{%- for c in cols %}
+<rect x="{{ c.x - 100 }}" y="48" width="200" height="208" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.2"/>
+<text x="{{ c.x }}" y="74" text-anchor="middle" fill="var(--fg-soft)">{{ t.days[loop.index0] }}</text>
+<rect x="{{ c.x - 72 }}" y="88" width="144" height="32" rx="8" fill="var(--surface-alt)" stroke="var(--accent)" stroke-width="2"/>
+<text x="{{ c.x }}" y="109" text-anchor="middle" fill="var(--accent)" font-weight="600">{{ c.id }}</text>
+{%- for n in range(0, 15) %}
+{%- set on = n in c.on %}
+<circle cx="{{ c.x - 56 + 28 * (n % 5) }}" cy="{{ 148 + 30 * ((n / 5) | round(0, 'floor')) }}" r="{{ 7 if on else 5 }}" fill="{{ 'var(--accent)' if on else 'var(--surface-alt)' }}" stroke="{{ 'var(--accent)' if on else 'var(--border-strong)' }}" stroke-width="1.2"/>
+{%- endfor %}
+<text x="{{ c.x }}" y="242" text-anchor="middle" font-size="11" fill="var(--fg-soft)">{{ t.held }}</text>
+{%- endfor %}
+<text x="360" y="286" text-anchor="middle" fill="currentColor">{{ t.bottom }}</text>
+</svg>

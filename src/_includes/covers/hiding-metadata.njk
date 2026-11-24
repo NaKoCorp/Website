@@ -1,0 +1,60 @@
+{#- Cover of article 07, drawn with the theme's colours. Decorative: the title
+    sits next to it. A packet as a relay sees it, inside a viewfinder: the
+    clear header cells, then the sealed payload (hatched, with a padlock).
+    The mailbox field (accent) carries an ID and its day number. Below, a
+    tag on the connection holds the client's IP address (threat colour, a
+    documentation address from RFC 5737). Motion, once, only without reduced
+    motion: the day turns twice and the mailbox ID changes with it, while the
+    IP tag stays exactly as it was, which is the article's point. No
+    transport colours: nothing here travels between relays. Only the day
+    label follows the page language. -#}
+{%- set dayWord = 'jour' if lang == 'fr' else 'day' -%}
+<svg class="cover-art cover-meta" viewBox="0 0 640 360" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)">
+<defs>
+<pattern id="meta-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+<path d="M0 0V8" stroke="var(--cover-line)" stroke-width="1.5" opacity=".45"/>
+</pattern>
+</defs>
+<rect width="640" height="360" fill="var(--cover-bg)"/>
+<g fill="none" stroke="var(--cover-grid)" stroke-width="1" opacity=".6">
+<path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640"/>
+<path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/>
+</g>
+<g fill="none" stroke="var(--cover-line)" stroke-width="2" stroke-linecap="round">
+<path d="M28 92V72H48M612 92V72H592M28 244V264H48M612 244V264H592"/>
+</g>
+<g stroke="var(--cover-line)" stroke-width="1.5" fill="var(--cover-node)">
+<rect x="40" y="132" width="12" height="60" rx="3"/>
+<rect x="54" y="132" width="12" height="60" rx="3"/>
+<rect x="68" y="132" width="12" height="60" rx="3"/>
+<rect x="82" y="132" width="12" height="60" rx="3"/>
+<rect x="100" y="132" width="96" height="60" rx="6"/>
+<rect x="202" y="132" width="40" height="60" rx="6"/>
+<rect x="330" y="132" width="20" height="60" rx="4"/>
+</g>
+<g fill="var(--cover-line)" font-size="11">
+<text x="110" y="167">7c19…</text>
+<text x="208" y="167">:00</text>
+</g>
+<rect class="meta-box" x="248" y="132" width="76" height="60" rx="6" fill="var(--cover-node)" stroke="var(--accent)" stroke-width="2"/>
+<g fill="var(--accent)" font-size="12" font-weight="600">
+<text class="meta-v meta-v1" x="257" y="167">d546…</text>
+<text class="meta-v meta-v2" x="257" y="167">0e9b…</text>
+<text class="meta-v meta-v3" x="257" y="167">a2f7…</text>
+</g>
+<rect x="356" y="132" width="244" height="60" rx="6" fill="url(#meta-hatch)" stroke="var(--cover-line)" stroke-width="1.5"/>
+<rect x="460" y="146" width="36" height="32" rx="8" fill="var(--cover-node)"/>
+<path d="M470 162V157a8 8 0 0 1 16 0V162" fill="none" stroke="var(--cover-line)" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="465" y="160" width="26" height="14" rx="3" fill="var(--accent)"/>
+<path d="M286 192V212" stroke="var(--accent)" stroke-width="1.5"/>
+<rect x="242" y="212" width="88" height="24" rx="12" fill="var(--cover-node)" stroke="var(--cover-chip)" stroke-width="1.5"/>
+<g fill="var(--cover-line)" font-size="11" text-anchor="middle">
+<text class="meta-d meta-v1" x="286" y="228">{{ dayWord }} 20782</text>
+<text class="meta-d meta-v2" x="286" y="228">{{ dayWord }} 20783</text>
+<text class="meta-d meta-v3" x="286" y="228">{{ dayWord }} 20784</text>
+</g>
+<path d="M46 192V292H96" fill="none" stroke="var(--cover-threat)" stroke-width="1.5" stroke-dasharray="4 5"/>
+<rect x="96" y="278" width="132" height="28" rx="14" fill="var(--cover-node)" stroke="var(--cover-threat)" stroke-width="1.5"/>
+<circle cx="114" cy="292" r="4" fill="var(--cover-threat)"/>
+<text x="126" y="296" font-size="12" fill="var(--cover-threat)">203.0.113.7</text>
+</svg>
