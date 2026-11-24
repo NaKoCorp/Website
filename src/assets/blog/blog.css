@@ -544,6 +544,20 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   52%, 86% { fill: var(--cover-threat); opacity: .4; }
 }
 
+/* Article 07: the day turns twice and the mailbox ID turns with it, while
+   the IP tag never moves. Plays once, rests on the third day. Without
+   motion, the first day shows. */
+.cover-meta .meta-v2, .cover-meta .meta-v3 { opacity: 0; }
+.cover-meta .meta-v, .cover-meta .meta-d { animation: 9s cubic-bezier(.2, .7, .2, 1) 1 both; }
+.cover-meta .meta-v1 { animation-name: meta-day-1; }
+.cover-meta .meta-v2 { animation-name: meta-day-2; }
+.cover-meta .meta-v3 { animation-name: meta-day-3; }
+.cover-meta .meta-box { animation: meta-turn 9s ease-out 1; }
+@keyframes meta-day-1 { 0%, 30% { opacity: 1; transform: none; } 36%, 100% { opacity: 0; transform: translateY(-6px); } }
+@keyframes meta-day-2 { 0%, 32% { opacity: 0; transform: translateY(6px); } 38%, 63% { opacity: 1; transform: none; } 69%, 100% { opacity: 0; transform: translateY(-6px); } }
+@keyframes meta-day-3 { 0%, 65% { opacity: 0; transform: translateY(6px); } 71%, 100% { opacity: 1; transform: none; } }
+@keyframes meta-turn { 0%, 31%, 45%, 64%, 78%, 100% { stroke-width: 2; } 36%, 69% { stroke-width: 4; } }
+
 /* Figures below the fold settle in once (blog.js adds the classes). */
 .prose .will-reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1); }
 .prose .will-reveal.in { opacity: 1; transform: none; }
@@ -552,6 +566,7 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   .cover-packet, .diagram-packet { animation: none; offset-distance: 50%; }
   .cover-pq .pq-classical, .cover-pq .pq-classical-dots, .cover-pq .pq-seal { animation: none; }
   .cover-pq .pq-value { animation: none; display: none; }
+  .cover-meta .meta-v, .cover-meta .meta-d, .cover-meta .meta-box { animation: none; }
   .feature-card, .toc a { transition: none; }
   .feature-card:hover { transform: none; }
 }

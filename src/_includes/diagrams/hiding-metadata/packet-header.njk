@@ -1,0 +1,72 @@
+{#- Article 07: the 40-byte clear header of a Barking packet, to scale (12
+    units per byte), then the 2-byte length, the encrypted payload (hatched)
+    and the zero padding up to the tier size (not to scale, marked by a
+    break). Above each field its name and size, below it what a relay learns
+    from it. The length is drawn in the threat colour: it gives the exact
+    size of the encrypted payload. No transport colour: nothing travels
+    here. ids are prefixed with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "The clear header of a Barking packet, field by field",
+    desc: "A Barking packet starts with a 40-byte header in clear: version, kind, hops and tier (one byte each), a 16-byte packet ID, a 4-byte expiry and a 16-byte mailbox ID. Then a 2-byte payload length, the encrypted payload, and zeros up to the tier size: 245, 1,024 or 16,384 bytes. What a relay learns: the kind tells a message from an acknowledgement; the packet ID looks random and links to nothing; the expiry is rounded down to 10 minutes; the mailbox ID changes every day; the length gives the exact size of the encrypted payload. The sender and the recipient appear nowhere.",
+    small: "4 × 1 byte", small2: "ver · kind · hops · tier",
+    id: "packet ID · 16", exp: "expires · 4", mb: "mailbox ID · 16", len: "len · 2",
+    payload: "encrypted payload", pad: "zeros",
+    r1: "message or ack, S/M/L", r2: "looks random", r3: "rounded to 10 min",
+    r4: "changes every day", r5: "exact size",
+    header: "40-byte clear header", tier: "up to the tier size: 245 · 1,024 · 16,384 bytes",
+    absent: "no sender, no recipient, no phone number"
+  },
+  fr: {
+    title: "L’en-tête en clair d’un paquet Barking, champ par champ",
+    desc: "Un paquet Barking commence par un en-tête en clair de 40 octets : version, type, sauts et palier (un octet chacun), un identifiant de paquet de 16 octets, une expiration de 4 octets et un identifiant de boîte de 16 octets. Puis une longueur de 2 octets, la charge chiffrée, et des zéros jusqu’à la taille du palier : 245, 1 024 ou 16 384 octets. Ce qu’un relais apprend : le type distingue un message d’un accusé ; l’identifiant de paquet a l’air aléatoire et ne relie rien ; l’expiration est arrondie à 10 minutes ; l’identifiant de boîte change chaque jour ; la longueur donne la taille exacte de la charge chiffrée. Ni l’expéditeur ni le destinataire n’apparaissent.",
+    small: "4 × 1 octet", small2: "ver · type · sauts · palier",
+    id: "ID paquet · 16", exp: "expire · 4", mb: "ID boîte · 16", len: "lon. · 2",
+    payload: "charge chiffrée", pad: "zéros",
+    r1: "message ou accusé, S/M/L", r2: "a l’air aléatoire", r3: "arrondie à 10 min",
+    r4: "change chaque jour", r5: "taille exacte",
+    header: "en-tête en clair de 40 octets", tier: "jusqu’au palier : 245 · 1 024 · 16 384 octets",
+    absent: "ni expéditeur, ni destinataire, ni numéro de téléphone"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 300" role="img" aria-labelledby="packet-header-title packet-header-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="packet-header-title">{{ t.title }}</title>
+<desc id="packet-header-desc">{{ t.desc }}</desc>
+<defs>
+<pattern id="packet-header-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="var(--fg-soft)" stroke-width="1.2" opacity=".5"/></pattern>
+</defs>
+<path d="M20 28V20H500V28" fill="none" stroke="var(--border-strong)"/>
+<text x="260" y="14" text-anchor="middle" fill="var(--fg-soft)">{{ t.header }}</text>
+<text x="20" y="42" fill="currentColor">{{ t.small }}</text>
+<text x="20" y="56" font-size="11" fill="var(--fg-soft)">{{ t.small2 }}</text>
+<text x="164" y="70" text-anchor="middle" fill="currentColor">{{ t.id }}</text>
+<text x="284" y="56" text-anchor="middle" fill="currentColor">{{ t.exp }}</text>
+<text x="404" y="70" text-anchor="middle" fill="var(--accent)" font-weight="600">{{ t.mb }}</text>
+<text x="512" y="56" text-anchor="middle" fill="currentColor">{{ t.len }}</text>
+<g fill="var(--surface-card)" stroke="currentColor" stroke-width="1.2">
+<rect x="20" y="84" width="12" height="52"/><rect x="32" y="84" width="12" height="52"/><rect x="44" y="84" width="12" height="52"/><rect x="56" y="84" width="12" height="52"/>
+<rect x="68" y="84" width="192" height="52"/>
+<rect x="260" y="84" width="48" height="52"/>
+</g>
+<rect x="308" y="84" width="192" height="52" fill="var(--surface-card)" stroke="var(--accent)" stroke-width="2"/>
+<rect x="500" y="84" width="24" height="52" fill="var(--surface-card)" stroke="var(--danger)" stroke-width="2"/>
+<rect x="524" y="84" width="128" height="52" fill="url(#packet-header-hatch)" stroke="currentColor" stroke-width="1.2"/>
+<text x="588" y="114" text-anchor="middle" font-size="11" fill="currentColor">{{ t.payload }}</text>
+<rect x="668" y="84" width="44" height="52" fill="var(--surface-alt)" stroke="var(--border-strong)" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="690" y="114" text-anchor="middle" font-size="11" fill="var(--fg-soft)">{{ t.pad }}</text>
+<path d="M655 80L661 140M661 80L667 140" stroke="var(--fg-soft)" stroke-width="1.2"/>
+<g stroke="var(--border-strong)">
+<path d="M44 136V160M164 136V184M284 136V160M404 136V184M512 136V160"/>
+</g>
+<g font-size="11">
+<text x="20" y="174" fill="var(--fg-soft)">{{ t.r1 }}</text>
+<text x="164" y="198" text-anchor="middle" fill="var(--fg-soft)">{{ t.r2 }}</text>
+<text x="284" y="174" text-anchor="middle" fill="var(--fg-soft)">{{ t.r3 }}</text>
+<text x="404" y="198" text-anchor="middle" fill="var(--accent)">{{ t.r4 }}</text>
+<text x="512" y="174" text-anchor="middle" fill="var(--danger)">{{ t.r5 }}</text>
+</g>
+<path d="M524 224V232H712V224" fill="none" stroke="var(--border-strong)"/>
+<text x="712" y="250" text-anchor="end" font-size="11" fill="var(--fg-soft)">{{ t.tier }}</text>
+<rect x="20" y="256" width="372" height="32" rx="8" fill="var(--surface-alt)" stroke="var(--border)"/>
+<text x="36" y="277" fill="currentColor">{{ t.absent }}</text>
+</svg>
