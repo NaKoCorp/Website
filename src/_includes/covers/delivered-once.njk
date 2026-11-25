@@ -1,0 +1,48 @@
+{#- Cover of article 08, drawn with the theme's colours. Decorative: the title
+    sits next to it. On the left, the receipt secret as a key (accent). On
+    the right, the five relays that hold the same packet (ID 7c19…), on a
+    ring. Relay A, where the receipt lands, is outlined in the accent; thin
+    dashed lines in the internet transport colour carry the receipt from A
+    to the four others (the replication pass).
+    The resting state is the end of the story: every slot is empty and
+    checked. Motion, once, only without reduced motion: the key slides into
+    A, A's copy fades and its check appears, then the replication lines
+    light up and the four other copies go. No loop. Text: hex only, so it
+    needs no translation. -#}
+{%- set ring = [
+  { n: "A", x: 296, y: 180, first: true },
+  { n: "B", x: 384, y: 68 },
+  { n: "C", x: 520, y: 110 },
+  { n: "D", x: 520, y: 250 },
+  { n: "E", x: 384, y: 292 }
+] -%}
+<svg class="cover-art cover-ack" viewBox="0 0 640 360" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)">
+<rect width="640" height="360" fill="var(--cover-bg)"/>
+<g fill="none" stroke="var(--cover-grid)" stroke-width="1" opacity=".6">
+<path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640"/>
+<path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/>
+</g>
+<g class="ack-links" fill="none" stroke="var(--transport-net)" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round">
+{%- for r in ring %}{% if not r.first %}
+<path d="M296 180L{{ r.x }} {{ r.y }}"/>
+{%- endif %}{% endfor %}
+</g>
+<g class="ack-key" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="84" cy="180" r="26"/>
+<circle cx="84" cy="180" r="9" stroke-width="3"/>
+<path d="M110 180H232M204 180V200M222 180V194"/>
+</g>
+<text class="ack-key" x="66" y="234" font-size="13" fill="var(--accent)">4e1f…9a07</text>
+{%- for r in ring %}
+{%- set late = '' if r.first else ' ack-late' %}
+<g transform="translate({{ r.x - 44 }} {{ r.y - 30 }})">
+<rect width="88" height="60" rx="10" fill="var(--cover-node)" stroke="{{ 'var(--accent)' if r.first else 'var(--cover-line)' }}" stroke-width="{{ '2.5' if r.first else '1.5' }}"/>
+<rect x="12" y="14" width="64" height="20" rx="4" fill="none" stroke="var(--cover-chip)" stroke-width="1.5" stroke-dasharray="3 4"/>
+<g class="ack-pkt{{ late }}">
+<rect x="12" y="14" width="64" height="20" rx="4" fill="var(--cover-line)" opacity=".85"/>
+<text x="44" y="28" text-anchor="middle" font-size="11" fill="var(--cover-node)">7c19…</text>
+</g>
+<path class="ack-check{{ late }}" d="M34 45l6 6l14 -14" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+{%- endfor %}
+</svg>
