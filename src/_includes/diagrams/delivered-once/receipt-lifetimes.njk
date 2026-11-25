@@ -1,0 +1,73 @@
+{#- Article 08: two lives of one message on a relay, on a 9-day axis. Top:
+    the receipt arrives a few hours after sending; the copy is deleted at
+    that point (the dashed outline is where it would have lived), and the
+    receipt is kept until its own 7-day expiry, then 24 h of grace (hatched).
+    Bottom: no receipt; the copy waits until day 7, is purged, and the
+    sender's iPhone is woken. No transport colour: nothing travels here.
+    Scale: 63 px per day from x = 128. ids are prefixed with the diagram
+    name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "How long a copy and its receipt stay on a relay",
+    desc: "Two cases on a timeline of nine days. With a receipt: the message is sent at day 0, the receipt arrives a few hours later and the relay deletes the copy at once, instead of keeping it until day 7. The relay keeps the receipt until its own expiry, 7 days after it was sent, then 24 hours of grace. Without a receipt: the copy waits until it expires at day 7, the relay purges it and the sender's iPhone is woken.",
+    withAck: "with a receipt",
+    noAck: "no receipt",
+    msg: "message",
+    deleted: "deleted",
+    arrives: "receipt arrives",
+    kept: "receipt kept",
+    grace: "grace",
+    waits: "copy waits for a receipt",
+    purged: "expires: purged, sender woken",
+    days: "days"
+  },
+  fr: {
+    title: "Combien de temps une copie et son accusé restent sur un relais",
+    desc: "Deux cas sur une frise de neuf jours. Avec accusé : le message part au jour 0, l’accusé arrive quelques heures plus tard et le relais efface la copie aussitôt, au lieu de la garder jusqu’au jour 7. Le relais garde l’accusé jusqu’à sa propre expiration, 7 jours après son envoi, puis 24 heures de grâce. Sans accusé : la copie attend jusqu’à son expiration au jour 7, le relais la purge et l’iPhone de l’expéditeur est réveillé.",
+    withAck: "avec accusé",
+    noAck: "sans accusé",
+    msg: "message",
+    deleted: "effacé",
+    arrives: "l’accusé arrive",
+    kept: "accusé gardé",
+    grace: "grâce",
+    waits: "la copie attend un accusé",
+    purged: "expire : purgé, expéditeur réveillé",
+    days: "jours"
+  }
+}[lang] -%}
+{%- set x0 = 128 -%}{%- set d = 63 -%}
+<svg class="diagram" viewBox="0 0 720 268" role="img" aria-labelledby="receipt-lifetimes-title receipt-lifetimes-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="receipt-lifetimes-title">{{ t.title }}</title>
+<desc id="receipt-lifetimes-desc">{{ t.desc }}</desc>
+<defs>
+<pattern id="receipt-lifetimes-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V6" stroke="var(--accent)" stroke-width="1.5" opacity=".6"/></pattern>
+</defs>
+<g stroke="var(--border)" stroke-width="1">
+{%- for i in range(0, 10) %}
+<path d="M{{ x0 + d * i }} 24V226"/>
+{%- endfor %}
+</g>
+<path d="M{{ x0 + d * 7 }} 24V226" stroke="var(--border-strong)" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="16" y="62" font-weight="600" fill="currentColor">{{ t.withAck }}</text>
+<rect x="{{ x0 }}" y="48" width="{{ d * 7 }}" height="20" rx="4" fill="none" stroke="var(--fg-muted)" stroke-width="1.2" stroke-dasharray="4 4"/>
+<rect x="{{ x0 }}" y="48" width="16" height="20" rx="4" fill="var(--fg-soft)"/>
+<text x="{{ x0 + 28 }}" y="62" fill="var(--fg-soft)">{{ t.msg }}: {{ t.deleted }}</text>
+<path d="M{{ x0 + 16 }} 40V108" stroke="var(--accent)" stroke-width="1.5"/>
+<circle cx="{{ x0 + 16 }}" cy="40" r="5" fill="var(--accent)"/>
+<text x="{{ x0 + 26 }}" y="34" font-size="11" fill="var(--accent)">{{ t.arrives }}</text>
+<rect x="{{ x0 + 16 }}" y="84" width="{{ d * 7 }}" height="20" rx="4" fill="var(--accent)" opacity=".18" stroke="var(--accent)" stroke-width="1.2"/>
+<rect x="{{ x0 + 16 + d * 7 }}" y="84" width="{{ d }}" height="20" rx="4" fill="url(#receipt-lifetimes-hatch)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="{{ x0 + 28 }}" y="98" fill="currentColor">{{ t.kept }}</text>
+<text x="{{ x0 + 16 + d * 7 + d / 2 }}" y="124" text-anchor="middle" font-size="11" fill="var(--accent)">{{ t.grace }}</text>
+<path d="M16 140H704" stroke="var(--border-strong)"/>
+<text x="16" y="178" font-weight="600" fill="currentColor">{{ t.noAck }}</text>
+<rect x="{{ x0 }}" y="164" width="{{ d * 7 }}" height="20" rx="4" fill="var(--fg-soft)" opacity=".35" stroke="var(--fg-soft)" stroke-width="1.2"/>
+<text x="{{ x0 + 12 }}" y="178" fill="currentColor">{{ t.waits }}</text>
+<circle cx="{{ x0 + d * 7 }}" cy="174" r="5" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.5"/>
+<text x="{{ x0 + d * 7 }}" y="206" text-anchor="middle" font-size="11" fill="var(--fg-soft)">{{ t.purged }}</text>
+{%- for i in range(0, 10) %}
+<text x="{{ x0 + d * i }}" y="246" text-anchor="middle" font-size="11" fill="var(--fg-muted)">{{ i }}</text>
+{%- endfor %}
+<text x="{{ x0 + d * 9 }}" y="262" text-anchor="end" font-size="11" fill="var(--fg-muted)">{{ t.days }}</text>
+</svg>

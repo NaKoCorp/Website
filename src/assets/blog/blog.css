@@ -558,6 +558,24 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 @keyframes meta-day-3 { 0%, 65% { opacity: 0; transform: translateY(6px); } 71%, 100% { opacity: 1; transform: none; } }
 @keyframes meta-turn { 0%, 31%, 45%, 64%, 78%, 100% { stroke-width: 2; } 36%, 69% { stroke-width: 4; } }
 
+/* Article 08: the key slides into relay A, A's copy goes, then the
+   replication lines light up and the four other copies go. Plays once and
+   rests on its end state, which is also the still image: five empty,
+   checked slots. */
+.cover-ack .ack-key, .cover-ack .ack-pkt, .cover-ack .ack-check, .cover-ack .ack-links { animation: 9s cubic-bezier(.2, .7, .2, 1) 1 both; }
+.cover-ack .ack-key { animation-name: ack-key; }
+.cover-ack .ack-pkt { opacity: 0; animation-name: ack-pkt; }
+.cover-ack .ack-pkt.ack-late { animation-name: ack-pkt-late; }
+.cover-ack .ack-check { animation-name: ack-check; }
+.cover-ack .ack-check.ack-late { animation-name: ack-check-late; }
+.cover-ack .ack-links { animation-name: ack-links; }
+@keyframes ack-key { 0% { opacity: 0; transform: translateX(-28px); } 8% { opacity: 1; } 20%, 100% { opacity: 1; transform: none; } }
+@keyframes ack-pkt { 0%, 22% { opacity: 1; } 28%, 100% { opacity: 0; } }
+@keyframes ack-pkt-late { 0%, 54% { opacity: 1; } 62%, 100% { opacity: 0; } }
+@keyframes ack-check { 0%, 26% { opacity: 0; } 32%, 100% { opacity: 1; } }
+@keyframes ack-check-late { 0%, 60% { opacity: 0; } 66%, 100% { opacity: 1; } }
+@keyframes ack-links { 0%, 32% { opacity: 0; } 42%, 100% { opacity: 1; } }
+
 /* Figures below the fold settle in once (blog.js adds the classes). */
 .prose .will-reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1); }
 .prose .will-reveal.in { opacity: 1; transform: none; }
@@ -567,6 +585,7 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   .cover-pq .pq-classical, .cover-pq .pq-classical-dots, .cover-pq .pq-seal { animation: none; }
   .cover-pq .pq-value { animation: none; display: none; }
   .cover-meta .meta-v, .cover-meta .meta-d, .cover-meta .meta-box { animation: none; }
+  .cover-ack .ack-key, .cover-ack .ack-pkt, .cover-ack .ack-check, .cover-ack .ack-links { animation: none; }
   .feature-card, .toc a { transition: none; }
   .feature-card:hover { transform: none; }
 }

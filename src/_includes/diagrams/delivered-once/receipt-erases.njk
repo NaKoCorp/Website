@@ -1,0 +1,62 @@
+{#- Article 08: Bob publishes the receipt secret on one relay (A), which
+    checks the hash and deletes its copy at once. The four other holders
+    (B to E) get the receipt from A at the next hourly replication pass and
+    run the same check. Route arrows use the internet transport colour,
+    since the receipt travels as a packet. Hex values are illustrative.
+    ids are prefixed with the diagram name. No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "One revealed secret deletes five copies",
+    desc: "Bob decrypted the message and learned its 16-byte secret. He publishes it in a receipt deposited on relay A. Relay A checks that BLAKE3 of the secret equals the packet ID, deletes its copy at once and keeps the receipt. At the next hourly replication pass, A sends the receipt to relays B, C, D and E, which run the same check and delete their copies. No relay learns who sent the receipt.",
+    publish: "publish secret",
+    secret: "secret",
+    relay: "relay",
+    check: "BLAKE3(secret) = ID ?",
+    deleted: "copy deleted",
+    now: "at once",
+    pass: "next replication pass"
+  },
+  fr: {
+    title: "Un secret révélé efface cinq copies",
+    desc: "Bob a déchiffré le message et appris son secret de 16 octets. Il le publie dans un accusé déposé sur le relais A. Le relais A vérifie que BLAKE3 du secret vaut l’identifiant du paquet, efface aussitôt sa copie et garde l’accusé. À la passe de recopie horaire suivante, A envoie l’accusé aux relais B, C, D et E, qui font la même vérification et effacent leurs copies. Aucun relais n’apprend qui a envoyé l’accusé.",
+    publish: "publie le secret",
+    secret: "secret",
+    relay: "relais",
+    check: "BLAKE3(secret) = ID ?",
+    deleted: "copie effacée",
+    now: "aussitôt",
+    pass: "prochaine passe de recopie"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 316" role="img" aria-labelledby="receipt-erases-title receipt-erases-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="receipt-erases-title">{{ t.title }}</title>
+<desc id="receipt-erases-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="receipt-erases-net" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--transport-net)"/></marker>
+</defs>
+<rect x="16" y="112" width="132" height="92" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.2"/>
+<text x="82" y="140" text-anchor="middle" font-weight="600" fill="currentColor">Bob</text>
+<g fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round">
+<circle cx="40" cy="170" r="7"/>
+<path d="M47 170H66M60 170V176M65 170V174"/>
+</g>
+<text x="74" y="174" fill="var(--accent)">{{ t.secret }}</text>
+<text x="82" y="194" text-anchor="middle" font-size="11" fill="var(--fg-soft)">4e1f…9a07</text>
+<g fill="none" stroke="var(--transport-net)" stroke-width="2" stroke-linecap="round">
+<path d="M148 140C190 140 186 50 234 50" marker-end="url(#receipt-erases-net)"/>
+<path d="M216 72V268" stroke-width="1.5" stroke-dasharray="5 6"/>
+<path d="M216 112H234M216 164H234M216 216H234M216 268H234" stroke-width="1.5" marker-end="url(#receipt-erases-net)"/>
+</g>
+<text x="20" y="96" fill="var(--transport-net)" font-size="11">{{ t.publish }}</text>
+{%- for n in ["A", "B", "C", "D", "E"] %}
+{%- set y = 30 + 52 * loop.index0 %}
+<rect x="240" y="{{ y }}" width="464" height="40" rx="10" fill="var(--surface-card)" stroke="{{ 'var(--accent)' if loop.first else 'var(--border-strong)' }}" stroke-width="{{ '2' if loop.first else '1.2' }}"/>
+<circle cx="262" cy="{{ y + 20 }}" r="6" fill="var(--surface-alt)" stroke="currentColor" stroke-width="1.2"/>
+<text x="276" y="{{ y + 24 }}" fill="currentColor">{{ t.relay }} {{ n }}</text>
+<text x="372" y="{{ y + 24 }}" fill="var(--fg-soft)">{{ t.check }}</text>
+<path d="M562 {{ y + 20 }}l5 5l9 -10" fill="none" stroke="var(--yes)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="584" y="{{ y + 24 }}" fill="currentColor">{{ t.deleted }}</text>
+{%- endfor %}
+<text x="704" y="20" text-anchor="end" font-size="11" fill="var(--accent)">A · {{ t.now }}</text>
+<text x="704" y="304" text-anchor="end" font-size="11" fill="var(--fg-soft)">B–E · {{ t.pass }}</text>
+</svg>
