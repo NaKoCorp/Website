@@ -2,6 +2,7 @@
 title: Send your first Barking message in 5 minutes
 description: Build the Barking CLI, create two identities, check a safety code, then exchange an encrypted message and its receipt as plain files.
 date: 2026-11-20
+updated: 2026-11-27
 translationKey: first-message
 tags: [barking, tutorial, rust]
 barking: true
@@ -164,7 +165,7 @@ Packets come in three [fixed sizes](https://github.com/NaKoCorp/Barking/blob/v0.
 
 ## Now through relays
 
-This part is optional, and it needs something Barking does not give you yet: a relay reachable from the internet. The [bootstrap list](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) built into the binary is empty, because no public relay exists. Without one, `sync` stops here:
+This part is optional, and it needs something the CLI does not give you yet: a relay reachable from the internet. Public beta relays have been up since 27 November 2026 (see the [network map](/en/network/)), but the [bootstrap list](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) built into the binary is still empty, so the CLI knows none of them. Without one, `sync` stops here:
 
 ```sh
 barking --home alice sync

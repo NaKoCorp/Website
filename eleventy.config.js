@@ -4,7 +4,8 @@ import { IdAttributePlugin } from "@11ty/eleventy";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import { checkTranslations } from "./lib/translations.js";
-import { formatDate, readingTime, labels } from "./lib/i18n.js";
+import { formatDate, formatDateTime, readingTime, labels } from "./lib/i18n.js";
+import { countryName, formatUptime } from "./lib/network.js";
 
 const DEFAULT_INPUT = "src";
 
@@ -65,11 +66,12 @@ export default function (eleventyConfig) {
     );
     return all;
   });
-  // Standalone pages (privacy policy, support), for the sitemap.
+  // Standalone pages (privacy policy, support, network map), for the sitemap.
+  const standalone = new Set(["layouts/page.njk", "layouts/network.njk"]);
   eleventyConfig.addCollection("pages", (api) =>
     api
       .getAll()
-      .filter((item) => item.data.layout === "layouts/page.njk")
+      .filter((item) => standalone.has(item.data.layout))
       .sort((a, b) => a.url.localeCompare(b.url)),
   );
   for (const lang of ["en", "fr"]) {
@@ -133,6 +135,11 @@ export default function (eleventyConfig) {
   // YYYY-MM-DD, for <time datetime> and the article meta tags.
   eleventyConfig.addFilter("isoDate", (date) => new Date(date).toISOString().slice(0, 10));
   eleventyConfig.addFilter("readingTime", readingTime);
+  // Network page: a census time (Unix seconds), an uptime, a country name.
+  eleventyConfig.addFilter("censusTime", (secs, lang) => formatDateTime(new Date(secs * 1000), lang));
+  eleventyConfig.addFilter("isoDateTime", (secs) => new Date(secs * 1000).toISOString());
+  eleventyConfig.addFilter("uptime", formatUptime);
+  eleventyConfig.addFilter("countryName", countryName);
   eleventyConfig.addFilter("translationOf", (page, posts) =>
     (posts || []).find(
       (item) =>
@@ -164,7 +171,7 @@ export default function (eleventyConfig) {
   return {
     dir: { input, output, includes: "_includes", data: "_data" },
     // HTML is never interpreted: the homepage is copied untouched.
-    templateFormats: ["md", "njk"],
+    templateFormats: ["md", "njk", "11ty.js"],
     markdownTemplateEngine: "njk",
   };
 }

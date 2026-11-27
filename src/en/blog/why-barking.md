@@ -2,6 +2,7 @@
 title: Why we're building Barking
 description: An end-to-end encrypted messenger with relays anyone can run, no central server, no phone number. What works today, and what does not exist yet.
 date: 2026-11-19
+updated: 2026-11-27
 translationKey: why-barking
 tags: [barking, manifesto]
 barking: true
@@ -97,7 +98,7 @@ These items are planned, not built:
 
 Releases do exist: v0.0.1 and v0.1.0 came out on 13 November 2026, and [v0.2.0](https://github.com/NaKoCorp/Barking/releases/tag/v0.2.0) on 16 November. A release only means the binaries were built by GitHub's CI and attested there. It does not mean the software is ready.
 
-There is no public relay network either. The [bootstrap list](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) built into the binary is empty, so to send anything you first add a relay by hand, yours or a friend's.
+The public relay network is only starting: its first relays went up in beta on 27 November 2026, and the [network map](/en/network/) shows where they run. The [bootstrap list](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) built into the binary is still empty, so to send anything you first add a relay by hand, yours or a friend's.
 
 ## Honest limits
 
@@ -107,7 +108,7 @@ The warning in the README comes down to three points:
 
 - **Not audited.** No external firm has reviewed the cryptography or the code.
 - **Relays see your IP address.** A relay knows which address deposits or fetches a packet. Hiding it needs Tor or a mixnet, which is planned, not done.
-- **No public relay network.** You have to run a relay or know someone who does.
+- **A public relay network in beta only.** The first relays are up, but the binary does not know them yet: you add a relay by hand, yours or someone else's.
 
 </div>
 

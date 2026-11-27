@@ -27,7 +27,7 @@ What you need:
 - one open UDP port, 4433 by default;
 - a few hundred MB of disk: storage is capped at 1 GiB by default, and 256 MiB is a sensible value on a small device.
 
-Before you start, the honest part: Barking is a prototype and has not been audited. As its README says, "there is no public relay network yet". The first operators are the ones who build it.
+Before you start, the honest part: Barking is a prototype and has not been audited. Its public relay network is in beta: the first relays are up, and the [network map](/en/network/) shows where they run. The next operators are the ones who grow it.
 
 ## Get the binary
 

@@ -2,6 +2,7 @@
 title: A messenger without a central server
 description: How Barking places each mailbox on the five closest relays, replicates packets between them and drops the relays that lose messages, with no directory.
 date: 2026-11-21
+updated: 2026-11-27
 translationKey: no-central-server
 tags: [barking, networking, rust, p2p]
 barking: true
@@ -13,7 +14,7 @@ A central server is one place to seize, one place to censor and one switch to tu
 
 In one sentence: in Barking, a mailbox lives on the [5 relays](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht/src/lib.rs#L22) whose identifier is closest to its key (S/Kademlia); the client deposits one copy, the relays complete the others themselves, and each client stops using the relays that lose its messages.
 
-Status first, because it matters: the code works and is tested, but no public network exists yet. Every number below comes from the Barking repository at commit [`7aa3a41`](https://github.com/NaKoCorp/Barking/commit/7aa3a4100f32e4380b030d6240be9115368abe5e), not from intentions. If you have not read it, [Why Barking](/en/blog/why-barking/) gives the context.
+Status first, because it matters: the code works and is tested, and the public network has only just started: its first relays went up in beta on 27 November 2026, as the [network map](/en/network/) shows. Every number below comes from the Barking repository at commit [`7aa3a41`](https://github.com/NaKoCorp/Barking/commit/7aa3a4100f32e4380b030d6240be9115368abe5e), not from intentions. If you have not read it, [Why Barking](/en/blog/why-barking/) gives the context.
 
 ## What a relay is
 
@@ -81,7 +82,7 @@ When a relay is set aside, `barking sync` prints [`Node … avoided: it lost mes
 
 ## What this design does not solve yet
 
-- **There is no public network.** The [bootstrap list](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht/bootstrap.toml) built into the binary is empty. Today you add a relay by hand.
+- **The public network is a beta.** Its first relays have been up since 27 November 2026, but the [bootstrap list](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht/bootstrap.toml) built into the binary is still empty. Today you add a relay by hand.
 - **A relay behind NAT stays a plain relay.** Without a `public_addr` in the [`[dht]` section](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/docs/deploy/barking-node.toml#L56-L62) of its configuration, it stores packets but takes no part in the table.
 - **A responsible sees IP addresses.** It sees the address that deposits and the address that fetches, and can link the two. What a relay can learn, and what it cannot, gets its own article.
 - **Introduction mailboxes can be targeted.** The mailbox for a first contact is computed from a public key. A patient attacker can place identities near it and delay first contacts, at the cost of the puzzle for each identity.
@@ -92,6 +93,6 @@ Barking is a prototype and has not been audited.
 
 ## Be one of the nodes
 
-The first public network will be made of its first operators. Run a relay with the table enabled (`public_addr` in the `[dht]` section), then publish its identifier and address: the README's [Run a relay](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/README.md#-run-a-relay) takes one binary, with Docker or systemd.
+The public network is being built by its first operators. Run a relay with the table enabled (`public_addr` in the `[dht]` section): once it answers the hourly census, it appears on the [network map](/en/network/), and you can share its identifier and address with the people who will use it. the README's [Run a relay](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/README.md#-run-a-relay) takes one binary, with Docker or systemd.
 
 And if you would rather break it than run it, read the table's code in [`crates/barking-dht`](https://github.com/NaKoCorp/Barking/tree/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht) and [open an issue](https://github.com/NaKoCorp/Barking/issues) where it is wrong.
