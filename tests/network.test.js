@@ -6,6 +6,7 @@ import { buildSite } from "./helpers/build.js";
 import {
   byCountry,
   cleanCensus,
+  dotMap,
   cleanText,
   formatUptime,
   mapLayers,
@@ -61,6 +62,21 @@ test("the map lights only the countries holding relays", () => {
   assert.ok(m.lit[0].path.length > 0, "France has dots");
   assert.equal(m.lit[1].path, "", "Singapore is too small for a dot but keeps its marker");
   assert.ok(m.lit[0].delay > m.lit.find((l) => l.code === "FR").delay - 1);
+});
+
+test("no country spans a whole row of the map (antimeridian rings)", () => {
+  const { dots, anchors } = dotMap();
+  for (const [code, pts] of dots) {
+    const rows = new Map();
+    for (const [px, py] of pts) rows.set(py, (rows.get(py) ?? 0) + 1);
+    // 180 columns per row; Russia, the widest country, covers about 95 of them.
+    for (const [py, n] of rows) assert.ok(n < 120, `${code} has ${n} dots on row ${py}`);
+  }
+  // Russia still reaches across the antimeridian: Chukotka sits east of -180+.
+  assert.ok(dots.get("RU").some(([px]) => px < 50), "Chukotka is drawn");
+  // Fiji straddles the antimeridian: its marker sits at the right edge.
+  const fiji = anchors.get("FJ")[0];
+  assert.ok(fiji < 20 || fiji > 1060, `Fiji at ${anchors.get("FJ")}`);
 });
 
 test("close markers are pushed apart, far ones stay", () => {
