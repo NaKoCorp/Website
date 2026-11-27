@@ -129,5 +129,6 @@ test("without a census the page says so and publishes no JSON", async () => {
   const html = await readFile(join(dir, "en/network/index.html"), "utf8");
   assert.ok(html.includes("No census yet"));
   assert.ok(html.includes("The list appears here after the first census."));
+  assert.ok(!html.includes('href="/network/nodes.json"'), "no link to a file that is not written");
   await assert.rejects(readFile(join(dir, "network/nodes.json"), "utf8"));
 });

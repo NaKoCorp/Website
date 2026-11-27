@@ -38,7 +38,7 @@ scripts: ["/assets/blog/network.js"]
     unverifiable: "Not checked",
     tiers: { low: "under 50%", medium: "50–80%", high: "80–95%", full: "95% or more" },
     howTitle: "How the census works",
-    rawData: "Raw data"
+    rawData: "Raw data: {link}, the same list as JSON."
   },
   fr: {
     h1: "Où tournent les relais Barking",
@@ -70,7 +70,7 @@ scripts: ["/assets/blog/network.js"]
     unverifiable: "Non vérifié",
     tiers: { low: "moins de 50 %", medium: "50–80 %", high: "80–95 %", full: "95 % et plus" },
     howTitle: "Comment fonctionne le recensement",
-    rawData: "Données brutes"
+    rawData: "Données brutes : {link}, la même liste en JSON."
   }
 }[lang] -%}
 {%- macro count(n, words) -%}<b class="net-num">{{ n }}</b> {{ words[0] if n == 1 else words[1] }}{%- endmacro -%}
@@ -164,6 +164,10 @@ scripts: ["/assets/blog/network.js"]
     {%- endif %}
     {%- if c and c.truncated %}
     <p class="net-note">{{ t.truncated }}</p>
+    {%- endif %}
+    {#- Only with a census: without one, /network/nodes.json is not written. #}
+    {%- if c %}
+    <p class="net-note">{{ t.rawData | replace("{link}", '<a href="/network/nodes.json"><code>nodes.json</code></a>') | safe }}</p>
     {%- endif %}
   </section>
 
