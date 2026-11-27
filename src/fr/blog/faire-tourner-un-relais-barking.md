@@ -27,7 +27,7 @@ Ce qu’il vous faut :
 - un port UDP ouvert, 4433 par défaut ;
 - quelques centaines de Mo de disque : le stockage est plafonné à 1 Gio par défaut, et 256 Mio est une valeur raisonnable sur un petit appareil.
 
-Avant de commencer, la partie honnête : Barking est un prototype et n’a pas été audité. Comme le dit son README, « there is no public relay network yet » : il n’existe pas encore de réseau public de relais. Ce sont les premiers opérateurs qui le construisent.
+Avant de commencer, la partie honnête : Barking est un prototype et n’a pas été audité. Son réseau public de relais est en bêta : les premiers relais tournent, et la [carte du réseau](/fr/reseau/) montre où. Ce sont les prochains opérateurs qui le feront grandir.
 
 ## Obtenir le binaire
 

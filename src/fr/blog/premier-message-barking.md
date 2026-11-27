@@ -2,6 +2,7 @@
 title: Envoyez votre premier message Barking en 5 minutes
 description: Compilez le CLI de Barking, créez deux identités, vérifiez un code de sécurité, puis échangez un message chiffré et son accusé dans de simples fichiers.
 date: 2026-11-20
+updated: 2026-11-27
 translationKey: first-message
 tags: [barking, tutorial, rust]
 barking: true
@@ -164,7 +165,7 @@ Les paquets ont trois [tailles fixes](https://github.com/NaKoCorp/Barking/blob/v
 
 ## Maintenant, par des relais
 
-Cette partie est facultative, et elle demande ce que Barking ne vous donne pas encore : un relais joignable depuis internet. La [liste d’amorçage](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) intégrée au binaire est vide, parce qu’aucun relais public n’existe. Sans relais, `sync` s’arrête là :
+Cette partie est facultative, et elle demande ce que le client en ligne de commande ne vous donne pas encore : un relais joignable depuis internet. Des relais publics tournent en bêta depuis le 27 novembre 2026 (voir la [carte du réseau](/fr/reseau/)), mais la [liste d’amorçage](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) intégrée au binaire est encore vide : le client n’en connaît aucun. Sans relais, `sync` s’arrête là :
 
 ```sh
 barking --home alice sync

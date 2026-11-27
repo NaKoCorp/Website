@@ -1,3 +1,6 @@
 .DS_Store
 node_modules/
 _site/
+
+# Census of the Barking network, written by the Pages workflow.
+/network/

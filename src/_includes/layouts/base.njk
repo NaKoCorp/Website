@@ -65,6 +65,12 @@
 <link rel="icon" href="/assets/nakocorp-logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/blog/tokens.css">
 <link rel="stylesheet" href="/assets/blog/blog.css">
+{%- for href in styles %}
+<link rel="stylesheet" href="{{ href }}">
+{%- endfor %}
+{%- for src in scripts %}
+<script src="{{ src }}" defer></script>
+{%- endfor %}
 </head>
 <body>
 {% include "partials/nav.njk" %}

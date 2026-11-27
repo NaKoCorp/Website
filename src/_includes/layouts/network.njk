@@ -1,0 +1,176 @@
+---
+layout: layouts/base.njk
+styles: ["/assets/blog/network.css"]
+scripts: ["/assets/blog/network.js"]
+---
+{#- The network map: the last census of the Barking network (_data/network.js).
+    Countries holding relays light up on a dot map; the list below carries
+    every figure, so the map stays a picture (role="img") with its summary in
+    <desc>. No address is ever rendered: the census holds none. -#}
+{%- set t = {
+  en: {
+    h1: "Where Barking relays run",
+    lead: "The public beta relays that answered the last census, placed by country and network operator. Their addresses never appear on this page.",
+    census: "Last census:",
+    every: "refreshed every hour",
+    stale: "may be out of date",
+    noCensus: "No census yet",
+    summary: "{r} in {c}, on {o}.",
+    relay: ["relay", "relays"],
+    country: ["country", "countries"],
+    operator: ["network operator", "network operators"],
+    mapTitle: "Map of the Barking relays",
+    mapEmpty: "World map. No relay to place yet.",
+    mapLegend: "A lit country holds at least one relay; the number counts them.",
+    markerLabel: "{name}: {n}",
+    listTitle: "Every relay",
+    listEmpty: "No relay answered the last census.",
+    listNoCensus: "The list appears here after the first census.",
+    unreachable: "{n} more found in the table did not answer.",
+    unreachableOne: "1 more found in the table did not answer.",
+    truncated: "The census stopped early: this list may be incomplete.",
+    cols: ["Relay", "Country", "Network operator", "Location check", "Version", "Uptime", "Storage"],
+    outside: "not in the table",
+    outsideTitle: "Answered as a seed, but no relay lists it in its table",
+    matches: "Confirmed",
+    mismatchCountry: "IP base: {name}",
+    mismatchOperator: "IP base: another operator",
+    unverifiable: "Not checked",
+    tiers: { low: "under 50%", medium: "50–80%", high: "80–95%", full: "95% or more" },
+    howTitle: "How the census works",
+    rawData: "Raw data"
+  },
+  fr: {
+    h1: "Où tournent les relais Barking",
+    lead: "Les relais de la bêta publique qui ont répondu au dernier recensement, placés par pays et par opérateur réseau. Leurs adresses n’apparaissent jamais sur cette page.",
+    census: "Dernier recensement :",
+    every: "mis à jour toutes les heures",
+    stale: "peut-être plus à jour",
+    noCensus: "Pas encore de recensement",
+    summary: "{r} dans {c}, chez {o}.",
+    relay: ["relais", "relais"],
+    country: ["pays", "pays"],
+    operator: ["opérateur réseau", "opérateurs réseau"],
+    mapTitle: "Carte des relais Barking",
+    mapEmpty: "Carte du monde. Aucun relais à placer pour l’instant.",
+    mapLegend: "Un pays allumé héberge au moins un relais ; le nombre les compte.",
+    markerLabel: "{name} : {n}",
+    listTitle: "Tous les relais",
+    listEmpty: "Aucun relais n’a répondu au dernier recensement.",
+    listNoCensus: "La liste apparaîtra ici après le premier recensement.",
+    unreachable: "{n} autres trouvés dans la table n’ont pas répondu.",
+    unreachableOne: "1 autre trouvé dans la table n’a pas répondu.",
+    truncated: "Le recensement s’est arrêté avant la fin : cette liste peut être incomplète.",
+    cols: ["Relais", "Pays", "Opérateur réseau", "Vérification du lieu", "Version", "En ligne depuis", "Stockage"],
+    outside: "hors de la table",
+    outsideTitle: "A répondu comme point d’entrée, mais aucun relais ne le liste dans sa table",
+    matches: "Confirmé",
+    mismatchCountry: "Base IP : {name}",
+    mismatchOperator: "Base IP : autre opérateur",
+    unverifiable: "Non vérifié",
+    tiers: { low: "moins de 50 %", medium: "50–80 %", high: "80–95 %", full: "95 % et plus" },
+    howTitle: "Comment fonctionne le recensement",
+    rawData: "Données brutes"
+  }
+}[lang] -%}
+{%- macro count(n, words) -%}<b class="net-num">{{ n }}</b> {{ words[0] if n == 1 else words[1] }}{%- endmacro -%}
+{%- set c = network.census -%}
+<article class="net">
+  <header class="net-hero">
+    <div class="blog-wrap">
+      <h1>{{ t.h1 }}</h1>
+      <p class="article-lead">{{ t.lead }}</p>
+      {%- if c %}
+      <p class="net-status" data-generated="{{ c.generated_at }}" data-lang="{{ lang }}">
+        <span class="net-dot" aria-hidden="true"></span>
+        <span>{{ t.census }} <time datetime="{{ c.generated_at | isoDateTime }}">{{ c.generated_at | censusTime(lang) }}</time></span>
+        <span class="net-sep" aria-hidden="true">·</span>
+        <span class="net-fresh">{{ t.every }}</span>
+        <span class="net-stale" hidden>{{ t.stale }}</span>
+      </p>
+      {%- else %}
+      <p class="net-status is-empty"><span class="net-dot" aria-hidden="true"></span><span>{{ t.noCensus }}</span></p>
+      {%- endif %}
+    </div>
+  </header>
+
+  <section class="blog-wrap net-map-section" aria-label="{{ t.mapTitle }}">
+    <figure class="net-map">
+      <div class="net-canvas" style="aspect-ratio: {{ network.map.width }} / {{ network.map.height }}">
+        <svg viewBox="0 0 {{ network.map.width }} {{ network.map.height }}" role="img" aria-labelledby="net-map-title net-map-desc" xmlns="http://www.w3.org/2000/svg">
+          <title id="net-map-title">{{ t.mapTitle }}</title>
+          <desc id="net-map-desc">
+            {%- if network.countries.length -%}
+            {%- for k in network.countries %}{{ k.code | countryName(lang) }} {{ k.count }}{{ ", " if not loop.last }}{% endfor %}
+            {%- else %}{{ t.mapEmpty }}{% endif -%}
+          </desc>
+          <path class="net-land" d="{{ network.map.land }}"/>
+          {%- for k in network.map.lit %}
+          <path class="net-lit" data-country="{{ k.code }}" style="--d: {{ k.delay }}ms" d="{{ k.path }}"/>
+          {%- endfor %}
+        </svg>
+        {%- for k in network.map.lit %}
+        <a class="net-marker" href="#country-{{ k.code }}" data-country="{{ k.code }}" style="left: {{ k.anchor[0] / network.map.width * 100 }}%; top: {{ k.anchor[1] / network.map.height * 100 }}%; --d: {{ k.delay }}ms" aria-label="{{ t.markerLabel | replace('{name}', k.code | countryName(lang)) | replace('{n}', k.count) }}">
+          <span class="net-ring" aria-hidden="true"></span>
+          <span class="net-pin" aria-hidden="true">{{ k.count }}</span>
+        </a>
+        {%- endfor %}
+        {%- if network.map.lit.length %}<span class="net-scan" aria-hidden="true"></span>{% endif %}
+      </div>
+      <figcaption>
+        {%- if c and c.nodes.length %}
+        <span class="net-summary">{{ t.summary | replace("{r}", count(c.nodes.length, t.relay)) | replace("{c}", count(network.countries.length, t.country)) | replace("{o}", count(network.operators, t.operator)) | safe }}</span>
+        <span>{{ t.mapLegend }}</span>
+        {%- else %}
+        <span>{{ t.mapEmpty }}</span>
+        {%- endif %}
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="blog-wrap net-list" aria-labelledby="relays">
+    <h2 id="relays">{{ t.listTitle }}</h2>
+    {%- if not c %}
+    <p class="net-note">{{ t.listNoCensus }}</p>
+    {%- elif not c.nodes.length %}
+    <p class="net-note">{{ t.listEmpty }}</p>
+    {%- else %}
+    <table class="net-table">
+      <thead>
+        <tr>{% for col in t.cols %}<th scope="col">{{ col }}</th>{% endfor %}</tr>
+      </thead>
+      <tbody>
+        {%- for n in c.nodes %}
+        {%- set firstOfCountry = loop.first or c.nodes[loop.index0 - 1].country != n.country %}
+        <tr data-country="{{ n.country }}"{% if firstOfCountry and n.country %} id="country-{{ n.country }}"{% endif %}>
+          <td data-label="{{ t.cols[0] }}"><span class="net-v"><code class="net-id">{{ n.id }}</code>{% if not n.in_table %}<span class="net-muted net-outside" title="{{ t.outsideTitle }}">{{ t.outside }}</span>{% endif %}</span></td>
+          <td data-label="{{ t.cols[1] }}"><span class="net-v">{% if n.country %}{{ n.country | countryName(lang) }} <span class="net-code">{{ n.country }}</span>{% else %}<span class="net-muted">—</span>{% endif %}</span></td>
+          <td data-label="{{ t.cols[2] }}"><span class="net-v">{% if n.as_name %}{{ n.as_name }}{% elif not n.asn %}<span class="net-muted">—</span>{% endif %}{% if n.asn %} <span class="net-code">AS{{ n.asn }}</span>{% endif %}</span></td>
+          <td data-label="{{ t.cols[3] }}"><span class="net-v">
+            {%- if n.origin == "matches" %}<span class="net-check is-ok">{{ t.matches }}</span>
+            {%- elif n.origin == "mismatch" %}<span class="net-check is-warn">{% if n.ip_country and n.ip_country != n.country %}{{ t.mismatchCountry | replace("{name}", n.ip_country | countryName(lang)) }}{% else %}{{ t.mismatchOperator }}{% endif %}</span>
+            {%- else %}<span class="net-check">{{ t.unverifiable }}</span>{% endif -%}
+          </span></td>
+          <td data-label="{{ t.cols[4] }}"><span class="net-v">{% if n.software %}<span class="net-code">{{ n.software }}</span>{% else %}<span class="net-muted">—</span>{% endif %}</span></td>
+          <td data-label="{{ t.cols[5] }}" class="net-figure"><span class="net-v">{{ (n.uptime_secs | uptime(lang)) or "—" }}</span></td>
+          <td data-label="{{ t.cols[6] }}" class="net-tier"><span class="net-v">{{ t.tiers[n.storage] if n.storage else "—" }}</span></td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+    {%- endif %}
+    {%- if c and c.unreachable %}
+    <p class="net-note">{{ t.unreachableOne if c.unreachable == 1 else (t.unreachable | replace("{n}", c.unreachable)) }}</p>
+    {%- endif %}
+    {%- if c and c.truncated %}
+    <p class="net-note">{{ t.truncated }}</p>
+    {%- endif %}
+  </section>
+
+  <section class="blog-wrap net-how" aria-labelledby="how">
+    <div class="prose">
+      <h2 id="how">{{ t.howTitle }}</h2>
+{{ content | safe }}
+    </div>
+  </section>
+</article>

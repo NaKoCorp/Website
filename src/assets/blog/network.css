@@ -1,0 +1,240 @@
+/* Network map page (layouts/network.njk). Builds on tokens.css and blog.css.
+   One authored moment: the census sweep. A line crosses the map west to
+   east and each country holding relays lights up as it passes, then its
+   count lands with a single ring. Nothing loops. */
+
+.net { --ease-out: cubic-bezier(.16, 1, .3, 1); --sweep: 900ms; }
+
+/* HEADER */
+.net-hero { padding: 64px 0 32px; }
+.net-hero h1 {
+  max-width: 20ch;
+  margin: 0 0 16px;
+  font-size: var(--size-display-cta);
+  line-height: 1.12;
+  letter-spacing: -1px;
+  text-wrap: balance;
+}
+.net-hero .article-lead { margin-bottom: 20px; }
+.net-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  line-height: 1.5;
+  color: var(--fg-soft);
+}
+.net-status time { color: var(--fg-muted); }
+.net-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-ok);
+  transition: background-color .3s var(--ease-out);
+}
+.net-status.is-stale .net-dot { background: var(--lora-dot); }
+.net-status.is-stale .net-stale { color: var(--warn-fg); }
+[data-theme="dark"] .net-status.is-stale .net-stale { color: var(--lora); }
+.net-status.is-empty .net-dot { background: var(--fg-soft); }
+
+/* MAP */
+.net-map { margin: 0; }
+.net-canvas {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface-alt);
+}
+.net-canvas svg { display: block; width: 100%; height: 100%; }
+.net-land, .net-lit { fill: none; stroke-linecap: round; }
+.net-land { stroke: var(--border-strong); stroke-width: 3.2; }
+[data-theme="dark"] .net-land { stroke: var(--ink-line); }
+.net-lit {
+  stroke: var(--accent);
+  stroke-width: 3.8;
+  transition: opacity .2s var(--ease-out);
+  animation: net-light .5s var(--ease-out) both;
+  animation-delay: calc(var(--d) + 120ms);
+}
+.net-canvas[data-focus] .net-lit:not(.is-focus) { opacity: .3; }
+
+.net-marker {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  color: var(--surface);
+  text-decoration: none;
+}
+.net-marker:hover { color: var(--surface); }
+.net-pin {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 12px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--surface-alt);
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  transition: transform .15s var(--ease-out), opacity .2s var(--ease-out);
+  animation: net-pin .42s var(--ease-out) both;
+  animation-delay: calc(var(--d) + 240ms);
+}
+.net-marker:hover .net-pin, .net-marker.is-focus .net-pin { transform: scale(1.12); }
+.net-canvas[data-focus] .net-marker:not(.is-focus) .net-pin { opacity: .45; }
+.net-marker:focus-visible { outline: none; }
+.net-marker:focus-visible .net-pin { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+.net-ring {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: net-ring 1.2s var(--ease-out) 1 both;
+  animation-delay: calc(var(--d) + 420ms);
+}
+
+/* The sweep: a hairline with a faint wake, crossing once at constant speed
+   so it meets each country at the delay lib/network.js gave it. */
+.net-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right,
+    transparent calc(100% - 64px),
+    color-mix(in srgb, var(--accent) 10%, transparent) calc(100% - 2px),
+    var(--accent) calc(100% - 2px));
+  transform: translateX(-100%);
+  opacity: 0;
+  animation: net-scan var(--sweep) linear 120ms 1 both;
+}
+
+@keyframes net-light { from { opacity: 0; } }
+@keyframes net-pin { from { opacity: 0; transform: scale(.6); } }
+@keyframes net-ring {
+  0% { opacity: .7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2.6); }
+}
+@keyframes net-scan {
+  0% { opacity: 1; transform: translateX(-100%); }
+  92% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(0); }
+}
+
+.net-map figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 24px;
+  margin-top: 12px;
+  font-size: var(--size-body-sm);
+  line-height: 1.5;
+  color: var(--fg-soft);
+}
+.net-summary { color: var(--fg-muted); }
+.net-num { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--fg); }
+
+/* LIST */
+.net-list { padding-block: 64px 0; }
+.net-list h2, .net-how h2 {
+  margin: 0 0 20px;
+  font-size: var(--size-heading-feature);
+  line-height: var(--leading-feature);
+  letter-spacing: var(--tracking-display);
+}
+.net-table { width: 100%; border-collapse: collapse; font-size: var(--size-body-sm); }
+.net-table th {
+  padding: 0 16px 10px 0;
+  border-bottom: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: var(--size-caption);
+  font-weight: 500;
+  color: var(--fg-soft);
+  text-align: left;
+  white-space: nowrap;
+}
+.net-table td {
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: baseline;
+  color: var(--fg-muted);
+}
+.net-table td:first-child, .net-table th:first-child { padding-left: 12px; }
+.net-table tr { scroll-margin-top: 96px; transition: background-color .15s var(--ease-out); }
+.net-table tbody tr:hover, .net-table tr.is-focus { background: var(--surface-alt); }
+.net-table tr:target { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.net-id { font-family: var(--font-mono); font-size: var(--size-body-sm); font-weight: 500; color: var(--fg); letter-spacing: .02em; }
+.net-code { font-family: var(--font-mono); font-size: var(--size-caption); color: var(--fg-soft); }
+.net-muted { color: var(--fg-soft); font-size: var(--size-caption); }
+.net-outside { display: block; margin-top: 2px; }
+.net-tier { white-space: nowrap; }
+.net-figure { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.net-check { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.net-check::before { content: ""; width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--fg-soft); }
+.net-check.is-ok { color: var(--status-ok); }
+.net-check.is-ok::before { border-color: currentColor; background: currentColor; }
+.net-check.is-warn { color: var(--warn-fg); }
+[data-theme="dark"] .net-check.is-warn { color: var(--lora); }
+.net-check.is-warn::before { border-color: currentColor; border-radius: 1px; transform: rotate(45deg); }
+.net-note { margin: 16px 0 0; font-size: var(--size-body-sm); color: var(--fg-soft); }
+
+/* NOTES */
+.net-how { padding-block: 64px var(--section-y); }
+.net-how .prose { max-width: var(--measure); }
+
+@media (prefers-reduced-motion: reduce) {
+  .net-scan, .net-ring { display: none; }
+  .net-lit { animation: net-light .3s linear both; animation-delay: 0ms; }
+  .net-pin { animation: net-light .3s linear both; animation-delay: 0ms; transition: opacity .2s linear; }
+  .net-marker:hover .net-pin, .net-marker.is-focus .net-pin { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .net-table, .net-table tbody, .net-table tr, .net-table td { display: block; }
+  .net-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .net-table tr { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .net-table td, .net-table td:first-child {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 4px 12px;
+    border: 0;
+    text-align: right;
+  }
+  .net-table .net-v { min-width: 0; }
+  .net-table .net-outside { display: inline; margin: 0 0 0 8px; }
+  .net-table td::before {
+    content: attr(data-label);
+    font-family: var(--font-mono);
+    font-size: var(--size-caption);
+    color: var(--fg-soft);
+    text-align: left;
+  }
+}
+@media (max-width: 720px) {
+  .net-hero { padding: 40px 0 24px; }
+  .net-hero h1 { font-size: var(--size-heading-mobile); letter-spacing: -0.5px; }
+  .net-marker { width: 28px; height: 28px; }
+  .net-pin { min-width: 20px; height: 20px; padding: 0 5px; font-size: var(--size-tag); }
+  .net-ring { width: 20px; height: 20px; }
+  .net-land { stroke-width: 4; }
+  .net-lit { stroke-width: 4.6; }
+  .net-list { padding-block: 48px 0; }
+  .net-how { padding-block: 48px var(--section-y-mobile); }
+}

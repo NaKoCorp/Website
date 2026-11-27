@@ -2,6 +2,7 @@
 title: Pourquoi nous construisons Barking
 description: Une messagerie chiffrée de bout en bout, des relais que chacun peut lancer, sans serveur central ni numéro. Ce qui marche aujourd’hui, ce qui manque encore.
 date: 2026-11-19
+updated: 2026-11-27
 translationKey: why-barking
 tags: [barking, manifesto]
 barking: true
@@ -97,7 +98,7 @@ Ces éléments sont prévus, pas construits :
 
 Des releases existent bien : v0.0.1 et v0.1.0 sont sorties le 13 novembre 2026, et [v0.2.0](https://github.com/NaKoCorp/Barking/releases/tag/v0.2.0) le 16 novembre. Une release veut seulement dire que les binaires ont été construits par la CI de GitHub et attestés par elle. Elle ne veut pas dire que le logiciel est prêt.
 
-Il n’y a pas non plus de réseau public de relais. La [liste d’amorçage](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) intégrée au binaire est vide : pour envoyer quoi que ce soit, vous ajoutez d’abord un relais à la main, le vôtre ou celui d’un ami.
+Le réseau public de relais ne fait que commencer : ses premiers relais tournent en bêta depuis le 27 novembre 2026, et la [carte du réseau](/fr/reseau/) montre où. La [liste d’amorçage](https://github.com/NaKoCorp/Barking/blob/v0.2.0/crates/barking-dht/bootstrap.toml) intégrée au binaire est encore vide : pour envoyer quoi que ce soit, vous ajoutez d’abord un relais à la main, le vôtre ou celui d’un ami.
 
 ## Des limites honnêtes
 
@@ -107,7 +108,7 @@ L’avertissement du README tient en trois points :
 
 - **Pas d’audit.** Aucun cabinet externe n’a relu la cryptographie ni le code.
 - **Les relais voient votre adresse IP.** Un relais sait quelle adresse dépose ou relève un paquet. La cacher demande Tor ou un mixnet, prévus mais pas faits.
-- **Pas de réseau public de relais.** Il faut lancer un relais ou connaître quelqu’un qui en lance un.
+- **Un réseau public de relais encore en bêta.** Les premiers relais tournent, mais le binaire ne les connaît pas encore : vous ajoutez un relais à la main, le vôtre ou celui de quelqu’un d’autre.
 
 </div>
 

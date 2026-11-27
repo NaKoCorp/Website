@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "generated_at": 1795818646,
+  "ipdb": "2026-11",
+  "truncated": false,
+  "unreachable": 1,
+  "nodes": [
+    { "id": "AAAABBBB", "in_table": true, "country": "FR", "ip_country": "FR", "asn": 64496, "as_name": "EXAMPLE-NET", "origin": "matches", "software": "0.7.0", "protocol": 5, "uptime_secs": 90000, "storage": "low", "wake": "low" },
+    { "id": "CCCCDDDD", "in_table": false, "country": "CA", "ip_country": "US", "asn": 64497, "as_name": "OTHER-NET", "origin": "mismatch", "software": "0.7.0", "protocol": 5, "uptime_secs": 7200, "storage": "medium", "wake": null },
+    { "id": "EEEEFFFF", "in_table": true, "country": "DE", "ip_country": null, "asn": 64498, "as_name": "seen at 198.51.100.7", "origin": "unverifiable", "software": "2001:db8::1", "protocol": 5, "uptime_secs": 600, "storage": "full", "wake": null },
+    { "id": "not-an-id", "country": "FR" },
+    { "id": "AAAABBBB", "country": "DE" }
+  ]
+}

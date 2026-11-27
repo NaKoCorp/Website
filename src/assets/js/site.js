@@ -8,6 +8,7 @@
     nav_node: "Lancer un nœud",
     nav_roadmap: "Feuille de route",
     nav_blog: "Blog",
+    nav_network: "Réseau",
     french_mark: "Projet français",
     theme_dark: "Thème sombre",
 

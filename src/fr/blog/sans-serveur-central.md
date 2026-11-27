@@ -2,6 +2,7 @@
 title: Une messagerie sans serveur central
 description: Comment Barking place chaque boîte aux lettres sur les cinq relais les plus proches, recopie les paquets et écarte les relais qui en perdent, sans annuaire.
 date: 2026-11-21
+updated: 2026-11-27
 translationKey: no-central-server
 tags: [barking, networking, rust, p2p]
 barking: true
@@ -13,7 +14,7 @@ Un serveur central, c’est un endroit à saisir, un endroit à censurer et un i
 
 En une phrase : dans Barking, une boîte aux lettres vit sur les [5 relais](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht/src/lib.rs#L22) dont l’identifiant est le plus proche de sa clé (S/Kademlia) ; le client y dépose une copie, les relais complètent eux-mêmes les autres, et chaque client cesse d’utiliser les relais qui perdent ses messages.
 
-Le statut d’abord, parce qu’il compte : le code fonctionne et il est testé, mais aucun réseau public n’existe encore. Chaque chiffre ci-dessous vient du dépôt Barking au commit [`7aa3a41`](https://github.com/NaKoCorp/Barking/commit/7aa3a4100f32e4380b030d6240be9115368abe5e), pas d’intentions. Si vous ne l’avez pas lu, [Pourquoi Barking](/fr/blog/pourquoi-barking/) donne le contexte. Ici, « relais » et « nœud » désignent la même chose.
+Le statut d’abord, parce qu’il compte : le code fonctionne et il est testé, et le réseau public ne fait que commencer : ses premiers relais tournent en bêta depuis le 27 novembre 2026, comme le montre la [carte du réseau](/fr/reseau/). Chaque chiffre ci-dessous vient du dépôt Barking au commit [`7aa3a41`](https://github.com/NaKoCorp/Barking/commit/7aa3a4100f32e4380b030d6240be9115368abe5e), pas d’intentions. Si vous ne l’avez pas lu, [Pourquoi Barking](/fr/blog/pourquoi-barking/) donne le contexte. Ici, « relais » et « nœud » désignent la même chose.
 
 ## Ce qu’est un relais
 
@@ -81,7 +82,7 @@ Quand un relais est mis à l’écart, `barking sync` affiche [`Node … avoided
 
 ## Ce que cette conception ne résout pas encore
 
-- **Il n’y a pas de réseau public.** La [liste d’amorçage](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht/bootstrap.toml) intégrée au binaire est vide. Aujourd’hui, on ajoute un relais à la main.
+- **Le réseau public est une bêta.** Ses premiers relais tournent depuis le 27 novembre 2026, mais la [liste d’amorçage](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht/bootstrap.toml) intégrée au binaire est encore vide. Aujourd’hui, on ajoute un relais à la main.
 - **Un relais derrière un NAT reste un simple relais.** Sans `public_addr` dans la [section `[dht]`](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/docs/deploy/barking-node.toml#L56-L62) de sa configuration, il stocke des paquets mais ne participe pas à la table.
 - **Un responsable voit des adresses IP.** Il voit l’adresse qui dépose et celle qui relève, et peut relier les deux. Ce qu’un relais peut apprendre, et ce qu’il ne peut pas, fera l’objet d’un article à part.
 - **Les boîtes d’introduction peuvent être ciblées.** La boîte d’un premier contact se calcule à partir d’une clé publique. Un attaquant patient peut placer des identités près d’elle et retarder des premiers contacts, au prix du puzzle pour chaque identité.
@@ -92,6 +93,6 @@ Barking est un prototype et n’a pas été audité.
 
 ## Devenez l’un des nœuds
 
-Le premier réseau public sera fait de ses premiers opérateurs. Lancez un relais avec la table activée (`public_addr` dans la section `[dht]`), puis publiez son identifiant et son adresse : la section [Run a relay](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/README.md#-run-a-relay) du README tient en un binaire, avec Docker ou systemd.
+Le réseau public se construit avec ses premiers opérateurs. Lancez un relais avec la table activée (`public_addr` dans la section `[dht]`) : dès qu’il répond au recensement horaire, il apparaît sur la [carte du réseau](/fr/reseau/), et vous pouvez donner son identifiant et son adresse à celles et ceux qui s’en serviront : la section [Run a relay](https://github.com/NaKoCorp/Barking/blob/7aa3a4100f32e4380b030d6240be9115368abe5e/README.md#-run-a-relay) du README tient en un binaire, avec Docker ou systemd.
 
 Et si vous préférez le casser plutôt que le faire tourner, lisez le code de la table dans [`crates/barking-dht`](https://github.com/NaKoCorp/Barking/tree/7aa3a4100f32e4380b030d6240be9115368abe5e/crates/barking-dht) et [ouvrez une issue](https://github.com/NaKoCorp/Barking/issues) là où il se trompe.

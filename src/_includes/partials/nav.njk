@@ -15,6 +15,7 @@
       <a href="/#security">{{ l.navSecurity }}</a>
       <a href="/#node">{{ l.navNode }}</a>
       <a href="/#roadmap">{{ l.navRoadmap }}</a>
+      <a href="{{ l.networkUrl }}"{% if page.url == l.networkUrl %} aria-current="page"{% endif %}>{{ l.network }}</a>
       <a href="/{{ lang }}/blog/"{% if (page.url | string).indexOf("/" + lang + "/blog/") == 0 %} aria-current="page"{% endif %}>{{ l.blog }}</a>
     </nav>
     <div class="nav-right">

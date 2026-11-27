@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Hourly census of the Barking network for the map (/en/network/).
+  schedule:
+    - cron: "17 * * * *"
 
 jobs:
   build:
@@ -21,6 +24,42 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # The network map: a fresh census with the released Barking CLI, checked
+      # against the release's SHA256SUMS. Seeds (<id>@<ip:port>) live in the
+      # BARKING_SEEDS secret and the CLI version in the BARKING_CLI_VERSION
+      # variable; without them, or if the census fails, the next step falls
+      # back to the census the live site publishes. The CLI prints counts
+      # only: no address reaches the logs or the site.
+      - name: Census of the Barking network
+        id: census
+        if: github.event_name != 'pull_request' && vars.BARKING_CLI_VERSION != ''
+        continue-on-error: true
+        timeout-minutes: 12
+        env:
+          VERSION: ${{ vars.BARKING_CLI_VERSION }}
+          BARKING_SEEDS: ${{ secrets.BARKING_SEEDS }}
+        run: |
+          set -euo pipefail
+          mkdir -p network "$RUNNER_TEMP/barking"
+          cd "$RUNNER_TEMP/barking"
+          bin="barking-cli-${VERSION}-x86_64-unknown-linux-musl"
+          base="https://github.com/NaKoCorp/Barking/releases/download/v${VERSION}"
+          curl -fsSL -o "$bin" "$base/$bin"
+          curl -fsSL -o SHA256SUMS "$base/SHA256SUMS"
+          grep " ${bin}\$" SHA256SUMS | sha256sum -c -
+          curl -fsSL -o ipdb.bin "https://raw.githubusercontent.com/NaKoCorp/Barking/v${VERSION}/apple/Barking/Resources/ipdb.bin"
+          chmod +x "$bin"
+          out="$GITHUB_WORKSPACE/network/nodes.json"
+          "./$bin" census --ipdb ipdb.bin --out "$out" --deadline 600
+          # No answer at all says more about this runner than about the
+          # network: keep the last published map instead.
+          jq -e '.nodes | length > 0' "$out" > /dev/null || { rm -f "$out"; echo "No relay answered."; exit 1; }
+      - name: Last published census
+        if: steps.census.outcome != 'success'
+        run: |
+          mkdir -p network
+          curl -fsSL --max-time 20 -o network/nodes.json https://www.nakocorp.com/network/nodes.json \
+            || { rm -f network/nodes.json; echo "No census: the map shows its empty state."; }
       - run: npx @11ty/eleventy
       - if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
