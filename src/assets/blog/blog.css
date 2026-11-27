@@ -576,6 +576,40 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
 @keyframes ack-check-late { 0%, 60% { opacity: 0; } 66%, 100% { opacity: 1; } }
 @keyframes ack-links { 0%, 32% { opacity: 0; } 42%, 100% { opacity: 1; } }
 
+/* Article 09: the status light comes on, the log line prints, three peers
+   join one after another, then sealed packets settle into node.db. Plays
+   once and rests on its end state, which is also the still image. */
+.cover-relay .relay-led, .cover-relay .relay-log, .cover-relay .relay-log2, .cover-relay .relay-port,
+.cover-relay .relay-link, .cover-relay .relay-peer, .cover-relay .relay-pkt { animation: 9s cubic-bezier(.2, .7, .2, 1) 1 both; }
+.cover-relay .relay-led { animation-name: relay-led; }
+.cover-relay .relay-log { animation-name: relay-log; }
+.cover-relay .relay-log2 { animation-name: relay-log2; }
+.cover-relay .relay-port { animation-name: relay-port; }
+.cover-relay .relay-link.relay-late-1 { animation-name: relay-link-1; }
+.cover-relay .relay-link.relay-late-2 { animation-name: relay-link-2; }
+.cover-relay .relay-link.relay-late-3 { animation-name: relay-link-3; }
+.cover-relay .relay-peer.relay-late-1 { animation-name: relay-peer-1; }
+.cover-relay .relay-peer.relay-late-2 { animation-name: relay-peer-2; }
+.cover-relay .relay-peer.relay-late-3 { animation-name: relay-peer-3; }
+.cover-relay .relay-pkt-1 { animation-name: relay-pkt-1; }
+.cover-relay .relay-pkt-2 { animation-name: relay-pkt-2; }
+.cover-relay .relay-pkt-3 { animation-name: relay-pkt-3; }
+.cover-relay .relay-pkt-4 { animation-name: relay-pkt-4; }
+@keyframes relay-led { 0%, 4% { fill: var(--cover-chip); } 10%, 100% { fill: var(--accent); } }
+@keyframes relay-log { 0%, 10% { opacity: 0; transform: translateX(-8px); } 16%, 100% { opacity: 1; transform: none; } }
+@keyframes relay-log2 { 0%, 76% { opacity: 0; } 82%, 100% { opacity: 1; } }
+@keyframes relay-port { 0%, 14% { opacity: .35; } 20%, 100% { opacity: 1; } }
+@keyframes relay-link-1 { 0%, 22% { opacity: 0; } 28%, 100% { opacity: 1; } }
+@keyframes relay-link-2 { 0%, 32% { opacity: 0; } 38%, 100% { opacity: 1; } }
+@keyframes relay-link-3 { 0%, 42% { opacity: 0; } 48%, 100% { opacity: 1; } }
+@keyframes relay-peer-1 { 0%, 24% { opacity: 0; transform: translate(520px, 72px); } 30%, 100% { opacity: 1; transform: translate(504px, 72px); } }
+@keyframes relay-peer-2 { 0%, 34% { opacity: 0; transform: translate(552px, 158px); } 40%, 100% { opacity: 1; transform: translate(536px, 158px); } }
+@keyframes relay-peer-3 { 0%, 44% { opacity: 0; transform: translate(520px, 244px); } 50%, 100% { opacity: 1; transform: translate(504px, 244px); } }
+@keyframes relay-pkt-1 { 0%, 52% { opacity: 0; transform: translateY(-10px); } 58%, 100% { opacity: 1; transform: none; } }
+@keyframes relay-pkt-2 { 0%, 57% { opacity: 0; transform: translateY(-10px); } 63%, 100% { opacity: 1; transform: none; } }
+@keyframes relay-pkt-3 { 0%, 62% { opacity: 0; transform: translateY(-10px); } 68%, 100% { opacity: 1; transform: none; } }
+@keyframes relay-pkt-4 { 0%, 67% { opacity: 0; transform: translateY(-10px); } 73%, 100% { opacity: 1; transform: none; } }
+
 /* Figures below the fold settle in once (blog.js adds the classes). */
 .prose .will-reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1); }
 .prose .will-reveal.in { opacity: 1; transform: none; }
@@ -586,6 +620,8 @@ pre .token.comment, pre .token.prolog { color: var(--on-dark-soft); }
   .cover-pq .pq-value { animation: none; display: none; }
   .cover-meta .meta-v, .cover-meta .meta-d, .cover-meta .meta-box { animation: none; }
   .cover-ack .ack-key, .cover-ack .ack-pkt, .cover-ack .ack-check, .cover-ack .ack-links { animation: none; }
+  .cover-relay .relay-led, .cover-relay .relay-log, .cover-relay .relay-log2, .cover-relay .relay-port,
+  .cover-relay .relay-link, .cover-relay .relay-peer, .cover-relay .relay-pkt { animation: none; }
   .feature-card, .toc a { transition: none; }
   .feature-card:hover { transform: none; }
 }

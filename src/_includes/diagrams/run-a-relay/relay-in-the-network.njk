@@ -1,0 +1,79 @@
+{#- Article 09: your relay in the middle, with its UDP 4433 port. On the
+    left, a client that deposits and a client that fetches; on the right,
+    three S/Kademlia peers it replicates to (dashed). Below: what the node
+    keeps, and what it never writes (client IPs, struck through in the
+    danger colour). The internet transport colour is used only on the
+    arrows that carry packets. ids are prefixed with the diagram name.
+    No blank line (Markdown). -#}
+{%- set t = {
+  en: {
+    title: "A Barking relay in the network",
+    desc: "Your relay listens on UDP port 4433. One client deposits a packet, another fetches it. The relay replicates packets to three S/Kademlia peers. It stores encrypted packets for at most 7 days and one hour, receipts and sealed wake-up subscriptions. It never writes a client's IP address, in its database or in its logs.",
+    client: "client",
+    deposit: "deposit",
+    fetch: "fetch",
+    relay: "your relay",
+    peers: "S/Kademlia peers",
+    peer: "peer",
+    replication: "replication",
+    stores: "stores",
+    s1: "encrypted packets ≤ 7 d + 1 h",
+    s2: "receipts, sealed wake-ups",
+    never: "never written",
+    ip: "client IP addresses"
+  },
+  fr: {
+    title: "Un relais Barking dans le réseau",
+    desc: "Votre relais écoute sur le port UDP 4433. Un client dépose un paquet, un autre le relève. Le relais recopie les paquets vers trois pairs S/Kademlia. Il garde des paquets chiffrés au plus 7 jours et une heure, des accusés et des abonnements de réveil scellés. Il n’écrit jamais l’adresse IP d’un client, ni dans sa base ni dans ses journaux.",
+    client: "client",
+    deposit: "dépôt",
+    fetch: "relève",
+    relay: "votre relais",
+    peers: "pairs S/Kademlia",
+    peer: "pair",
+    replication: "recopie",
+    stores: "garde",
+    s1: "paquets chiffrés ≤ 7 j + 1 h",
+    s2: "accusés, réveils scellés",
+    never: "jamais écrit",
+    ip: "adresses IP des clients"
+  }
+}[lang] -%}
+<svg class="diagram" viewBox="0 0 720 356" role="img" aria-labelledby="relay-in-the-network-title relay-in-the-network-desc" xmlns="http://www.w3.org/2000/svg" font-family="var(--font-mono)" font-size="12">
+<title id="relay-in-the-network-title">{{ t.title }}</title>
+<desc id="relay-in-the-network-desc">{{ t.desc }}</desc>
+<defs>
+<marker id="relay-in-the-network-net" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--transport-net)"/></marker>
+</defs>
+{%- for c in [{ y: 32, label: t.deposit }, { y: 128, label: t.fetch }] %}
+<rect x="16" y="{{ c.y }}" width="132" height="56" rx="12" fill="var(--surface-card)" stroke="currentColor" stroke-width="1.2"/>
+<text x="82" y="{{ c.y + 24 }}" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.client }}</text>
+<text x="82" y="{{ c.y + 42 }}" text-anchor="middle" font-size="11" fill="var(--fg-soft)">{{ c.label }}</text>
+{%- endfor %}
+<g fill="none" stroke="var(--transport-net)" stroke-width="2" stroke-linecap="round">
+<path d="M148 60C196 60 196 92 236 92" marker-end="url(#relay-in-the-network-net)"/>
+<path d="M156 156C196 156 196 120 244 120" marker-start="url(#relay-in-the-network-net)"/>
+</g>
+<rect x="244" y="48" width="216" height="116" rx="14" fill="var(--surface-card)" stroke="var(--accent)" stroke-width="2"/>
+<text x="352" y="84" text-anchor="middle" font-weight="600" fill="currentColor">{{ t.relay }}</text>
+<text x="352" y="104" text-anchor="middle" font-size="11" fill="var(--fg-soft)">barking-node</text>
+<rect x="300" y="120" width="104" height="28" rx="8" fill="var(--surface-alt)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="352" y="138" text-anchor="middle" font-size="11" fill="var(--accent)">UDP 4433</text>
+<text x="704" y="20" text-anchor="end" font-size="11" fill="var(--fg-soft)">{{ t.peers }}</text>
+{%- for y in [32, 88, 144] %}
+<path d="M460 106C520 106 520 {{ y + 18 }} 584 {{ y + 18 }}" fill="none" stroke="var(--transport-net)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round" marker-end="url(#relay-in-the-network-net)"/>
+<rect x="592" y="{{ y }}" width="112" height="36" rx="10" fill="var(--surface-card)" stroke="var(--border-strong)" stroke-width="1.2"/>
+<circle cx="612" cy="{{ y + 18 }}" r="5" fill="var(--surface-alt)" stroke="currentColor" stroke-width="1.2"/>
+<text x="626" y="{{ y + 22 }}" fill="currentColor">{{ t.peer }}</text>
+{%- endfor %}
+<text x="524" y="200" text-anchor="middle" font-size="11" fill="var(--transport-net)">{{ t.replication }}</text>
+<path d="M352 164V212" stroke="var(--border-strong)" stroke-width="1.2"/>
+<rect x="176" y="212" width="352" height="76" rx="12" fill="var(--surface-card)" stroke="var(--border-strong)" stroke-width="1.2"/>
+<text x="196" y="236" font-size="11" fill="var(--fg-soft)">{{ t.stores }}</text>
+<text x="196" y="256" fill="currentColor">{{ t.s1 }}</text>
+<text x="196" y="274" font-size="11" fill="var(--fg-soft)">{{ t.s2 }}</text>
+<rect x="176" y="296" width="352" height="44" rx="12" fill="none" stroke="var(--danger)" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="196" y="323" font-size="11" fill="var(--danger)">{{ t.never }}</text>
+<text x="508" y="323" text-anchor="end" fill="currentColor">{{ t.ip }}</text>
+<path d="M{{ 508 - 7.2 * (t.ip | length) - 4 }} 319H512" stroke="var(--danger)" stroke-width="1.5"/>
+</svg>
